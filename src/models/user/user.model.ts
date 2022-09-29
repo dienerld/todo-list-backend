@@ -28,6 +28,15 @@ class User {
   get password () {
     return this.#password;
   }
+
+  toJSON () {
+    return {
+      id: this.#id,
+      name: this.#name,
+      email: this.#email,
+      password: this.#password
+    };
+  }
 }
 
 export { User };
