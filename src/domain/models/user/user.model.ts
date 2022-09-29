@@ -1,16 +1,19 @@
 import { randomUUID } from 'crypto';
+import { Task } from './task.model';
 
 class User {
   #id: string;
   #name: string;
   #email: string;
   #password: string;
+  #tasks: Task[];
 
   constructor (name: string, email: string, password: string) {
     this.#id = randomUUID();
     this.#name = name;
     this.#email = email;
     this.#password = password;
+    this.#tasks = [];
   }
 
   get id () {
@@ -27,6 +30,11 @@ class User {
 
   get password () {
     return this.#password;
+  }
+
+  get tasks () {
+    const task = this.#tasks;
+    return task;
   }
 
   toJSON () {
