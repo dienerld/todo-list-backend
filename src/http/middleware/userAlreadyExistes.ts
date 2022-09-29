@@ -6,9 +6,8 @@ function userAlreadyExistsMiddleware (req: CustomRequest, res: Response, next: N
   const { email } = req.body;
   try {
     const DB = getDatabase();
-    if (DB.users.find(user => user.email === email)) {
-      return res.status(400).send({ message: 'User already exists' });
-    }
+    const userAlreadyExists = DB.users.find(user => user.email === email);
+    req.user = userAlreadyExists;
 
     next();
   } catch (err) {

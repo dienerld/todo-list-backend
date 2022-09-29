@@ -1,4 +1,4 @@
-import { getDatabase, saveDatabase } from '../database';
+import { getDatabase, saveDatabase } from '../../database';
 import { UserRequestDto } from '../models/user/user.dtos';
 import { User } from '../models/user/user.model';
 
