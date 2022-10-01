@@ -1,7 +1,11 @@
 import { Router } from 'express';
-import { CreateUserUseCase } from '../../usecases/createUser.usecase';
-import { CreateUserController } from '../controllers';
+
 import { userAlreadyExistsMiddleware } from '../middleware/userAlreadyExistes';
+
+import { CreateUserUseCase } from '../../domain/usecases/createUser.usecase';
+import { LoginUserUsecase } from '../../domain/usecases/loginUser.usecase';
+import { CreateUserController } from '../controllers';
+import { LoginUserController } from '../controllers/user/login.controller';
 
 const usersRouter = Router();
 
@@ -10,6 +14,14 @@ usersRouter.use(userAlreadyExistsMiddleware);
 usersRouter.post('/', (req, res) => {
   const useCase = new CreateUserUseCase();
   const controller = new CreateUserController(useCase);
+
+  return controller.handle(req, res);
+});
+
+usersRouter.post('/login', (req, res) => {
+  const useCase = new LoginUserUsecase();
+  const controller = new LoginUserController(useCase);
+
   return controller.handle(req, res);
 });
 
