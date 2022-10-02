@@ -1,5 +1,6 @@
 @port = 3000
 @host = http://localhost:{{port}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzZmNmMTlkLTYyNjYtNDRhNS1hNDQwLTljNjhkZTk0MDJhNyIsImVtYWlsIjoiam9obi5kb2VAZ21haWwuY29tIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjY0NjcwMzY4LCJleHAiOjE2NjQ3NTY3Njh9.ZJ7D2auGgb7S7DdtGrCU2DNEhBQfpOV-s7B9kCFuOSo
 
 POST {{host}}/users HTTP/1.1
 Content-Type: application/json
@@ -26,3 +27,9 @@ Content-Type: application/json
   "email": "john.doe@gmail.com",
   "password": "123456"
 }
+
+###
+
+GET {{host}}/users/tasks HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { CustomRequest } from '../interfaces/customRequest';
 
-function hasAuthentication (req: Request, res: Response, next: NextFunction) {
+function hasAuthentication (req: CustomRequest, res: Response, next: NextFunction) {
   try {
     const auth = req.headers.authorization;
 
@@ -9,12 +10,14 @@ function hasAuthentication (req: Request, res: Response, next: NextFunction) {
     if (!token) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    const decoded = jwt.verify(token, 'secret') as { id: string };
+    const decoded = jwt.verify(token, 'secret');
 
-    req.body.user.id = decoded.id;
+    req.user = decoded as { id: string };
 
     next();
   } catch (err) {
+    console.log(err);
+
     return res.status(401).json({ error: 'Unauthorized' });
   }
 }
