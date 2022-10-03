@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { getDatabase } from '../../../database';
+
+import { getDatabase } from '@database/index';
 
 class LoginUserUsecase {
   async execute (userId: string, password: string) {

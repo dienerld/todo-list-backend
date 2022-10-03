@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Task } from './task.model';
+import { Task } from '../task/task.model';
 
 class User {
   #id: string;

@@ -4,11 +4,11 @@ import { userAlreadyExistsMiddleware } from '../middleware/userAlreadyExistes';
 
 import { CreateUserController } from '../controllers';
 import { LoginUserController } from '../controllers/user/login.controller';
-import { getDatabase } from '../../database';
 import { hasAuthentication } from '../middleware/hasAuth';
 import { CustomRequest } from '../interfaces/customRequest';
-import { LoginUserUsecase } from '../../domain/usecases/user/loginUser.usecase';
-import { CreateUserUseCase } from '../../domain/usecases/user/createUser.usecase';
+import { LoginUserUsecase } from '@usecases/user/loginUser.usecase';
+import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
+import { getDatabase } from '@database/index';
 
 const usersRouter = Router();
 
