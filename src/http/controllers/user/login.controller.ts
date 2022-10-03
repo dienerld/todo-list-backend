@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { LoginUserUsecase } from '../../../domain/usecases/loginUser.usecase';
+import { LoginUserUsecase } from '../../../domain/usecases/user/loginUser.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class LoginUserController {

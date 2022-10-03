@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { UserRequestDto } from '../../../domain/models/user/user.dtos';
-import { CreateUserUseCase } from '../../../domain/usecases/createUser.usecase';
+import { CreateUserUseCase } from '../../../domain/usecases/user/createUser.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class CreateUserController {

@@ -2,13 +2,13 @@ import { Router } from 'express';
 
 import { userAlreadyExistsMiddleware } from '../middleware/userAlreadyExistes';
 
-import { CreateUserUseCase } from '../../domain/usecases/createUser.usecase';
-import { LoginUserUsecase } from '../../domain/usecases/loginUser.usecase';
 import { CreateUserController } from '../controllers';
 import { LoginUserController } from '../controllers/user/login.controller';
 import { getDatabase } from '../../database';
 import { hasAuthentication } from '../middleware/hasAuth';
 import { CustomRequest } from '../interfaces/customRequest';
+import { LoginUserUsecase } from '../../domain/usecases/user/loginUser.usecase';
+import { CreateUserUseCase } from '../../domain/usecases/user/createUser.usecase';
 
 const usersRouter = Router();
 
