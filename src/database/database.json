@@ -10,6 +10,32 @@
           "id": "13fcf19d-6266-44a5",
           "title": "Task 1",
           "description": "Task 1 description"
+        },
+        {
+          "id": "eaa5aacc-cba4-49cb-8300-fa6a9165e5f0",
+          "title": "Task 2",
+          "description": "Task 2 description",
+          "status": "PENDING"
+        },
+        {
+          "id": "3f73cf01-d63f-4254-bcf3-991353f0825e",
+          "title": "Task 2",
+          "description": "Task 2 description",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "5aed2654-6f43-449b-ae46-f9b1e0ed69df",
+      "name": "Diener",
+      "email": "diener@gmail.com",
+      "password": "123456",
+      "tasks": [
+        {
+          "id": "650c732c-c1a6-4f70-93fe-9bf3f06fdd82",
+          "title": "Task 2",
+          "description": "Task 2 description",
+          "status": "PENDING"
         }
       ]
     }

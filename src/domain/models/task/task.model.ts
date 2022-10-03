@@ -40,6 +40,15 @@ class Task {
   set status (status: TaskStatus) {
     this.#status = status;
   }
+
+  toJSON () {
+    return {
+      id: this.#id,
+      title: this.#title,
+      description: this.#description,
+      status: this.#status
+    };
+  }
 }
 
 export { Task, TaskStatus };

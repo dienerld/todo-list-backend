@@ -5,7 +5,7 @@ import { UserRequestDto } from '@models/user/user.dtos';
 import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
 
 class CreateUserController {
-  constructor (private createUser: CreateUserUseCase) {}
+  constructor (private readonly createUser: CreateUserUseCase) {}
 
   async handle (request: CustomRequest, response: Response) {
     if (request?.user) {

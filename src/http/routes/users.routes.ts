@@ -1,25 +1,14 @@
 import { Router } from 'express';
 
+import { getDatabase } from '@database/index';
 import { userAlreadyExistsMiddleware } from '../middleware/userAlreadyExistes';
 
-import { CreateUserController } from '../controllers';
-import { LoginUserController } from '../controllers/user/login.controller';
-import { hasAuthentication } from '../middleware/hasAuth';
-import { CustomRequest } from '../interfaces/customRequest';
+import { CreateUserController, LoginUserController } from '../controllers';
+
 import { LoginUserUsecase } from '@usecases/user/loginUser.usecase';
 import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
-import { getDatabase } from '@database/index';
 
 const usersRouter = Router();
-
-usersRouter.get('/tasks', hasAuthentication, (req: CustomRequest, res) => {
-  const userId = req.user!.id;
-  console.log(userId);
-
-  res.json(
-    getDatabase().users.find((user) => user.id === userId)?.tasks || []
-  );
-});
 
 usersRouter.use(userAlreadyExistsMiddleware);
 
