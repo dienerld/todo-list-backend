@@ -5,6 +5,8 @@ import { getDatabase } from '@database/index';
 import { hasAuthentication } from '../middleware/hasAuth';
 import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
 import { CreateTaskController } from '../controllers';
+import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
+import { UpdateTaskController } from '../controllers/task/updateTask.controller';
 
 const tasksRouter = Router();
 
@@ -22,6 +24,13 @@ tasksRouter.get('/', (req: CustomRequest, res) => {
 tasksRouter.post('/', (req: CustomRequest, res) => {
   const useCase = new CreateTaskUseCase();
   const controller = new CreateTaskController(useCase);
+
+  return controller.handle(req, res);
+});
+
+tasksRouter.put('/:id', (req: CustomRequest, res) => {
+  const useCase = new UpdateTaskUseCase();
+  const controller = new UpdateTaskController(useCase);
 
   return controller.handle(req, res);
 });

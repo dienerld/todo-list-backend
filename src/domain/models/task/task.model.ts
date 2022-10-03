@@ -29,8 +29,16 @@ class Task {
     return this.#title;
   }
 
+  set title (title: string) {
+    this.#title = title;
+  }
+
   get description () {
     return this.#description;
+  }
+
+  set description (description: string) {
+    this.#description = description;
   }
 
   get status () {

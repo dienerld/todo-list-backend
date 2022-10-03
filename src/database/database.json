@@ -33,9 +33,9 @@
       "tasks": [
         {
           "id": "650c732c-c1a6-4f70-93fe-9bf3f06fdd82",
+          "description": "Task 2 description update",
           "title": "Task 2",
-          "description": "Task 2 description",
-          "status": "PENDING"
+          "status": "DONE"
         }
       ]
     }
