@@ -1,5 +1,5 @@
-import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
 import { Response } from 'express';
+import { UpdateTaskUseCase } from '../../../domain/usecases/task/updateTask.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class UpdateTaskController {

@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import { getDatabase } from '@database/index';
+import { getDatabase } from '../../database';
 import { CustomRequest } from '../interfaces/customRequest';
 
 function userAlreadyExistsMiddleware (req: CustomRequest, res: Response, next: NextFunction) {
