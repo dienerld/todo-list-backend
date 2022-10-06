@@ -4,16 +4,16 @@ import { TaskStatus } from '@models/task/task.model';
 
 class UpdateTaskUseCase {
   async execute (userId: string, taskId: string, taskDto: TaskUpdateRequestDto) {
-    const DB = getDatabase();
-    const userIndex = DB.users.findIndex(user => user.id === userId);
+    const users = getDatabase();
+    const userIndex = users.findIndex(user => user.id === userId);
     if (userIndex === -1) {
       throw new Error('User not found');
     }
-    const taskIndex = DB.users[userIndex].tasks.findIndex(task => task.id === taskId);
+    const taskIndex = users[userIndex].tasks.findIndex(task => task.id === taskId);
     if (taskIndex === -1) {
       throw new Error('Task not found');
     }
-    const task = DB.users[userIndex].tasks[taskIndex];
+    const task = users[userIndex].tasks[taskIndex];
     if (taskDto.title) {
       task.title = taskDto.title;
     }
@@ -30,8 +30,8 @@ class UpdateTaskUseCase {
       task.status = TaskStatus[taskDto.status];
     }
 
-    DB.users[userIndex].tasks[taskIndex] = task;
-    saveDatabase(DB);
+    users[userIndex].tasks[taskIndex] = task;
+    saveDatabase(users);
 
     return task;
   }

@@ -5,7 +5,6 @@ enum TaskStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
   DONE = 'DONE',
-  HIDDEN = 'HIDDEN',
 }
 
 class Task {
@@ -13,12 +12,26 @@ class Task {
   #title: string;
   #description: string;
   #status: TaskStatus;
+  #hidden: boolean;
 
   constructor (title: string, description: string) {
     this.#id = randomUUID();
     this.#title = title;
     this.#description = description;
     this.#status = TaskStatus.PENDING;
+    this.#hidden = false;
+  }
+
+  static create (task: Task) {
+    const newTask = new Task(task.title, task.description);
+    newTask.#id = task.id;
+    newTask.#status = task.status;
+    newTask.#hidden = task.hidden;
+    return newTask;
+  }
+
+  private set id (id: string) {
+    this.#id = id;
   }
 
   get id () {
@@ -35,6 +48,14 @@ class Task {
 
   get description () {
     return this.#description;
+  }
+
+  toggleHidden () {
+    this.#hidden = !this.#hidden;
+  }
+
+  get hidden () {
+    return this.#hidden;
   }
 
   set description (description: string) {

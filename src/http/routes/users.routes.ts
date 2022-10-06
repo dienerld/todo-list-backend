@@ -27,7 +27,10 @@ usersRouter.post('/login', (req, res) => {
 });
 
 usersRouter.get('/', (req, res) => {
-  res.json(getDatabase().users);
+  res.json(getDatabase());
 });
 
+usersRouter.put('/:id', (req, res) => {
+  res.status(200).json(getDatabase());
+});
 export { usersRouter };

@@ -10,10 +10,10 @@ class CreateUserUseCase {
 
     const user = new User(userDto.name, userDto.email, userDto.password);
     try {
-      const DB = getDatabase();
+      const users = getDatabase();
 
-      DB.users.push(user);
-      saveDatabase(DB);
+      users.push(user);
+      saveDatabase(users);
 
       return user;
     } catch (error) {

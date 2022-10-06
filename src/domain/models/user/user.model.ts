@@ -16,6 +16,13 @@ class User {
     this.#tasks = [];
   }
 
+  static create (userDto: User): User {
+    const user = new User(userDto.name, userDto.email, userDto.password);
+    user.#id = userDto.id;
+    user.#tasks = userDto.tasks.map(task => Task.create(task));
+    return user;
+  }
+
   get id () {
     return this.#id;
   }

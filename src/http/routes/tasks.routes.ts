@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
 
 import { getDatabase } from '@database/index';
-import { hasAuthentication } from '../middleware/hasAuth';
+import { hasAuthentication } from '../middleware';
 import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
 import { CreateTaskController } from '../controllers';
 import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
@@ -17,7 +17,7 @@ tasksRouter.get('/', (req: CustomRequest, res) => {
   console.log(userId);
 
   res.json(
-    getDatabase().users.find((user) => user.id === userId)?.tasks || []
+    getDatabase().find((user) => user.id === userId)?.tasks || []
   );
 });
 

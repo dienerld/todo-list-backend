@@ -4,9 +4,9 @@ import { getDatabase } from '@database/index';
 
 class LoginUserUsecase {
   async execute (userId: string, password: string) {
-    const DB = getDatabase();
+    const users = getDatabase();
 
-    const user = DB.users.find(user => user.id === userId);
+    const user = users.find(user => user.id === userId);
     if (!user) {
       throw new Error('User not found');
     }

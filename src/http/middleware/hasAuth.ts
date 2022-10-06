@@ -8,8 +8,7 @@ function hasAuthentication (req: CustomRequest, res: Response, next: NextFunctio
 
     const token = auth?.split(' ')[1];
     if (!token) {
-      // return res.status(401).json({ error: 'Unauthorized' });
-      return res.status(401).json({ error: 'Unauthorized Auth if' });
+      return res.status(401).json({ error: 'Unauthorized' });
     }
     const decoded = jwt.verify(token, 'secret');
 
@@ -19,8 +18,7 @@ function hasAuthentication (req: CustomRequest, res: Response, next: NextFunctio
   } catch (err) {
     console.log(err);
 
-    // return res.status(401).json({ error: 'Unauthorized' });
-    return res.status(401).json({ error: 'Unauthorized Auth Catch' });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 }
 
