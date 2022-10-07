@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Title",
+    "version": "1.0",
+    "description": "API Description"
+  },
+  "servers": [
+    {
+      "url": "https://dnr-test.fly.dev",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "development"
+    }
+  ],
+
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Get endpoint",
+        "description": "Get endpoint description",
+        "operationId": "getEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "User name"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Task"
+            }
+          }
+        }
+      },
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Task name"
+          },
+          "description": {
+            "type": "string",
+            "example": "Task description"
+          },
+          "status": {
+            "type": "string",
+            "example": "DONE"
+          },
+          "hidden": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Bad Request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
