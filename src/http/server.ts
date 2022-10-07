@@ -1,7 +1,10 @@
-import 'module-alias/register';
+/* eslint-disable import/first */
+
+if (process.env.NODE_ENV === 'production') {
+  require('module-alias/register');
+}
 import 'dotenv/config';
 import { app } from './app';
-
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

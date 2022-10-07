@@ -32,15 +32,16 @@
     "tasks": [
       {
         "id": "650c732c-c1a6-4f70-93fe-9bf3f06fdd82",
-        "description": "Task 2 description update",
         "title": "Task 2",
+        "description": "Task 2 description update",
         "status": "DONE"
       },
       {
         "id": "65b1fb37-df6a-42c3-bffb-8d7521d74413",
-        "title": "Task 3",
+        "title": "Task 3 update",
         "description": "Task 3 description",
-        "status": "DONE"
+        "status": "DONE",
+        "hidden": false
       }
     ]
   }

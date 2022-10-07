@@ -17,6 +17,8 @@ class UpdateTaskUseCase {
 
     if (!taskDto) {
       task.toggleHidden();
+      users[userIndex].tasks[taskIndex] = task;
+      saveDatabase(users);
       return task;
     }
 
