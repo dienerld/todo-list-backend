@@ -1,6 +1,6 @@
-import { getDatabase, saveDatabase } from '../../../database';
-import { TaskRequestDto } from '../../models/task/task.dtos';
-import { Task } from '../../models/task/task.model';
+import { getDatabase, saveDatabase } from '@database/index';
+import { TaskRequestDto } from '@models/task/task.dtos';
+import { Task } from '@models/task/task.model';
 
 class CreateTaskUseCase {
   async execute (userId: string, taskDto: TaskRequestDto): Promise<Task> {

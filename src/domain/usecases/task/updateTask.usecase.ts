@@ -1,6 +1,6 @@
-import { getDatabase, saveDatabase } from '../../../database';
-import { TaskUpdateRequestDto } from '../../models/task/task.dtos';
-import { TaskStatus } from '../../models/task/task.model';
+import { getDatabase, saveDatabase } from '@database/index';
+import { TaskUpdateRequestDto } from '@models/task/task.dtos';
+import { TaskStatus } from '@models/task/task.model';
 
 class UpdateTaskUseCase {
   async execute (userId: string, taskId: string, taskDto: TaskUpdateRequestDto) {

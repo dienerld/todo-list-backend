@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
 
+import { getDatabase } from '@database/index';
 import { hasAuthentication } from '../middleware';
+import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
 import { CreateTaskController } from '../controllers';
+import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
 import { UpdateTaskController } from '../controllers/task/updateTask.controller';
-import { getDatabase } from '../../database';
-import { CreateTaskUseCase } from '../../domain/usecases/task/createTask.usecase';
-import { UpdateTaskUseCase } from '../../domain/usecases/task/updateTask.usecase';
 
 const tasksRouter = Router();
 

@@ -1,5 +1,5 @@
+import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
 import { Response } from 'express';
-import { CreateTaskUseCase } from '../../../domain/usecases/task/createTask.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class CreateTaskController {

@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { UserRequestDto } from '../../../domain/models/user/user.dtos';
-import { CreateUserUseCase } from '../../../domain/usecases/user/createUser.usecase';
 
 import { CustomRequest } from '../../interfaces/customRequest';
+import { UserRequestDto } from '@models/user/user.dtos';
+import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
 
 class CreateUserController {
   constructor (private readonly createUser: CreateUserUseCase) {}
