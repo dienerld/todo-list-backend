@@ -27,12 +27,24 @@ class User {
     return this.#id;
   }
 
+  set name (name: string) {
+    this.#name = name;
+  }
+
   get name () {
     return this.#name;
   }
 
+  set email (email: string) {
+    this.#email = email;
+  }
+
   get email () {
     return this.#email;
+  }
+
+  set password (password: string) {
+    this.#password = password;
   }
 
   get password () {
