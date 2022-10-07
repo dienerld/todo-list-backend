@@ -1,5 +1,5 @@
 @port = 3000
-@host = http://localhost:{{port}}
+@host = https://dnr-test.fly.dev
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZWQyNjU0LTZmNDMtNDQ5Yi1hZTQ2LWY5YjFlMGVkNjlkZiIsImVtYWlsIjoiZGllbmVyQGdtYWlsLmNvbSIsIm5hbWUiOiJEaWVuZXIiLCJpYXQiOjE2NjUwNzk3NDMsImV4cCI6MTY2NTE2NjE0M30.amSzMIqQgiej0XMao9XyhDTsf0g1r6USr8lAc5LFBJw
 
 POST {{host}}/users HTTP/1.1
