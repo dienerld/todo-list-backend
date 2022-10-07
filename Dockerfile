@@ -4,8 +4,13 @@ WORKDIR /app
 
 COPY . .
 
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
 RUN yarn
+RUN yarn build
 
-ENTRYPOINT [ "tail", "-f", "/dev/null" ]
+ENTRYPOINT [ "yarn", "start" ]
 
-EXPOSE 3000
+EXPOSE $PORT
