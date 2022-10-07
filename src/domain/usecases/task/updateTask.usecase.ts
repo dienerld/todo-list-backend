@@ -3,7 +3,7 @@ import { TaskUpdateRequestDto } from '@models/task/task.dtos';
 import { TaskStatus } from '@models/task/task.model';
 
 class UpdateTaskUseCase {
-  async execute (userId: string, taskId: string, taskDto: TaskUpdateRequestDto) {
+  async execute (userId: string, taskId: string, taskDto?: TaskUpdateRequestDto) {
     const users = getDatabase();
     const userIndex = users.findIndex(user => user.id === userId);
     if (userIndex === -1) {
@@ -14,6 +14,12 @@ class UpdateTaskUseCase {
       throw new Error('Task not found');
     }
     const task = users[userIndex].tasks[taskIndex];
+
+    if (!taskDto) {
+      task.toggleHidden();
+      return task;
+    }
+
     if (taskDto.title) {
       task.title = taskDto.title;
     }
