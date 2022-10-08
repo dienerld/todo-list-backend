@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "dienerld/dnr-test"
+  image = "dienerld/dnr-express-growdev"
 
 [build.args]
   PORT= 8080 # default port

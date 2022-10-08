@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://dnr-test.fly.dev",
+      "url": "https://dnr-growdev.fly.dev",
       "description": "Production"
     },
     {
