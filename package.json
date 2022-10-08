@@ -39,6 +39,7 @@
   "_moduleAliases": {
     "@usecases": "./dist/domain/usecases",
     "@models": "./dist/domain/models",
-    "@database": "./dist/database"
+    "@database": "./dist/database",
+    "@configs": "./dist/configs"
   }
 }

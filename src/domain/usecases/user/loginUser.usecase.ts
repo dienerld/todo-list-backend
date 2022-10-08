@@ -1,29 +1,35 @@
 import jwt from 'jsonwebtoken';
 
+import { jwtConfig } from '@configs/jwt';
 import { getDatabase } from '@database/index';
 
 class LoginUserUsecase {
   async execute (userId: string, password: string) {
-    const users = getDatabase();
+    try {
+      const users = getDatabase();
 
-    const user = users.find(user => user.id === userId);
-    if (!user) {
-      throw new Error('User not found');
+      const user = users.find(user => user.id === userId);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      if (user.password !== password) {
+        throw new Error('Invalid password');
+      }
+
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          name: user.name
+        },
+        jwtConfig.secret, { expiresIn: jwtConfig.expiresIn });
+
+      return token;
+    } catch (err) {
+      console.error(err);
+      throw err;
     }
-
-    if (user.password !== password) {
-      throw new Error('Invalid password');
-    }
-
-    const token = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name
-      },
-      'secret', { expiresIn: '1d' });
-
-    return token;
   }
 }
 
