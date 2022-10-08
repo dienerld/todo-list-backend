@@ -57,4 +57,5 @@ usersRouter.delete('/:id', (req, res) => {
 
   return controller.handle(req, res);
 });
+
 export { usersRouter };

@@ -1,3 +1,4 @@
+import { getDatabase } from '@database/index';
 import express from 'express';
 import { cors } from './middleware/cors';
 import { usersRouter, tasksRouter } from './routes';
@@ -10,5 +11,7 @@ app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
 
 app.get('/', (_, response) => response.redirect('/api-docs'));
+
+app.get('/root/users', (_, res) => res.json(getDatabase()));
 
 export { app };

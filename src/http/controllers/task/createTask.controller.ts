@@ -10,7 +10,7 @@ class CreateTaskController {
 
     const task = await this.createTask.execute(request.user!.id, { title, description });
 
-    return response.json(task);
+    return response.status(201).json(task);
   }
 }
 
