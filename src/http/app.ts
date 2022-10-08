@@ -9,4 +9,6 @@ app.use(cors);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
 
+app.get('/', (_, response) => response.redirect('/api-docs'));
+
 export { app };

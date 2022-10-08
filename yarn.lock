@@ -213,7 +213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.17.14":
+"@types/express@npm:*, @types/express@npm:^4.17.14":
   version: 4.17.14
   resolution: "@types/express@npm:4.17.14"
   dependencies:
@@ -297,6 +297,16 @@ __metadata:
   version: 0.0.30
   resolution: "@types/strip-json-comments@npm:0.0.30"
   checksum: 829ddd389645073f347c5b1924a8c34b8813af29756576e511c46f40e218193cf93ccbade62661d47fc70f707e98f410331729b8c20edfcb2e807d51df1ad4b7
+  languageName: node
+  linkType: hard
+
+"@types/swagger-ui-express@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "@types/swagger-ui-express@npm:4.1.3"
+  dependencies:
+    "@types/express": "*"
+    "@types/serve-static": "*"
+  checksum: 1c990fa8c158f699c5443245383daef2c4b47efce715c105e67f9b88447cf23663774393fdeea7d5a6e97a83d6959b09129f19c4abca64abdb7db74517162295
   languageName: node
   linkType: hard
 
@@ -612,6 +622,7 @@ __metadata:
     "@types/express": ^4.17.14
     "@types/jsonwebtoken": ^8.5.9
     "@types/node": ^18.7.23
+    "@types/swagger-ui-express": ^4.1.3
     "@typescript-eslint/eslint-plugin": latest
     "@typescript-eslint/parser": latest
     cors: ^2.8.5
@@ -626,6 +637,7 @@ __metadata:
     module-alias: ^2.2.2
     rimraf: ^3.0.2
     sucrase: ^3.28.0
+    swagger-ui-express: ^4.5.0
     ts-node-dev: ^2.0.0
     tsconfig-paths: ^4.1.0
     typescript: ^4.8.4
@@ -3286,6 +3298,24 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"swagger-ui-dist@npm:>=4.11.0":
+  version: 4.14.2
+  resolution: "swagger-ui-dist@npm:4.14.2"
+  checksum: 8d452a840bce3a2fc2f0a4b803c5458654c934daaa09a1485ab85a17bd050d092ebb4cd126920bf36bec3f349316516e178ef4a199a122a47a25a71f06549453
+  languageName: node
+  linkType: hard
+
+"swagger-ui-express@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "swagger-ui-express@npm:4.5.0"
+  dependencies:
+    swagger-ui-dist: ">=4.11.0"
+  peerDependencies:
+    express: ">=4.0.0"
+  checksum: 67f1725bceea2142554f57b50e7ac03acb55f20f893da5a68bc806d4fec6b5dffa1b59e3aba09ac0e50f049f3719f71290afee556a0957e11ee13a27e652816d
   languageName: node
   linkType: hard
 

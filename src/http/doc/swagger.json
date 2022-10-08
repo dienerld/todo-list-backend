@@ -1,9 +1,14 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "API Title",
+    "title": "API Growdev TaskList Dnr",
     "version": "1.0",
-    "description": "API Description"
+    "description": "API developed for the Growdev TaskList Dnr project",
+    "contact": {
+      "name": "Diener",
+      "url": "https://github.com/dienerld",
+      "email": "diener.ld@outlook.com"
+    }
   },
   "servers": [
     {
@@ -15,13 +20,29 @@
       "description": "development"
     }
   ],
-
+  "tags": [
+    {
+      "name": "User",
+      "description": "Routes for User"
+    },
+    {
+      "name": "Auth",
+      "description": "Routes for Auth"
+    }
+  ],
   "paths": {
     "/users": {
       "get": {
-        "summary": "Get endpoint",
-        "description": "Get endpoint description",
-        "operationId": "getEndpoint",
+        "tags": ["User"],
+
+        "summary": "Get data of user authenticated",
+        "description": "Get data of user authenticated",
+        "operationId": "getUser",
+        "security": [
+          {
+            "bearerAuth": ["read:user"]
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -48,6 +69,7 @@
         }
       },
       "post": {
+        "tags": ["User"],
         "summary": "Create  a new user",
         "description": "Create a new user",
         "operationId": "createUser",
@@ -78,6 +100,7 @@
     },
     "/users/login": {
       "post": {
+        "tags": ["User", "Auth"],
         "summary": "Login user",
         "description": "Login user",
         "operationId": "loginUser",
@@ -109,6 +132,98 @@
           "400": {
             "description": "Bad Request",
             "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update user authenticated",
+        "description": "Update user authenticated",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": ["update:user"]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete user authenticated",
+        "description": "Delete user authenticated",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": ["delete:user"]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "description": "Internal Server Error",
@@ -265,6 +380,13 @@
             }
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
