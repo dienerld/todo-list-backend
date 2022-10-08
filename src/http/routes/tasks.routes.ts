@@ -8,9 +8,10 @@ import { CreateTaskController, UpdateTaskController } from '../controllers/task'
 import { CreateTaskUseCase, UpdateTaskUseCase } from '@usecases/task';
 
 const tasksRouter = Router();
-
+// This route is protected by the middleware - user can access only after login
 tasksRouter.use(hasAuthentication);
 
+// Get tasks list for user
 tasksRouter.get('/', (req: CustomRequest, res) => {
   const userId = req.user!.id;
   console.log(userId);
@@ -20,6 +21,7 @@ tasksRouter.get('/', (req: CustomRequest, res) => {
   );
 });
 
+// Create task
 tasksRouter.post('/', (req: CustomRequest, res) => {
   const useCase = new CreateTaskUseCase();
   const controller = new CreateTaskController(useCase);
@@ -27,6 +29,7 @@ tasksRouter.post('/', (req: CustomRequest, res) => {
   return controller.handle(req, res);
 });
 
+// Update task
 tasksRouter.put('/:id', (req: CustomRequest, res) => {
   const useCase = new UpdateTaskUseCase();
   const controller = new UpdateTaskController(useCase);
