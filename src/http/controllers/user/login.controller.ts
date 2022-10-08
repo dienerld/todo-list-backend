@@ -16,8 +16,8 @@ class LoginUserController {
       const token = await this.loginUserUseCase.execute(userId, password);
 
       return response.json({ token });
-    } catch (error: any) {
-      return response.status(400).json({ error: error.message });
+    } catch (err: any) {
+      return response.status(500).json({ error: err.message || 'Internal Server Error' });
     }
   }
 }

@@ -1,12 +1,15 @@
 import { Router } from 'express';
 
-import { getDatabase } from '@database/index';
-import { userAlreadyExistsMiddleware } from '../middleware/userAlreadyExistes';
-
-import { CreateUserController, LoginUserController } from '../controllers';
-
-import { LoginUserUsecase } from '@usecases/user/loginUser.usecase';
-import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
+import { CustomRequest } from 'http/interfaces/customRequest';
+import { hasAuthentication, userAlreadyExistsMiddleware } from 'http/middleware';
+import {
+  CreateUserController, GetUserController,
+  LoginUserController, UpdateUserController
+} from '../controllers';
+import {
+  CreateUserUseCase, GetUserUseCase,
+  LoginUserUsecase, UpdateUserUseCase
+} from '@usecases/user';
 
 const usersRouter = Router();
 
@@ -26,11 +29,21 @@ usersRouter.post('/login', (req, res) => {
   return controller.handle(req, res);
 });
 
-usersRouter.get('/', (req, res) => {
-  res.json(getDatabase());
+// This route is protected by the middleware
+usersRouter.use(hasAuthentication);
+
+usersRouter.get('/', (req: CustomRequest, res) => {
+  const useCase = new GetUserUseCase();
+  const controller = new GetUserController(useCase);
+
+  return controller.handle(req, res);
 });
 
 usersRouter.put('/:id', (req, res) => {
-  res.status(200).json(getDatabase());
+  const useCase = new UpdateUserUseCase();
+  const controller = new UpdateUserController(useCase);
+
+  return controller.handle(req, res);
 });
+
 export { usersRouter };
