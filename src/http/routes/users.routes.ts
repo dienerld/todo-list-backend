@@ -3,11 +3,11 @@ import { Router } from 'express';
 import { CustomRequest } from 'http/interfaces/customRequest';
 import { hasAuthentication, userAlreadyExistsMiddleware } from 'http/middleware';
 import {
-  CreateUserController, GetUserController,
+  CreateUserController, DeleteUserController, GetUserController,
   LoginUserController, UpdateUserController
 } from '../controllers/user';
 import {
-  CreateUserUseCase, GetUserUseCase,
+  CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
   LoginUserUsecase, UpdateUserUseCase
 } from '@usecases/user';
 
@@ -50,4 +50,11 @@ usersRouter.put('/:id', (req, res) => {
   return controller.handle(req, res);
 });
 
+// Delete User
+usersRouter.delete('/:id', (req, res) => {
+  const useCase = new DeleteUserUsecase();
+  const controller = new DeleteUserController(useCase);
+
+  return controller.handle(req, res);
+});
 export { usersRouter };
