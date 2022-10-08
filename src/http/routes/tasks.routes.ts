@@ -4,7 +4,7 @@ import { CustomRequest } from '../interfaces/customRequest';
 import { getDatabase } from '@database/index';
 import { hasAuthentication } from '../middleware';
 import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
-import { CreateTaskController } from '../controllers';
+import { CreateTaskController } from '../controllers/task';
 import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
 import { UpdateTaskController } from '../controllers/task/updateTask.controller';
 
