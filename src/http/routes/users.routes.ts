@@ -1,7 +1,5 @@
 import { Router } from 'express';
 
-import { CustomRequest } from 'http/interfaces/customRequest';
-import { hasAuthentication, userAlreadyExistsMiddleware } from 'http/middleware';
 import {
   CreateUserController, DeleteUserController, GetUserController,
   LoginUserController, UpdateUserController
@@ -10,6 +8,8 @@ import {
   CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
   LoginUserUsecase, UpdateUserUseCase
 } from '@usecases/user';
+import { hasAuthentication, userAlreadyExistsMiddleware } from '../middleware';
+import { CustomRequest } from '../interfaces/customRequest';
 
 const usersRouter = Router();
 

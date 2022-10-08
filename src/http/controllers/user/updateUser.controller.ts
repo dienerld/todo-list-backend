@@ -1,6 +1,6 @@
 import { UpdateUserUseCase } from '@usecases/user';
 import { Response } from 'express';
-import { CustomRequest } from 'http/interfaces/customRequest';
+import { CustomRequest } from '../../interfaces/customRequest';
 
 class UpdateUserController {
   constructor (private updateUserUseCase: UpdateUserUseCase) {}

@@ -1,6 +1,6 @@
 import { DeleteTaskUseCase } from '@usecases/task';
 import { Response } from 'express';
-import { CustomRequest } from 'http/interfaces/customRequest';
+import { CustomRequest } from '../../interfaces/customRequest';
 
 class DeleteTaskController {
   constructor (private deleteTaskUseCase: DeleteTaskUseCase) {}

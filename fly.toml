@@ -1,6 +1,6 @@
 # fly.toml file generated for dnr-test on 2022-10-07T12:52:07-03:00
 
-app = "dnr-test"
+app = "dnr-growdev"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

@@ -1,6 +1,6 @@
 import { GetAllTaskUseCase } from '@usecases/task/getAllTask.usecase';
 import { Response } from 'express';
-import { CustomRequest } from 'http/interfaces/customRequest';
+import { CustomRequest } from '../../interfaces/customRequest';
 
 class GetAllTaskController {
   constructor (private getAllTaskUseCase: GetAllTaskUseCase) {}

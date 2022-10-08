@@ -1,6 +1,7 @@
-import { getDatabase } from '@database/index';
 import express from 'express';
-import { cors } from './middleware/cors';
+
+import { cors } from './middleware';
+import { getDatabase } from '@database/index';
 import { usersRouter, tasksRouter } from './routes';
 
 const app = express();

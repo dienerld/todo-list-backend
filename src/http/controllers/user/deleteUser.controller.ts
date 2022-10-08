@@ -1,6 +1,6 @@
 import { DeleteUserUsecase } from '@usecases/user';
 import { Response } from 'express';
-import { CustomRequest } from 'http/interfaces/customRequest';
+import { CustomRequest } from '../../interfaces/customRequest';
 
 class DeleteUserController {
   constructor (private deleteUserUseCase: DeleteUserUsecase) {}

@@ -1,6 +1,6 @@
 import { GetUserUseCase } from '@usecases/user/getUser.usecase';
 import { Response } from 'express';
-import { CustomRequest } from 'http/interfaces/customRequest';
+import { CustomRequest } from '../../interfaces/customRequest';
 
 class GetUserController {
   constructor (private readonly getUserUseCase: GetUserUseCase) {}
