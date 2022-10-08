@@ -2,10 +2,9 @@ import { Router } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
 import { hasAuthentication } from '../middleware';
 
-import { getDatabase } from '@database/index';
-
-import { CreateTaskController, UpdateTaskController } from '../controllers/task';
+import { CreateTaskController, GetAllTaskController, UpdateTaskController } from '../controllers/task';
 import { CreateTaskUseCase, UpdateTaskUseCase } from '@usecases/task';
+import { GetAllTaskUseCase } from '@usecases/task/getAllTask.usecase';
 
 const tasksRouter = Router();
 // This route is protected by the middleware - user can access only after login
@@ -13,12 +12,10 @@ tasksRouter.use(hasAuthentication);
 
 // Get tasks list for user
 tasksRouter.get('/', (req: CustomRequest, res) => {
-  const userId = req.user!.id;
-  console.log(userId);
+  const useCase = new GetAllTaskUseCase();
+  const controller = new GetAllTaskController(useCase);
 
-  res.json(
-    getDatabase().find((user) => user.id === userId)?.tasks || []
-  );
+  return controller.handle(req, res);
 });
 
 // Create task
