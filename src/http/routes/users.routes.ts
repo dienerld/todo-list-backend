@@ -5,7 +5,7 @@ import { hasAuthentication, userAlreadyExistsMiddleware } from 'http/middleware'
 import {
   CreateUserController, GetUserController,
   LoginUserController, UpdateUserController
-} from '../controllers';
+} from '../controllers/user';
 import {
   CreateUserUseCase, GetUserUseCase,
   LoginUserUsecase, UpdateUserUseCase
