@@ -1,13 +1,15 @@
-import { TaskStatus } from './task.model';
 
 type TaskRequestDto = {
   title: string;
   description: string;
+  date: Date;
+  hour: string;
 };
 
 type TaskUpdateRequestDto = {
   title?: string;
-  description?: string;
-  status?: TaskStatus;
+  date?: Date;
+  hour?: string;
+  done?: boolean;
 }
 export { TaskRequestDto, TaskUpdateRequestDto };

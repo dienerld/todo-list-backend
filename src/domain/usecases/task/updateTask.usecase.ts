@@ -1,6 +1,5 @@
 import { getDatabase, saveDatabase } from '@database/index';
 import { TaskUpdateRequestDto } from '@models/task/task.dtos';
-import { TaskStatus } from '@models/task/task.model';
 
 class UpdateTaskUseCase {
   async execute (userId: string, taskId: string, taskDto?: TaskUpdateRequestDto) {
@@ -26,16 +25,16 @@ class UpdateTaskUseCase {
       task.title = taskDto.title;
     }
 
-    if (taskDto.description) {
-      task.description = taskDto.description;
+    if (taskDto.date) {
+      task.date = taskDto.date;
     }
 
-    if (taskDto.status && !Object.values(TaskStatus).includes(taskDto.status)) {
-      throw new Error('Invalid status');
+    if (taskDto.hour) {
+      task.hour = taskDto.hour;
     }
 
-    if (taskDto.status) {
-      task.status = TaskStatus[taskDto.status];
+    if (taskDto.done !== undefined) {
+      task.toggleDone();
     }
 
     users[userIndex].tasks[taskIndex] = task;

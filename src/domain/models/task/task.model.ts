@@ -1,31 +1,27 @@
 /* eslint-disable no-unused-vars */
 import { randomUUID } from 'crypto';
 
-enum TaskStatus {
-  PENDING = 'PENDING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
-
 class Task {
   #id: string;
   #title: string;
-  #description: string;
-  #status: TaskStatus;
+  #done: boolean;
   #hidden: boolean;
+  #date: Date;
+  #hour: string;
 
-  constructor (title: string, description: string) {
+  constructor (title: string, date:Date, hour: string) {
     this.#id = randomUUID();
     this.#title = title;
-    this.#description = description;
-    this.#status = TaskStatus.PENDING;
+    this.#done = false;
     this.#hidden = false;
+    this.#date = date;
+    this.#hour = hour;
   }
 
   static create (task: Task) {
-    const newTask = new Task(task.title, task.description);
+    const newTask = new Task(task.title, task.date, task.hour);
     newTask.#id = task.id;
-    newTask.#status = task.status;
+    newTask.#done = task.done;
     newTask.#hidden = task.hidden;
     return newTask;
   }
@@ -46,10 +42,6 @@ class Task {
     this.#title = title;
   }
 
-  get description () {
-    return this.#description;
-  }
-
   toggleHidden () {
     this.#hidden = !this.#hidden;
   }
@@ -58,27 +50,40 @@ class Task {
     return this.#hidden;
   }
 
-  set description (description: string) {
-    this.#description = description;
+  get date () {
+    return this.#date;
   }
 
-  get status () {
-    return this.#status;
+  set date (date: Date) {
+    this.#date = date;
   }
 
-  set status (status: TaskStatus) {
-    this.#status = status;
+  get hour () {
+    return this.#hour;
+  }
+
+  set hour (hour: string) {
+    this.#hour = hour;
+  }
+
+  get done () {
+    return this.#done;
+  }
+
+  toggleDone () {
+    this.#done = !this.#done;
   }
 
   toJSON () {
     return {
       id: this.#id,
       title: this.#title,
-      description: this.#description,
-      status: this.#status,
+      date: this.#date,
+      hour: this.#hour,
+      done: this.#done,
       hidden: this.#hidden
     };
   }
 }
 
-export { Task, TaskStatus };
+export { Task };
