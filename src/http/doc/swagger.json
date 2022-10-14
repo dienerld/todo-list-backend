@@ -442,13 +442,16 @@
             "type": "string",
             "example": "Task name"
           },
-          "description": {
+          "date": {
             "type": "string",
-            "example": "Task description"
+            "example": "2020-10-10"
           },
-          "status": {
+          "hour": {
             "type": "string",
-            "example": "DONE"
+            "example": "10:00"
+          },
+          "done": {
+            "type": "boolean"
           },
           "hidden": {
             "type": "boolean",
@@ -461,15 +464,14 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "mail@mail.com",
-            "description": "User email"
+            "example": "mail@mail.com"
           },
           "password": {
             "type": "string",
-            "example": "password123",
-            "description": "User password"
+            "example": "password123"
           }
-        }
+        },
+        "required": ["email", "password"]
       }
     },
     "responses": {
@@ -545,7 +547,8 @@
                   "type": "string",
                   "example": "password123"
                 }
-              }
+              },
+              "required": ["name", "email", "password", "password_confirm"]
             }
           }
         }
@@ -560,11 +563,16 @@
                   "type": "string",
                   "example": "Task name"
                 },
-                "description": {
+                "date": {
                   "type": "string",
-                  "example": "Task description"
+                  "example": "2021-01-01"
+                },
+                "hour": {
+                  "type": "string",
+                  "example": "12:00"
                 }
-              }
+              },
+              "required": ["title", "date", "hour"]
             }
           }
         }
@@ -579,13 +587,21 @@
                   "type": "string",
                   "example": "Task name"
                 },
-                "description": {
+                "date": {
                   "type": "string",
-                  "example": "Task description"
+                  "example": "2021-01-01"
                 },
-                "status": {
+                "hour": {
                   "type": "string",
-                  "example": "DONE"
+                  "example": "12:00"
+                },
+                "done": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "hidden": {
+                  "type": "boolean",
+                  "example": true
                 }
               }
             }
