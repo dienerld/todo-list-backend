@@ -8,16 +8,10 @@ class UpdateTaskController {
   async handle (req: CustomRequest, res: Response) {
     const idUser = req.user!.id;
     const idTask = req.params.id;
-    const { title, description, status } = req.body;
+    const { title, date, hour, done, hidden } = req.body;
 
     try {
-      // only update property hidden
-      if (!title && !description && !status) {
-        const task = await this.updateTask.execute(idUser, idTask);
-        return res.status(200).json(task);
-      }
-      // update properties title, description and status
-      const task = await this.updateTask.execute(idUser, idTask, { title, description, status });
+      const task = await this.updateTask.execute(idUser, idTask, { title, date, hour, done, hidden });
 
       return res.json(task);
     } catch (err: any) {

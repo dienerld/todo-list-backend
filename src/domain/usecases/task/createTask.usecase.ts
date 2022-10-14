@@ -4,7 +4,7 @@ import { Task } from '@models/task/task.model';
 
 class CreateTaskUseCase {
   async execute (userId: string, taskDto: TaskRequestDto): Promise<Task> {
-    const task = new Task(taskDto.title, taskDto.description);
+    const task = new Task(taskDto.title, taskDto.date, taskDto.hour);
     try {
       const users = getDatabase();
 

@@ -15,10 +15,7 @@ class UpdateTaskUseCase {
     const task = users[userIndex].tasks[taskIndex];
 
     if (!taskDto) {
-      task.toggleHidden();
-      users[userIndex].tasks[taskIndex] = task;
-      saveDatabase(users);
-      return task;
+      throw new Error('Task data not provided');
     }
 
     if (taskDto.title) {
@@ -35,6 +32,10 @@ class UpdateTaskUseCase {
 
     if (taskDto.done !== undefined) {
       task.toggleDone();
+    }
+
+    if (taskDto.hidden !== undefined) {
+      task.toggleHidden();
     }
 
     users[userIndex].tasks[taskIndex] = task;

@@ -1,7 +1,6 @@
 
 type TaskRequestDto = {
   title: string;
-  description: string;
   date: Date;
   hour: string;
 };
@@ -11,5 +10,6 @@ type TaskUpdateRequestDto = {
   date?: Date;
   hour?: string;
   done?: boolean;
+  hidden?: boolean;
 }
 export { TaskRequestDto, TaskUpdateRequestDto };

@@ -1,8 +1,8 @@
 @port = 8080
 # @host = https://dnr-test.fly.dev
 @host = http://localhost:{{port}}
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZWQyNjU0LTZmNDMtNDQ5Yi1hZTQ2LWY5YjFlMGVkNjlkZiIsImVtYWlsIjoiZGllbmVyQGdtYWlsLmNvbSIsIm5hbWUiOiJEaWVuZXIiLCJpYXQiOjE2NjUxODE5NjYsImV4cCI6MTY2NTI2ODM2Nn0.PSxRPY2g4peLd2mwbff3Fed9FT19lyaPFWT8TrKH23Q
-@id = 65b1fb37-df6a-42c3-bffb-8d7521d74413
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2YmJmNmRmLWUxMzctNGRkYy04Mzk1LWQ4NmZiMjRlZjdkYyIsImVtYWlsIjoiZG5yQG1haWwuY29tIiwibmFtZSI6IkRpZW5lciIsImlhdCI6MTY2NTY5OTUyMiwiZXhwIjoxNjY1Nzg1OTIyfQ.7wPhiQbZbhfzHstRvQnizQ3mJLf1j2rjmlbqoFYz5iI
+@id = 8603c4a2-542c-44ed-ade9-9e13dc87634f
 
 GET {{host}}/tasks HTTP/1.1
 Content-Type: application/json
@@ -16,7 +16,8 @@ Authorization: Bearer {{token}}
 
 {
   "title": "Task 3",
-  "description": "Task 3 description"
+  "date": "2021-07-01",
+  "hour": "12:00"
 }
 
 
@@ -26,7 +27,3 @@ Authorization: Bearer {{token}}
 PUT {{host}}/tasks/{{id}} HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}
-
-{
-  "title": "Task 3 update"
-}

@@ -1,16 +1,17 @@
 @port = 8080
 # @host = https://dnr-test.fly.dev
 @host = http://localhost:{{port}}
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZWQyNjU0LTZmNDMtNDQ5Yi1hZTQ2LWY5YjFlMGVkNjlkZiIsImVtYWlsIjoiZGllbmVyQGdtYWlsLmNvbSIsIm5hbWUiOiJEaWVuZXIiLCJpYXQiOjE2NjUxODE5NjYsImV4cCI6MTY2NTI2ODM2Nn0.PSxRPY2g4peLd2mwbff3Fed9FT19lyaPFWT8TrKH23Q
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjZTNjMmVhLTM3MTgtNGM4Ny04NDA5LWJmMzU2NzQwNmUzOSIsImVtYWlsIjoibWFpbEBtYWlsLmNvbSIsIm5hbWUiOiJVc2VyIG5hbWUiLCJpYXQiOjE2NjU2MTQ4MTUsImV4cCI6MTY2NTcwMTIxNX0.wlh3Kkc580C4wnPFzx3eEP0fnDKqNlil7PIrbHgidcs
+
 
 POST {{host}}/users HTTP/1.1
 Content-Type: application/json
 
 {
   "name": "Diener",
-  "email": "diener@gmail.com",
-  "password": "123456",
-  "password_confirm": "123456"
+  "email": "dnr@mail.com",
+  "password": "123Qw",
+  "password_confirm": "123Qw"
 }
 
 
@@ -23,8 +24,8 @@ POST {{host}}/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "diener@gmail.com",
-  "password": "123456"
+  "email": "dnr@mail.com",
+  "password": "123Qw"
 }
 
 ### get user
