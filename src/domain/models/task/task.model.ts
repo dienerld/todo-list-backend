@@ -19,7 +19,8 @@ class Task {
   }
 
   static create (task: Task) {
-    const newTask = new Task(task.title, task.date, task.hour);
+    const date = new Date(task.date);
+    const newTask = new Task(task.title, date, task.hour);
     newTask.#id = task.id;
     newTask.#done = task.done;
     newTask.#hidden = task.hidden;
