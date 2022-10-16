@@ -43,7 +43,7 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 });
 
 // Update User
-usersRouter.put('/:id', (req, res) => {
+usersRouter.put('/', (req, res) => {
   const useCase = new UpdateUserUseCase();
   const controller = new UpdateUserController(useCase);
 
@@ -51,7 +51,7 @@ usersRouter.put('/:id', (req, res) => {
 });
 
 // Delete User
-usersRouter.delete('/:id', (req, res) => {
+usersRouter.delete('/', (req, res) => {
   const useCase = new DeleteUserUsecase();
   const controller = new DeleteUserController(useCase);
 

@@ -7,9 +7,9 @@ class DeleteUserController {
 
   async handle (request: CustomRequest, response: Response): Promise<Response> {
     try {
-      const { id } = request.params;
+      const userId = request.user?.id!;
 
-      await this.deleteUserUseCase.execute(id);
+      await this.deleteUserUseCase.execute(userId);
 
       return response.status(204).send();
     } catch (err: any) {

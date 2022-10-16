@@ -5,10 +5,10 @@ import { CustomRequest } from '../../interfaces/customRequest';
 class UpdateUserController {
   constructor (private updateUserUseCase: UpdateUserUseCase) {}
 
-  async handle (req: CustomRequest, res: Response) {
+  async handle (request: CustomRequest, res: Response) {
     try {
-      const userId = req.user!.id;
-      const { email, name, password, password_confirm } = req.body;
+      const userId = request.user!.id;
+      const { email, name, password, password_confirm } = request.body;
 
       const user = await this.updateUserUseCase.execute(userId, { email, name, password, password_confirm });
 
