@@ -6,11 +6,17 @@ class CreateTaskController {
   constructor (private readonly createTask: CreateTaskUseCase) {}
 
   async handle (request: CustomRequest, response: Response) {
-    const { title, hour, date } = request.body;
+    try {
+      const { title, hour, date } = request.body;
 
-    const task = await this.createTask.execute(request.user!.id, { title, hour, date });
+      const task = await this.createTask.execute(request.user!.id, { title, hour, date });
 
-    return response.status(201).json(task);
+      return response.status(201).json(task);
+    } catch (err: any) {
+      return response.status(400).json({
+        message: err.message || 'Unexpected error.'
+      });
+    }
   }
 }
 

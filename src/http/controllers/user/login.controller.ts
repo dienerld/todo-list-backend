@@ -17,7 +17,7 @@ class LoginUserController {
 
       return response.json({ token });
     } catch (err: any) {
-      return response.status(500).json({ error: err.message || 'Internal Server Error' });
+      return response.status(400).json({ error: err.message || 'Unexpected error.' });
     }
   }
 }

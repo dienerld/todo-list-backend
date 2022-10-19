@@ -14,7 +14,7 @@ class UpdateUserController {
 
       return res.json(user);
     } catch (err: any) {
-      return res.status(500).json({ error: err.message || 'Internal Server Error' });
+      return res.status(400).json({ error: err.message || 'Unexpected error.' });
     }
   }
 }
