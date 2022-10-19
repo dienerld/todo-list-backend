@@ -1,7 +1,7 @@
 @port = 8080
 # @host = https://dnr-test.fly.dev
 @host = http://localhost:{{port}}
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2YmJmNmRmLWUxMzctNGRkYy04Mzk1LWQ4NmZiMjRlZjdkYyIsImVtYWlsIjoiZG5yQG1haWwuY29tIiwibmFtZSI6IkRpZW5lciIsImlhdCI6MTY2NTY5OTUyMiwiZXhwIjoxNjY1Nzg1OTIyfQ.7wPhiQbZbhfzHstRvQnizQ3mJLf1j2rjmlbqoFYz5iI
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2YmJmNmRmLWUxMzctNGRkYy04Mzk1LWQ4NmZiMjRlZjdkYyIsImVtYWlsIjoiZG5yQG1haWwuY29tIiwibmFtZSI6IkRpZW5lciBMb3VyZW5jbyBEb3JuZWxhcyIsImlhdCI6MTY2NjE0MTk1NSwiZXhwIjoxNjY2MjI4MzU1fQ.DwiE48wKHzZz0zyvKrt2kzMixdG9y6WAB8mMgFEnHAM
 @id = 8603c4a2-542c-44ed-ade9-9e13dc87634f
 
 GET {{host}}/tasks HTTP/1.1
@@ -23,7 +23,11 @@ Authorization: Bearer {{token}}
 
 
 ### Update
-
 PUT {{host}}/tasks/{{id}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Get with query
+GET {{host}}/tasks/search/?title=Grow HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{token}}

@@ -3,12 +3,13 @@ import { hasAuthentication } from '../middleware';
 
 import {
   CreateTaskController, DeleteTaskController,
-  GetAllTaskController, UpdateTaskController
+  GetAllTaskController, GetTaskController, UpdateTaskController
 } from '../controllers/task';
 import {
   CreateTaskUseCase, DeleteTaskUseCase,
   GetAllTaskUseCase, UpdateTaskUseCase
 } from '@usecases/task';
+import { GetTaskUseCase } from '@usecases/task/getTask.usecase';
 
 const tasksRouter = Router();
 // This route is protected by the middleware - user can access only after login
@@ -42,6 +43,14 @@ tasksRouter.put('/:id', (req, res) => {
 tasksRouter.delete('/:id', (req, res) => {
   const useCase = new DeleteTaskUseCase();
   const controller = new DeleteTaskController(useCase);
+
+  return controller.handle(req, res);
+});
+
+// Get task with query
+tasksRouter.get('/search', (req, res) => {
+  const useCase = new GetTaskUseCase();
+  const controller = new GetTaskController(useCase);
 
   return controller.handle(req, res);
 });
