@@ -1,2 +1,5 @@
 node_modules
 .yarn/cache
+dist/
+.env
+**/database.json

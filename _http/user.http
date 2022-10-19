@@ -1,0 +1,33 @@
+@port = 8080
+# @host = https://dnr-test.fly.dev
+@host = http://localhost:{{port}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ2YmJmNmRmLWUxMzctNGRkYy04Mzk1LWQ4NmZiMjRlZjdkYyIsImVtYWlsIjoiZG5yQG1haWwuY29tIiwibmFtZSI6IkRpZW5lciBMb3VyZW5jbyBEb3JuZWxhcyIsImlhdCI6MTY2NjE0MTk1NSwiZXhwIjoxNjY2MjI4MzU1fQ.DwiE48wKHzZz0zyvKrt2kzMixdG9y6WAB8mMgFEnHAM
+
+POST {{host}}/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Diener",
+  "email": "dnr@mail.com",
+  "password": "123Qw",
+  "password_confirm": "123Qw"
+}
+
+
+### unauthorized
+GET {{host}}/users HTTP/1.1
+
+
+### Login user
+POST {{host}}/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "dnr@mail.com",
+  "password": "123Qw"
+}
+
+### get user
+GET {{host}}/users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
