@@ -400,6 +400,64 @@
           }
         }
       }
+    },
+    "/tasks/search": {
+      "get": {
+        "summary": "Search task",
+        "description": "Search task",
+        "operationId": "searchTask",
+        "tags": ["Task"],
+        "parameters": [
+          {
+            "name": "hidden",
+            "in": "query",
+            "description": "Search query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Search query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": ["read:task"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
