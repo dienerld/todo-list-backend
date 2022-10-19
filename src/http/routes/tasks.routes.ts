@@ -47,6 +47,7 @@ tasksRouter.delete('/:id', (req, res) => {
   return controller.handle(req, res);
 });
 
+// Growdev - Rota não utilizada no projeto frontend, mas está funcionando corretamente e pode ser utilizada através de clientes http
 // Get task with query
 tasksRouter.get('/search', (req, res) => {
   const useCase = new GetTaskUseCase();
