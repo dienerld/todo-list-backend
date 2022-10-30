@@ -1,3 +1,4 @@
+import { MissingParamError } from '../../presentation/errors/missingParamsError';
 import { Task } from './task.model';
 
 describe('[Model] Task', () => {
@@ -6,5 +7,11 @@ describe('[Model] Task', () => {
 
     expect(task).toHaveProperty('id');
     expect(task).toHaveProperty('title', 'Test');
+  });
+
+  it('should throw if no title is provided', () => {
+    expect(
+      () => new Task('', new Date(), '12:00')
+    ).toThrow(new MissingParamError('Title'));
   });
 });
