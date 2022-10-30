@@ -14,6 +14,7 @@ class GetTaskController {
       const userId = req.user!.id;
       // @ts-expect-error
       const { hidden, title }: TParamsRequest = req.query;
+      // TODO: change validate hidden
       const bool = hidden === 'true';
       const tasks = await this.getTaskUseCase.execute(userId, bool, title);
 

@@ -1,6 +1,6 @@
+import { User } from '@models/user/user.model';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
-import { User } from '../domain/models/user/user.model';
 
 // eslint-disable-next-line n/no-path-concat
 const pathDB = path.resolve(`${__dirname}/database.json`);
