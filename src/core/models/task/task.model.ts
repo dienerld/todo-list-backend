@@ -18,7 +18,7 @@ class Task {
   constructor (title: string, date:Date, hour: string) {
     if (isParamMissing(title)) { throw new MissingParamError('Title'); }
     if (isParamMissing(hour)) { throw new MissingParamError('Hour'); }
-    if (!date) { throw new MissingParamError('date'); }
+    if (!date) { throw new MissingParamError('Date'); }
     this.id = randomUUID();
     this.title = title;
     this.done = false;
