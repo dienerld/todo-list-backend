@@ -35,6 +35,13 @@ class HttpResponse {
     };
   }
 
+  static created<T> (data: T): IHttpResponse {
+    return {
+      statusCode: 201,
+      body: data
+    };
+  }
+
   static noContent (): IHttpResponse {
     return {
       statusCode: 204,
