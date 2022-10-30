@@ -23,6 +23,7 @@ describe('[Model] Task', () => {
 
   it('should throw if no date is provided', () => {
     expect(
+      // @ts-expect-error
       () => new Task('Test', null, '12:00')
     ).toThrow(new MissingParamError('Date'));
   });
