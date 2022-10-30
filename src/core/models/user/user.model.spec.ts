@@ -25,4 +25,17 @@ describe('[Model] User', () => {
       new User('John Doe', 'any_mail@mail.com', '')
     ).toThrow(new MissingParamError('Password'));
   });
+
+  it('should create user using method static create', () => {
+    const user = User.create({
+      id: 'any_id',
+      name: 'John Doe',
+      email: 'any_mail@mail.com',
+      password: 'any_password',
+      tasks: []
+    });
+
+    expect(user).toHaveProperty('id', 'any_id');
+    expect(user).toHaveProperty('tasks', []);
+  });
 });
