@@ -1,6 +1,6 @@
 import { TTask } from '@models/task/task.dtos';
 import { randomUUID } from 'crypto';
-import { MissingParamError } from '../../presentation/errors/missingParams';
+import { MissingParamError } from '../../presentation/errors/missingParamsError';
 import { Task } from '../task/task.model';
 
 function isParamMissing (str: string): boolean {

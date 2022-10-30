@@ -1,4 +1,4 @@
-import { MissingParamError } from '../../presentation/errors/missingParams';
+import { MissingParamError } from '../../presentation/errors/missingParamsError';
 import { User } from './user.model';
 
 describe('[Model] User', () => {
