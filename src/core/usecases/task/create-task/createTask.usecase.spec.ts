@@ -60,4 +60,15 @@ describe('[UseCase] Create Task', () => {
 
     expect(statusCode).toBe(400);
   });
+
+  it('should return badRequest if date is not provided', async () => {
+    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const { statusCode } = await createTaskUseCase.execute('1', {
+      title: 'Test',
+      date: null,
+      hour: '12:00'
+    });
+
+    expect(statusCode).toBe(400);
+  });
 });
