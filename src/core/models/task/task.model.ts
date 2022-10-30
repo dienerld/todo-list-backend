@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { randomUUID } from 'crypto';
+import { TTask } from './task.dtos';
 
 class Task {
   #id: string;
@@ -18,7 +19,7 @@ class Task {
     this.#hour = hour;
   }
 
-  static create (task: Task) {
+  static create (task: TTask) {
     const date = new Date(task.date);
     const newTask = new Task(task.title, date, task.hour);
     newTask.#id = task.id;

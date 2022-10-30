@@ -1,3 +1,4 @@
+import { TTask } from '@models/task/task.dtos';
 import { randomUUID } from 'crypto';
 import { MissingParamError } from '../../presentation/errors/missingParams';
 import { Task } from '../task/task.model';
@@ -11,7 +12,7 @@ class User {
   name: string;
   email: string;
   password: string;
-  tasks: Task[];
+  tasks: TTask[];
 
   constructor (name: string, email: string, password: string) {
     if (isParamMissing(name)) { throw new MissingParamError('Name'); }

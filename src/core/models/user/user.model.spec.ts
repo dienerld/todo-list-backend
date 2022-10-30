@@ -38,4 +38,27 @@ describe('[Model] User', () => {
     expect(user).toHaveProperty('id', 'any_id');
     expect(user).toHaveProperty('tasks', []);
   });
+
+  it('should create user using method static create with tasks', () => {
+    const user = User.create({
+      id: 'any_id',
+      name: 'John Doe',
+      email: 'any_mail@mail.com',
+      password: 'any_password',
+      tasks: [
+        {
+          id: 'any_id',
+          title: 'any_title',
+          done: false,
+          date: new Date(),
+          hidden: false,
+          hour: '11:12'
+        }
+      ]
+    });
+
+    expect(user).toHaveProperty('id', 'any_id');
+    expect(user).toHaveProperty('tasks');
+    expect(user.tasks[0]).toHaveProperty('id', 'any_id');
+  });
 });

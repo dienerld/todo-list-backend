@@ -1,4 +1,13 @@
 
+type TTask = {
+  id: string;
+  title: string;
+  done: boolean;
+  date: Date;
+  hidden: boolean;
+  hour: string;
+}
+
 type TaskRequestDto = {
   title: string;
   date: Date;
@@ -12,4 +21,5 @@ type TaskUpdateRequestDto = {
   done?: boolean;
   hidden?: boolean;
 }
-export { TaskRequestDto, TaskUpdateRequestDto };
+
+export { TaskRequestDto, TaskUpdateRequestDto, TTask };
