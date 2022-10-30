@@ -93,4 +93,18 @@ describe('[UseCase] Create Task', () => {
 
     expect(statusCode).toBe(400);
   });
+
+  it('should return serverError if database throws', async () => {
+    const createTaskUseCase = new CreateTaskUseCase(null);
+    jest.spyOn(DatabaseMock.db(), 'saveDatabase').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const { statusCode } = await createTaskUseCase.execute('1', {
+      title: 'Test',
+      date: new Date(),
+      hour: '12:00'
+    });
+
+    expect(statusCode).toBe(500);
+  });
 });
