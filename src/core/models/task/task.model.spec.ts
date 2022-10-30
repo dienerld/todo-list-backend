@@ -26,4 +26,19 @@ describe('[Model] Task', () => {
       () => new Task('Test', null, '12:00')
     ).toThrow(new MissingParamError('Date'));
   });
+
+  it('should create a task using static method', () => {
+    const task = Task.create({
+      id: '123',
+      title: 'Test',
+      done: false,
+      hidden: true,
+      date: new Date(),
+      hour: '12:00'
+    });
+
+    expect(task).toHaveProperty('id', '123');
+    expect(task).toHaveProperty('title', 'Test');
+    expect(task).toHaveProperty('hidden', true);
+  });
 });
