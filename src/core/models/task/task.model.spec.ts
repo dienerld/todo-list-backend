@@ -14,4 +14,10 @@ describe('[Model] Task', () => {
       () => new Task('', new Date(), '12:00')
     ).toThrow(new MissingParamError('Title'));
   });
+
+  it('should throw if no hour is provided', () => {
+    expect(
+      () => new Task('Test', new Date(), '')
+    ).toThrow(new MissingParamError('Hour'));
+  });
 });
