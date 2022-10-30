@@ -1,6 +1,6 @@
 import swagger from 'swagger-ui-express';
 
-import swaggerFile from './swagger.json';
+import swaggerFile from './swagger';
 
 const swaggerServe = swagger.serve;
 const swaggerUi = swagger.setup(swaggerFile, { customSiteTitle: 'API Documentation' });

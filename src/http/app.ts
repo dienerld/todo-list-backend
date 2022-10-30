@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { cors } from './middleware';
-import { getDatabase } from '@database/index';
+import { Database } from '@database/index';
 import { usersRouter, tasksRouter } from './routes';
 
 const app = express();
@@ -13,6 +13,6 @@ app.use('/tasks', tasksRouter);
 
 app.get('/', (_, response) => response.redirect('/api-docs'));
 
-app.get('/root/users', (_, res) => res.json(getDatabase()));
+app.get('/root/users', (_, res) => res.json(Database().getDatabase()));
 
 export { app };

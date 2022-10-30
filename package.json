@@ -7,11 +7,17 @@
   "packageManager": "yarn@3.2.3",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc",
+    "build": "swc ./src/ -d dist/",
     "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/http/server.ts",
     "start": "NODE_ENV=production node dist/http/server.js",
-    "test": "jest --watch --silent",
-    "test:staged": "jest --passWithNoTests --findRelatedTests --silent"
+    "test": "jest --watch --silent"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
@@ -32,23 +38,8 @@
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^29.2.2",
     "rimraf": "^3.0.2",
-    "sucrase": "^3.28.0",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
-    "swagger-ui-express": "^4.5.0"
-  },
-  "_moduleAliases": {
-    "@usecases": "./dist/domain/usecases",
-    "@models": "./dist/domain/models",
-    "@database": "./dist/database",
-    "@configs": "./dist/configs"
   }
 }

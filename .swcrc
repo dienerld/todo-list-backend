@@ -1,15 +1,25 @@
 {
+  "$schema": "https://json.schemastore.org/swcrc",
   "jsc": {
     "parser": {
       "syntax": "typescript",
       "tsx": false,
-      "decorators": true
+      "decorators": true,
+      "dynamicImport": false
     },
+
+    "baseUrl": "./",
     "target": "es2017",
-    "keepClassNames": true,
     "transform": {
       "legacyDecorator": true,
       "decoratorMetadata": true
+    },
+    "paths": {
+      "@database/*": ["./src/database/*"],
+      "@core/*": ["./src/core/$1"],
+      "@models/*": ["./src/core/models/*"],
+      "@usecases/*": ["./src/core/usecases/*"],
+      "@configs/*": ["./src/configs/*"]
     }
   },
   "module": {
