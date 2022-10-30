@@ -82,4 +82,15 @@ describe('[UseCase] Create Task', () => {
 
     expect(statusCode).toBe(400);
   });
+
+  it('should return serverError if user is not found', async () => {
+    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const { statusCode } = await createTaskUseCase.execute('2', {
+      title: 'Test',
+      date: new Date(),
+      hour: '12:00'
+    });
+
+    expect(statusCode).toBe(400);
+  });
 });

@@ -3,6 +3,7 @@ import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { InvalidParamError } from '../../../presentation/errors/invalidParamError';
 import { MissingParamError } from '../../../presentation/errors/missingParamsError';
+import { NotFoundError } from '../../../presentation/errors/notFoundError';
 import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/htpResponse';
 
 class CreateTaskUseCase {
@@ -13,13 +14,13 @@ class CreateTaskUseCase {
       return HttpResponse.badRequest(new MissingParamError('userId'));
     }
 
-    const users = this.database.getDatabase();
-    const userIndex = users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
-    }
-
     try {
+      const users = this.database.getDatabase();
+      const userIndex = users.findIndex(user => user.id === userId);
+      if (userIndex === -1) {
+        throw new NotFoundError('User');
+      }
+
       const task = new Task(taskDto.title, taskDto.date, taskDto.hour);
 
       users[userIndex].tasks.push(task);
@@ -29,7 +30,8 @@ class CreateTaskUseCase {
     } catch (error) {
       if (
         error instanceof MissingParamError ||
-        error instanceof InvalidParamError
+        error instanceof InvalidParamError ||
+        error instanceof NotFoundError
       ) {
         return HttpResponse.badRequest(error);
       }
