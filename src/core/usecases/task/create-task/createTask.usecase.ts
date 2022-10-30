@@ -1,12 +1,14 @@
-import { getDatabase, saveDatabase } from '@database/index';
+import { IDatabase } from '@database/index';
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 
 class CreateTaskUseCase {
+  constructor (private readonly database: IDatabase) {}
+
   async execute (userId: string, taskDto: TaskRequestDto): Promise<Task> {
     const task = new Task(taskDto.title, taskDto.date, taskDto.hour);
     try {
-      const users = getDatabase();
+      const users = this.database.getDatabase();
 
       const userIndex = users.findIndex(user => user.id === userId);
 
@@ -16,7 +18,7 @@ class CreateTaskUseCase {
 
       users[userIndex].tasks.push(task);
 
-      saveDatabase(users);
+      this.database.saveDatabase(users);
       return task;
     } catch (error) {
       console.error(error);
