@@ -61,4 +61,16 @@ describe('[Model] User', () => {
     expect(user).toHaveProperty('tasks');
     expect(user.tasks[0]).toHaveProperty('id', 'any_id');
   });
+
+  it('should throw if no name is provided using method static create', () => {
+    expect(() =>
+      User.create({
+        id: 'any_id',
+        name: '',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        tasks: []
+      })
+    ).toThrow(new MissingParamError('Name'));
+  });
 });
