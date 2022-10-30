@@ -9,13 +9,18 @@ describe('[Model] User', () => {
     expect(user).toHaveProperty('name', 'John Doe');
   });
 
-  it('should create a new user without email', () => {
+  it('should throw if no name is provided', () => {
+    expect(() => new User('', 'any_mail@mail.com', 'any_password'))
+      .toThrow(new MissingParamError('Name'));
+  });
+
+  it('should throw if no email is provided', () => {
     expect(() =>
       new User('John Doe', '', 'any_password')
     ).toThrow(new MissingParamError('Email'));
   });
 
-  it('should create a new user without password', () => {
+  it('should throw if no password is provided', () => {
     expect(() =>
       new User('John Doe', 'any_mail@mail.com', '')
     ).toThrow(new MissingParamError('Password'));
