@@ -41,4 +41,17 @@ describe('[Model] Task', () => {
     expect(task).toHaveProperty('title', 'Test');
     expect(task).toHaveProperty('hidden', true);
   });
+
+  it('should create a task using static method without title', () => {
+    expect(
+      () => Task.create({
+        id: '123',
+        title: '',
+        done: false,
+        hidden: true,
+        date: new Date(),
+        hour: '12:00'
+      })
+    ).toThrow(new MissingParamError('Title'));
+  });
 });
