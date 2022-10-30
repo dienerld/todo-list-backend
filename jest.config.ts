@@ -8,8 +8,9 @@ export default {
   testMatch: ['**/*.{test,spec}.ts'],
   moduleNameMapper: {
     '@core/(.*)': '<rootDir>/src/core/$1',
+    '@models/(.*)': '<rootDir>/src/core/models/$1',
     '@presentation/(.*)': '<rootDir>/src/core/presentation/$1',
-    '@domain/(.*)': '<rootDir>/src/core/domain/$1',
-    '@infra/(.*)': '<rootDir>/src/infra/$1'
+    '@infra/(.*)': '<rootDir>/src/infra/$1',
+    '@database/(.*)': '<rootDir>/src/database/$1'
   }
 };
