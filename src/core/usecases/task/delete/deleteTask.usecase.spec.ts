@@ -56,4 +56,12 @@ describe('[UseCase] Delete', () => {
     expect(statusCode).toBe(400);
     expect(body).toEqual({ message: 'User not found' });
   });
+
+  it('should return badRequest if task is not found', async () => {
+    const deleteTaskUseCase = new DeleteTaskUseCase(DatabaseMock.db());
+    const { statusCode, body } = await deleteTaskUseCase.execute('any_id', 'invalid_id');
+
+    expect(statusCode).toBe(400);
+    expect(body).toEqual({ message: 'Task not found' });
+  });
 });
