@@ -1,8 +1,10 @@
-import { getDatabase, saveDatabase } from '@database/index';
+import { IDatabase } from '@database/index';
 
 class DeleteTaskUseCase {
+  constructor (private database: IDatabase) {}
+
   async execute (userId: string, taskId: string): Promise<void> {
-    const users = getDatabase();
+    const users = this.database.getDatabase();
     const userIndex = users.findIndex(user => user.id === userId);
     if (userIndex === -1) {
       throw new Error('User not found');
@@ -12,7 +14,7 @@ class DeleteTaskUseCase {
       throw new Error('Task not found');
     }
     users[userIndex].tasks.splice(taskIndex, 1);
-    saveDatabase(users);
+    this.database.saveDatabase(users);
   }
 }
 
