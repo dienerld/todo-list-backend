@@ -10,21 +10,21 @@ class HttpResponse {
   static badRequest (error: Error): IHttpResponse {
     return {
       statusCode: 400,
-      body: error
+      body: { message: error.message }
     };
   }
 
   static serverError (): IHttpResponse {
     return {
       statusCode: 500,
-      body: new ServerError()
+      body: { message: new ServerError() }
     };
   }
 
   static unauthorizedError (): IHttpResponse {
     return {
       statusCode: 401,
-      body: new UnauthorizedError()
+      body: { message: new UnauthorizedError() }
     };
   }
 
