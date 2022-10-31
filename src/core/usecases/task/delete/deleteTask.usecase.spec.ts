@@ -39,14 +39,18 @@ describe('[UseCase] Delete', () => {
 
   it('should return badRequest if userId is not provided', async () => {
     const deleteTaskUseCase = new DeleteTaskUseCase(DatabaseMock.db());
-    const { statusCode } = await deleteTaskUseCase.execute('', 'valid_id');
+    const { statusCode, body } = await deleteTaskUseCase.execute('', 'valid_id');
+
     expect(statusCode).toBe(400);
+    expect(body).toEqual({ message: 'Missing param: userId' });
   });
 
   it('should return badRequest if taskId is not provided', async () => {
     const deleteTaskUseCase = new DeleteTaskUseCase(DatabaseMock.db());
-    const { statusCode } = await deleteTaskUseCase.execute('any_id', '');
+    const { statusCode, body } = await deleteTaskUseCase.execute('any_id', '');
+
     expect(statusCode).toBe(400);
+    expect(body).toEqual({ message: 'Missing param: taskId' });
   });
 
   it('should return badRequest if user is not found', async () => {
