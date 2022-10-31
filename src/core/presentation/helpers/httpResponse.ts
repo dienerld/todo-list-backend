@@ -17,14 +17,14 @@ class HttpResponse {
   static serverError (): IHttpResponse {
     return {
       statusCode: 500,
-      body: { message: new ServerError() }
+      body: { message: new ServerError().message }
     };
   }
 
   static unauthorizedError (): IHttpResponse {
     return {
       statusCode: 401,
-      body: { message: new UnauthorizedError() }
+      body: { message: new UnauthorizedError().message }
     };
   }
 
