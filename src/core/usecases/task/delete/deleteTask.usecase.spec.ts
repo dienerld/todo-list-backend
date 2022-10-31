@@ -36,4 +36,10 @@ describe('[UseCase] Delete', () => {
     await deleteTaskUseCase.execute('any_id', 'valid_id');
     expect(DatabaseMock.users[0].tasks.length).toBe(0);
   });
+
+  it('should return badRequest if userId is not provided', async () => {
+    const deleteTaskUseCase = new DeleteTaskUseCase(DatabaseMock.db());
+    const { statusCode } = await deleteTaskUseCase.execute('', 'valid_id');
+    expect(statusCode).toBe(400);
+  });
 });
