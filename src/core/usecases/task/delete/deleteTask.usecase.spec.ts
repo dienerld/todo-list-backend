@@ -68,4 +68,15 @@ describe('[UseCase] Delete', () => {
     expect(statusCode).toBe(400);
     expect(body).toEqual({ message: 'Task not found' });
   });
+
+  it('should return serverError if database throws', async () => {
+    const databaseMock = DatabaseMock.db();
+    jest.spyOn(databaseMock, 'getDatabase').mockImplementation(() => { throw new Error(); });
+
+    const deleteTaskUseCase = new DeleteTaskUseCase(databaseMock);
+    const { statusCode, body } = await deleteTaskUseCase.execute('any_id', 'valid_id');
+
+    expect(statusCode).toBe(500);
+    expect(body).toEqual({ message: 'Internal server error' });
+  });
 });
