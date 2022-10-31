@@ -2,7 +2,7 @@ import { IDatabase } from '@database/index';
 import { InvalidParamError } from '../../../presentation/errors/invalidParamError';
 import { MissingParamError } from '../../../presentation/errors/missingParamsError';
 import { NotFoundError } from '../../../presentation/errors/notFoundError';
-import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/htpResponse';
+import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
 
 class DeleteTaskUseCase {
   constructor (private database: IDatabase) {}

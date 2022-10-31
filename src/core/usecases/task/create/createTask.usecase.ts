@@ -4,7 +4,7 @@ import { Task } from '@models/task/task.model';
 import { InvalidParamError } from '../../../presentation/errors/invalidParamError';
 import { MissingParamError } from '../../../presentation/errors/missingParamsError';
 import { NotFoundError } from '../../../presentation/errors/notFoundError';
-import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/htpResponse';
+import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
 
 class CreateTaskUseCase {
   constructor (private readonly database: IDatabase) {}
