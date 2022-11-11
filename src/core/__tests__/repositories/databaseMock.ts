@@ -1,4 +1,4 @@
-import { IDatabase } from '@database/index';
+import { IDatabase } from '../../../infra/database/index';
 import { Task } from '@models/task/task.model';
 import { User } from '@models/user/user.model';
 

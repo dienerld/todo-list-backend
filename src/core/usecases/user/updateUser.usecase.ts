@@ -1,4 +1,4 @@
-import { getDatabase, saveDatabase } from '@database/index';
+import { getDatabase, saveDatabase } from '../../../infra/database/index';
 import { UserRequestDto } from '@models/user/user.dtos';
 import { User } from '@models/user/user.model';
 

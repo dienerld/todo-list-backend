@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { cors } from './middleware';
-import { Database } from '@database/index';
+import { Database } from '../database/index';
 import { usersRouter, tasksRouter } from './routes';
 
 const app = express();

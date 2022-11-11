@@ -1,4 +1,4 @@
-import { getDatabase } from '@database/index';
+import { getDatabase } from '../../../infra/database/index';
 
 type TQuery = true | false | string;
 

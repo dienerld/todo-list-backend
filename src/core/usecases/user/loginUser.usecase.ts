@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { getDatabase } from '@database/index';
+import { getDatabase } from '../../../infra/database/index';
 import { jwtConfig } from '@configs/jwt';
 
 class LoginUserUsecase {

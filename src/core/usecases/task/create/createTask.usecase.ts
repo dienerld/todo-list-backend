@@ -1,4 +1,4 @@
-import { IDatabase } from '@database/index';
+import { IDatabase } from '../../../../infra/database/index';
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';

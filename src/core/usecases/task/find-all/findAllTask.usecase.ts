@@ -1,4 +1,4 @@
-import { IDatabase } from '@database/index';
+import { IDatabase } from '../../../../infra/database/index';
 import { Task } from '@models/task/task.model';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';

@@ -1,4 +1,4 @@
-import { IDatabase } from '@database/index';
+import { IDatabase } from '../../../../infra/database/index';
 import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers/httpResponse';
 

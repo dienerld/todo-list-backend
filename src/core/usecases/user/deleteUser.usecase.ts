@@ -1,4 +1,4 @@
-import { getDatabase, saveDatabase } from '@database/index';
+import { getDatabase, saveDatabase } from '../../../infra/database/index';
 
 class DeleteUserUsecase {
   async execute (userId: string): Promise<void> {
