@@ -1829,6 +1829,7 @@ __metadata:
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
     swagger-ui-express: ^4.5.0
+    ts-node: ^10.9.1
     ts-node-dev: ^2.0.0
     tsconfig-paths: ^4.1.0
     typeorm: ^0.3.10
@@ -6009,7 +6010,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.4.0":
+"ts-node@npm:^10.4.0, ts-node@npm:^10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:
