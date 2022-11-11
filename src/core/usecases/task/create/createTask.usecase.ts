@@ -29,7 +29,7 @@ class CreateTaskUseCase {
       if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);
       }
-      return HttpResponse.serverError();
+      return HttpResponse.serverError(error);
     }
   }
 }

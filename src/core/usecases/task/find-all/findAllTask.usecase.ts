@@ -1,9 +1,11 @@
+import { Task } from '@core/models/task/task.model';
+import { HttpResponse, IHttpResponse } from '@core/presentation/helpers';
 import { IDatabase } from '@database/index';
-import { NotFoundError } from '../../../presentation/errors/notFoundError';
+import { CustomError, NotFoundError } from '@presentation/errors';
 
 class FindAllTaskUseCase {
   constructor (private database: IDatabase) {}
-  async execute (userId: string) {
+  async execute (userId: string): Promise<IHttpResponse> {
     try {
       const users = this.database.getDatabase();
       const user = users.find(user => user.id === userId);
@@ -26,10 +28,12 @@ class FindAllTaskUseCase {
         }
         return Number(aMinute) - Number(bMinute);
       });
-      return tasks;
+      return HttpResponse.ok<Task[]>(tasks);
     } catch (err) {
-      console.log(err);
-      throw err;
+      if (err instanceof CustomError) {
+        return HttpResponse.badRequest(err);
+      }
+      return HttpResponse.serverError(err);
     }
   }
 }

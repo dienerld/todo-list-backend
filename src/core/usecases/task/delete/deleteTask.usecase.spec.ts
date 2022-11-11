@@ -13,7 +13,7 @@ describe('[UseCase] Delete', () => {
     const { statusCode, body } = await deleteTaskUseCase.execute('', 'valid_id');
 
     expect(statusCode).toBe(400);
-    expect(body).toEqual({ message: 'Missing param: userId' });
+    expect(body).toHaveProperty('message', 'Missing param: userId');
   });
 
   it('should return badRequest if taskId is not provided', async () => {
@@ -21,7 +21,7 @@ describe('[UseCase] Delete', () => {
     const { statusCode, body } = await deleteTaskUseCase.execute('any_id', '');
 
     expect(statusCode).toBe(400);
-    expect(body).toEqual({ message: 'Missing param: taskId' });
+    expect(body).toHaveProperty('message', 'Missing param: taskId');
   });
 
   it('should return badRequest if user is not found', async () => {
@@ -29,7 +29,7 @@ describe('[UseCase] Delete', () => {
     const { statusCode, body } = await deleteTaskUseCase.execute('invalid_id', 'valid_id');
 
     expect(statusCode).toBe(400);
-    expect(body).toEqual({ message: 'User not found' });
+    expect(body).toHaveProperty('message', 'User not found');
   });
 
   it('should return badRequest if task is not found', async () => {
@@ -37,7 +37,7 @@ describe('[UseCase] Delete', () => {
     const { statusCode, body } = await deleteTaskUseCase.execute('any_id', 'invalid_id');
 
     expect(statusCode).toBe(400);
-    expect(body).toEqual({ message: 'Task not found' });
+    expect(body).toHaveProperty('message', 'Task not found');
   });
 
   it('should return serverError if database throws', async () => {
@@ -48,6 +48,6 @@ describe('[UseCase] Delete', () => {
     const { statusCode, body } = await deleteTaskUseCase.execute('any_id', 'valid_id');
 
     expect(statusCode).toBe(500);
-    expect(body).toEqual({ message: 'Internal server error' });
+    expect(body).toHaveProperty('error', 'Error');
   });
 });

@@ -1,4 +1,3 @@
-import { ServerError } from '../errors/serverError';
 import { UnauthorizedError } from '../errors/unauthorizedError';
 
 export interface IHttpResponse{
@@ -10,21 +9,28 @@ class HttpResponse {
   static badRequest (error: Error): IHttpResponse {
     return {
       statusCode: 400,
-      body: { message: error.message }
+      body: {
+        error: error.name,
+        message: error.message
+      }
     };
   }
 
-  static serverError (): IHttpResponse {
+  static serverError (error: any): IHttpResponse {
     return {
       statusCode: 500,
-      body: { message: new ServerError().message }
+      body: { error: error.name, message: error.message }
     };
   }
 
   static unauthorizedError (): IHttpResponse {
+    const { name, message } = new UnauthorizedError();
     return {
       statusCode: 401,
-      body: { message: new UnauthorizedError().message }
+      body: {
+        error: name,
+        message
+      }
     };
   }
 

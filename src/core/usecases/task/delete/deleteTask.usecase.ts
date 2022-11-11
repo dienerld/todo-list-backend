@@ -30,7 +30,7 @@ class DeleteTaskUseCase {
         return HttpResponse.badRequest(error);
       }
 
-      return HttpResponse.serverError();
+      return HttpResponse.serverError(error);
     }
   }
 }
