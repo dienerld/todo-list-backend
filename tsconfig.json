@@ -1,22 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "paths": {
-      "@database/*": ["src/infra/database/*"],
-      "@models/*": ["./src/core/models/*"],
-      "@usecases/*": ["./src/core/usecases/*"],
-      "@presentation/*": ["./src/core/presentation/*"],
-      "@configs/*": ["./src/configs/*"]
-    },
-    "resolveJsonModule": true,
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+   "compilerOptions": {
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "target": "es5",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "outDir": "./build",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true
+   }
 }
