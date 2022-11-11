@@ -1,12 +1,14 @@
-import { getDatabase } from '@database/index';
+import { IDatabase } from '@database/index';
+import { NotFoundError } from '../../../presentation/errors/notFoundError';
 
-class GetAllTaskUseCase {
+class FindAllTaskUseCase {
+  constructor (private database: IDatabase) {}
   async execute (userId: string) {
     try {
-      const users = getDatabase();
+      const users = this.database.getDatabase();
       const user = users.find(user => user.id === userId);
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
       }
 
       const tasks = user.tasks.sort((a, b) => {
@@ -32,4 +34,4 @@ class GetAllTaskUseCase {
   }
 }
 
-export { GetAllTaskUseCase };
+export { FindAllTaskUseCase };

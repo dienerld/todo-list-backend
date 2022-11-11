@@ -1,10 +1,8 @@
 import { IDatabase } from '@database/index';
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
-import { InvalidParamError } from '../../../presentation/errors/invalidParamError';
-import { MissingParamError } from '../../../presentation/errors/missingParamsError';
-import { NotFoundError } from '../../../presentation/errors/notFoundError';
-import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
+import { InvalidParamError, MissingParamError, NotFoundError } from '@presentation/errors';
+import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class CreateTaskUseCase {
   constructor (private readonly database: IDatabase) {}

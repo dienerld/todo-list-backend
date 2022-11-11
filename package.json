@@ -10,7 +10,7 @@
     "build": "swc ./src/ -d dist/",
     "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/http/server.ts",
     "start": "NODE_ENV=production node dist/http/server.js",
-    "test": "jest --watch --silent"
+    "test": "jest --watch"
   },
   "dependencies": {
     "cors": "^2.8.5",
