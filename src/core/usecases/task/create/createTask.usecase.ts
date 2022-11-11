@@ -1,7 +1,7 @@
 import { IDatabase } from '@database/index';
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
-import { InvalidParamError, MissingParamError, NotFoundError } from '@presentation/errors';
+import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class CreateTaskUseCase {
@@ -26,11 +26,7 @@ class CreateTaskUseCase {
       this.database.saveDatabase(users);
       return HttpResponse.created<Task>(task);
     } catch (error) {
-      if (
-        error instanceof MissingParamError ||
-        error instanceof InvalidParamError ||
-        error instanceof NotFoundError
-      ) {
+      if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);
       }
       return HttpResponse.serverError();

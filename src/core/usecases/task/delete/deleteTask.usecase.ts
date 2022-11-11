@@ -1,8 +1,6 @@
 import { IDatabase } from '@database/index';
-import { InvalidParamError } from '../../../presentation/errors/invalidParamError';
-import { MissingParamError } from '../../../presentation/errors/missingParamsError';
-import { NotFoundError } from '../../../presentation/errors/notFoundError';
-import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
+import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers/httpResponse';
 
 class DeleteTaskUseCase {
   constructor (private database: IDatabase) {}
@@ -28,7 +26,7 @@ class DeleteTaskUseCase {
 
       return HttpResponse.noContent();
     } catch (error) {
-      if (error instanceof MissingParamError || error instanceof InvalidParamError) {
+      if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);
       }
 
