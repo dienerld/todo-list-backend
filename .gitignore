@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+.yarn/cache
 build/
 tmp/
 temp/
