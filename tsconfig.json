@@ -5,7 +5,6 @@
     "rootDir": "./src",
     "paths": {
       "@database/*": ["./src/database/*"],
-      "@core/*": ["./src/core/*"],
       "@models/*": ["./src/core/models/*"],
       "@usecases/*": ["./src/core/usecases/*"],
       "@presentation/*": ["./src/core/presentation/*"],
