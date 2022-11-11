@@ -1,7 +1,7 @@
-import { Task } from '@core/models/task/task.model';
-import { HttpResponse, IHttpResponse } from '@core/presentation/helpers';
 import { IDatabase } from '@database/index';
+import { Task } from '@models/task/task.model';
 import { CustomError, NotFoundError } from '@presentation/errors';
+import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class FindAllTaskUseCase {
   constructor (private database: IDatabase) {}
@@ -29,11 +29,11 @@ class FindAllTaskUseCase {
         return Number(aMinute) - Number(bMinute);
       });
       return HttpResponse.ok<Task[]>(tasks);
-    } catch (err) {
-      if (err instanceof CustomError) {
-        return HttpResponse.badRequest(err);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
       }
-      return HttpResponse.serverError(err);
+      return HttpResponse.serverError(error);
     }
   }
 }
