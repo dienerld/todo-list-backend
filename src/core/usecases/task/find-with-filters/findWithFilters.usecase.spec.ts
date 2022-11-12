@@ -38,4 +38,11 @@ describe('[UseCase] Find With Filters', () => {
     expect(statusCode).toBe(200);
     expect(body.total).toBe(1);
   });
+
+  it('should return 404 if user not found', async () => {
+    const { sut } = makeSut();
+    const { statusCode } = await sut.execute('invalid_id', {});
+
+    expect(statusCode).toBe(400);
+  });
 });
