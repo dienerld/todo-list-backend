@@ -42,4 +42,20 @@ describe('[UseCase] Update Task', () => {
     expect(body).toHaveProperty('error', 'NotFoundError');
     expect(body).toHaveProperty('message', 'User not found');
   });
+
+  it('should return 500 if repository throws', async () => {
+    const { sut, repository } = makeSut();
+    const [task] = UsersMock[0].tasks;
+
+    jest.spyOn(repository, 'findById').mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    const { statusCode, body } = await sut.execute(task.user_id, task.id, {
+      title: 'any_title'
+    });
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('error', 'Error');
+  });
 });
