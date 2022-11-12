@@ -45,4 +45,16 @@ describe('[UseCase] Find With Filters', () => {
 
     expect(statusCode).toBe(400);
   });
+
+  it('should return 200 if returns empty tasks', async () => {
+    const { sut } = makeSut();
+    const user = UsersMock[0];
+
+    const { statusCode, body } = await sut.execute(user.id, {
+      title: 'invalid_title'
+    });
+
+    expect(statusCode).toBe(200);
+    expect(body.total).toBe(0);
+  });
 });
