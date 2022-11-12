@@ -5,10 +5,12 @@ WORKDIR /app
 COPY . .
 
 
-ENV NODE_ENV=development
-ARG PORT=8080
+ENV PORT=8080
 RUN yarn
-
-ENTRYPOINT [ "yarn", "dev" ]
+CMD [ "yarn","typeorm:up" ]
+RUN yarn build
+ENV NODE_ENV=production
+RUN yarn
+ENTRYPOINT [ "yarn", "start" ]
 
 EXPOSE $PORT
