@@ -17,4 +17,16 @@ describe('[UseCase] Update Task', () => {
 
     expect(statusCode).toBe(204);
   });
+
+  it('should return 404 if task not found', async () => {
+    const { sut } = makeSut();
+    const [task] = UsersMock[0].tasks;
+
+    const { statusCode, body } = await sut.execute(task.user_id, task.id + '1', {
+      title: 'any_title'
+    });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('error', 'NotFoundError');
+  });
 });
