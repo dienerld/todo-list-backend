@@ -7,9 +7,9 @@ import {
 } from '../controllers/task';
 import {
   CreateTaskUseCase, DeleteTaskUseCase,
-  GetAllTaskUseCase, UpdateTaskUseCase
+  FindAllTaskUseCase, UpdateTaskUseCase,
+  FindWithFiltersUseCase
 } from '@usecases/task';
-import { GetTaskUseCase } from '@usecases/task/getTask.usecase';
 import { TaskRepository } from '@database/repositories/task.repository';
 
 const tasksRouter = Router();
@@ -19,7 +19,7 @@ tasksRouter.use(hasAuthentication);
 // Get tasks list for user
 tasksRouter.get('/', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new GetAllTaskUseCase(repo);
+  const useCase = new FindAllTaskUseCase(repo);
   const controller = new GetAllTaskController(useCase);
 
   return controller.handle(req, res);
@@ -56,7 +56,7 @@ tasksRouter.delete('/:id', (req, res) => {
 // Get task with query
 tasksRouter.get('/search', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new GetTaskUseCase(repo);
+  const useCase = new FindWithFiltersUseCase(repo);
   const controller = new GetTaskController(useCase);
 
   return controller.handle(req, res);

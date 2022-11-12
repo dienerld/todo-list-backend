@@ -10,9 +10,9 @@ class UpdateUserController {
       const userId = request.user!.id;
       const { email, name, password, password_confirm } = request.body;
 
-      const user = await this.updateUserUseCase.execute(userId, { email, name, password, password_confirm });
+      const { body, statusCode } = await this.updateUserUseCase.execute(userId, { email, name, password, password_confirm });
 
-      return res.json(user);
+      return res.status(statusCode).json(body);
     } catch (err: any) {
       return res.status(400).json({ error: err.message || 'Unexpected error.' });
     }

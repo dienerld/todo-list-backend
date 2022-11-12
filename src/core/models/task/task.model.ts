@@ -36,24 +36,24 @@ class Task {
   }
 
   update (task: Partial<TaskUpdateRequestDto>): void {
-    if (task.date) {
+    if (task.date !== undefined) {
       this.date = task.date;
       this.updated_at = new Date();
     }
-    if (task.hour) {
+    if (task.hour !== undefined) {
       this.hour = task.hour;
       this.updated_at = new Date();
     }
-    if (task.title) {
+    if (task.title !== undefined) {
       this.title = task.title;
       this.updated_at = new Date();
     }
-    if (task.done) {
-      this.done = !task.done;
+    if (task.done !== undefined) {
+      this.done = task.done;
       this.updated_at = new Date();
     }
-    if (task.hidden) {
-      this.hidden = !task.hidden;
+    if (task.hidden !== undefined) {
+      this.hidden = task.hidden;
       this.updated_at = new Date();
     }
   }

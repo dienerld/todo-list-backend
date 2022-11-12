@@ -13,7 +13,6 @@ class CreateUserUseCase {
 
     const user = new User(userDto.name, userDto.email, userDto.password);
     try {
-      console.log('user', user);
       await this.userRepository.save(user);
 
       return user;

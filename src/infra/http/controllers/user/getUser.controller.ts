@@ -12,9 +12,9 @@ class GetUserController {
         return response.status(400).json({ error: 'User not found' });
       }
 
-      const user = await this.getUserUseCase.execute(userId);
+      const { body, statusCode } = await this.getUserUseCase.execute(userId);
 
-      return response.json(user);
+      return response.status(statusCode).json(body);
     } catch (err: any) {
       return response.status(400).json(
         { error: err.message || 'Unexpected error.' });

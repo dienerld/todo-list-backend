@@ -9,9 +9,9 @@ class DeleteUserController {
     try {
       const userId = request.user?.id!;
 
-      await this.deleteUserUseCase.execute(userId);
+      const { body, statusCode } = await this.deleteUserUseCase.execute(userId);
 
-      return response.status(204).send();
+      return response.status(statusCode).json(body);
     } catch (err: any) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.'

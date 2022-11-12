@@ -13,9 +13,9 @@ class LoginUserController {
     }
     try {
       const { password } = request.body;
-      const token = await this.loginUserUseCase.execute(userId, password);
+      const { body, statusCode } = await this.loginUserUseCase.execute(userId, password);
 
-      return response.json({ token });
+      return response.status(statusCode).json(body);
     } catch (err: any) {
       return response.status(400).json({ error: err.message || 'Unexpected error.' });
     }
