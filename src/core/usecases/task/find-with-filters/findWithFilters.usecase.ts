@@ -1,15 +1,13 @@
-import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { ITaskRepository, TFiltersQuery } from '@models/task/taskRepository.interface';
 import { CustomError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
-type TQuery = true | false | string;
-
-class GetTaskUseCase {
+class FindWithFiltersUseCase {
   constructor (private readonly repository: ITaskRepository) {}
 
-  async execute (userId: string, ...querys: TQuery[]): Promise<IHttpResponse> {
+  async execute (userId: string, filters: TFiltersQuery): Promise<IHttpResponse> {
     try {
-      const tasks = await this.repository.findAll(userId);
+      const tasks = await this.repository.findWithFilters(userId, filters);
 
       return HttpResponse.ok(tasks);
     } catch (error) {
@@ -22,4 +20,4 @@ class GetTaskUseCase {
   }
 }
 
-export { GetTaskUseCase };
+export { FindWithFiltersUseCase };

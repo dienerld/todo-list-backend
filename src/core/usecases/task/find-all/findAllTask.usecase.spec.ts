@@ -13,7 +13,7 @@ describe('[UseCase] Find All Tasks', () => {
 
     const { body: tasks } = await sut.execute('any_id');
 
-    expect(tasks).toHaveLength(1);
+    expect(tasks.tasks).toHaveLength(1);
   });
 
   it('Should return empty array if user has no tasks', async () => {
@@ -23,7 +23,7 @@ describe('[UseCase] Find All Tasks', () => {
 
     const { body: tasks } = await sut.execute(user.id);
 
-    expect(tasks).toHaveLength(0);
+    expect(tasks.tasks).toHaveLength(0);
   });
 
   it('Should return 404 if user not found', async () => {
