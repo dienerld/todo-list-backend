@@ -3,10 +3,6 @@ import { randomUUID } from 'crypto';
 import { MissingParamError } from '../../presentation/errors/missingParamsError';
 import { TaskUpdateRequestDto, TTask } from './task.dtos';
 
-function isParamMissing (str: string): boolean {
-  return false;
-}
-
 class Task {
   id: string;
   title: string;
@@ -18,7 +14,7 @@ class Task {
   updated_at: Date;
   user_id: string;
 
-  constructor (title: string, date:Date, hour: string, user_id: string) {
+  private constructor (title: string, date:Date, hour: string, user_id: string) {
     this.id = randomUUID();
     this.title = title;
     this.done = false;
@@ -28,6 +24,15 @@ class Task {
     this.created_at = new Date();
     this.updated_at = new Date();
     this.user_id = user_id;
+  }
+
+  static create (title: string, date:Date, hour: string, user_id: string): Task {
+    if (!title) { throw new MissingParamError('Title'); }
+    if (!hour) { throw new MissingParamError('Hour'); }
+    if (!date) { throw new MissingParamError('Date'); }
+    if (!user_id) { throw new MissingParamError('User ID'); }
+
+    return new Task(title, date, hour, user_id);
   }
 
   update (task: Partial<TaskUpdateRequestDto>): void {

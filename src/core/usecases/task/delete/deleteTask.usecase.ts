@@ -10,8 +10,8 @@ class DeleteTaskUseCase {
       if (!userId) { throw new MissingParamError('userId'); };
       if (!taskId) { throw new MissingParamError('taskId'); };
 
-      const task = await this.repository.findById(taskId);
-      if (!task) { throw new NotFoundError('Task not found'); };
+      const task = await this.repository.findById(taskId, userId);
+      if (!task) { throw new NotFoundError('Task'); };
 
       await this.repository.delete(taskId);
 
@@ -20,7 +20,6 @@ class DeleteTaskUseCase {
       if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);
       }
-
       return HttpResponse.serverError(error);
     }
   }

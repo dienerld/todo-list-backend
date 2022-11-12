@@ -1,10 +1,16 @@
 
-import { DatabaseMock } from '../../../__tests__/repositories/databaseMock';
+import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { TaskRepositoryMock } from '../../../__tests__/repositories/databaseMock';
 import { CreateTaskUseCase } from './createTask.usecase';
 
 describe('[UseCase] Create Task', () => {
+  let repository: ITaskRepository;
+
+  beforeEach(() => {
+    repository = new TaskRepositoryMock();
+  });
   it('should create task with correct params', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { body: task } = await createTaskUseCase.execute('any_id', {
       title: 'Test',
       date: new Date(),
@@ -16,7 +22,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return badRequest if userId is not provided', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('', {
       title: 'Test',
       date: new Date(),
@@ -27,7 +33,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return badRequest if title is not provided', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('1', {
       title: '',
       date: new Date(),
@@ -38,7 +44,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return badRequest if date is not provided', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('1', {
       title: 'Test',
       date: null,
@@ -49,7 +55,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return badRequest if hour is not provided', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('1', {
       title: 'Test',
       date: new Date(),
@@ -60,7 +66,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return serverError if user is not found', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(DatabaseMock.db());
+    const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('2', {
       title: 'Test',
       date: new Date(),
@@ -72,7 +78,7 @@ describe('[UseCase] Create Task', () => {
 
   it('should return serverError if database throws', async () => {
     const createTaskUseCase = new CreateTaskUseCase(null);
-    jest.spyOn(DatabaseMock.db(), 'saveDatabase').mockImplementationOnce(() => {
+    jest.spyOn(repository, 'save').mockImplementationOnce(() => {
       throw new Error();
     });
     const { statusCode } = await createTaskUseCase.execute('1', {
