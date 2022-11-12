@@ -36,7 +36,6 @@ class Task {
   }
 
   update (task: Partial<TaskUpdateRequestDto>): void {
-    console.log(task);
     if (task.date) {
       this.date = task.date;
       this.updated_at = new Date();

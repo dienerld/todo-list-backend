@@ -1,6 +1,6 @@
 import { CustomError } from '@presentation/errors';
 import { HttpResponse } from '@presentation/helpers';
-import { UpdateTaskUseCase } from '@usecases/task/updateTask.usecase';
+import { UpdateTaskUseCase } from '@usecases/task/update/updateTask.usecase';
 import { Response } from 'express';
 import { CustomRequest } from '../../interfaces/customRequest';
 
