@@ -16,9 +16,9 @@ class GetTaskController {
       const { hidden, title }: TParamsRequest = req.query;
       // TODO: change validate hidden
       const bool = hidden === 'true';
-      const tasks = await this.getTaskUseCase.execute(userId, bool, title);
+      const { body, statusCode } = await this.getTaskUseCase.execute(userId, bool, title);
 
-      return res.json(tasks);
+      return res.status(statusCode).json(body);
     } catch (err: any) {
       return res.status(400).json({
         message: err.message || 'Unexpected error.'

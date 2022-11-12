@@ -1,20 +1,24 @@
-import { getDatabase, saveDatabase } from '../../../infra/database/index';
+import { IUserRepository } from '@models/user/userRepository.interface';
+import { CustomError, NotFoundError } from '@presentation/errors';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class DeleteUserUsecase {
-  async execute (userId: string): Promise<void> {
+  constructor (private readonly userRepository: IUserRepository) {}
+
+  async execute (userId: string): Promise<IHttpResponse> {
     try {
-      const users = getDatabase();
-      const userIndex = users.findIndex(user => user.id === userId);
-
-      if (userIndex === -1) {
-        throw new Error('User not found');
+      const user = await this.userRepository.findById(userId);
+      if (!user) {
+        throw new NotFoundError('User');
       }
+      await this.userRepository.delete(userId);
 
-      users.splice(userIndex, 1);
-      saveDatabase(users);
+      return HttpResponse.noContent();
     } catch (error) {
-      console.error(error);
-      throw error;
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
+      }
+      return HttpResponse.serverError(error);
     }
   }
 }

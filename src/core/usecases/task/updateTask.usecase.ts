@@ -1,48 +1,30 @@
-import { getDatabase, saveDatabase } from '../../../infra/database/index';
 import { TaskUpdateRequestDto } from '@models/task/task.dtos';
+import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { CustomError, NotFoundError, UnauthorizedError } from '@presentation/errors';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class UpdateTaskUseCase {
-  async execute (userId: string, taskId: string, taskDto?: TaskUpdateRequestDto) {
-    const users = getDatabase();
-    const userIndex = users.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
-    }
-    const taskIndex = users[userIndex].tasks.findIndex(task => task.id === taskId);
-    if (taskIndex === -1) {
-      throw new Error('Task not found');
-    }
-    const task = users[userIndex].tasks[taskIndex];
+  constructor (private readonly taskRepository: ITaskRepository) {}
 
-    if (!taskDto) {
-      throw new Error('Task data not provided');
+  async execute (userId: string, taskId: string, taskDto: Partial<TaskUpdateRequestDto>): Promise<IHttpResponse> {
+    try {
+      const task = await this.taskRepository.findById(taskId);
+      if (task.user_id !== userId) {
+        throw new UnauthorizedError();
+      }
+      if (!task) { throw new NotFoundError('Task'); }
+
+      task.update(taskDto);
+      await this.taskRepository.update(task);
+      console.log('depois');
+      return HttpResponse.ok(task);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
+      }
+
+      return HttpResponse.serverError(error);
     }
-
-    if (taskDto.title) {
-      task.title = taskDto.title;
-    }
-
-    if (taskDto.date) {
-      task.date = taskDto.date;
-    }
-
-    if (taskDto.hour) {
-      task.hour = taskDto.hour;
-    }
-
-    if (taskDto.done !== undefined) {
-      task.toggleDone();
-    }
-
-    if (taskDto.hidden !== undefined) {
-      task.toggleHidden();
-    }
-
-    users[userIndex].tasks[taskIndex] = task;
-    saveDatabase(users);
-
-    return task;
   }
 }
-
 export { UpdateTaskUseCase };

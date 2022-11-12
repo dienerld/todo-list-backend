@@ -10,9 +10,9 @@ class DeleteTaskController {
     const userId = request.user!.id;
 
     try {
-      await this.deleteTaskUseCase.execute(userId, taskId);
+      const { body, statusCode } = await this.deleteTaskUseCase.execute(userId, taskId);
 
-      return response.status(204).send();
+      return response.status(statusCode).json(body);
     } catch (err: any) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.'

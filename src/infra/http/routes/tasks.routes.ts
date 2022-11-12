@@ -10,6 +10,7 @@ import {
   GetAllTaskUseCase, UpdateTaskUseCase
 } from '@usecases/task';
 import { GetTaskUseCase } from '@usecases/task/getTask.usecase';
+import { TaskRepository } from '@database/repositories/task.repository';
 
 const tasksRouter = Router();
 // This route is protected by the middleware - user can access only after login
@@ -17,7 +18,8 @@ tasksRouter.use(hasAuthentication);
 
 // Get tasks list for user
 tasksRouter.get('/', (req, res) => {
-  const useCase = new GetAllTaskUseCase();
+  const repo = new TaskRepository();
+  const useCase = new GetAllTaskUseCase(repo);
   const controller = new GetAllTaskController(useCase);
 
   return controller.handle(req, res);
@@ -25,7 +27,8 @@ tasksRouter.get('/', (req, res) => {
 
 // Create task
 tasksRouter.post('/', (req, res) => {
-  const useCase = new CreateTaskUseCase();
+  const repo = new TaskRepository();
+  const useCase = new CreateTaskUseCase(repo);
   const controller = new CreateTaskController(useCase);
 
   return controller.handle(req, res);
@@ -33,7 +36,8 @@ tasksRouter.post('/', (req, res) => {
 
 // Update task
 tasksRouter.put('/:id', (req, res) => {
-  const useCase = new UpdateTaskUseCase();
+  const repo = new TaskRepository();
+  const useCase = new UpdateTaskUseCase(repo);
   const controller = new UpdateTaskController(useCase);
 
   return controller.handle(req, res);
@@ -41,7 +45,8 @@ tasksRouter.put('/:id', (req, res) => {
 
 // Delete task
 tasksRouter.delete('/:id', (req, res) => {
-  const useCase = new DeleteTaskUseCase();
+  const repo = new TaskRepository();
+  const useCase = new DeleteTaskUseCase(repo);
   const controller = new DeleteTaskController(useCase);
 
   return controller.handle(req, res);
@@ -50,7 +55,8 @@ tasksRouter.delete('/:id', (req, res) => {
 // Growdev - Rota não utilizada no projeto frontend, mas está funcionando corretamente e pode ser utilizada através de clientes http
 // Get task with query
 tasksRouter.get('/search', (req, res) => {
-  const useCase = new GetTaskUseCase();
+  const repo = new TaskRepository();
+  const useCase = new GetTaskUseCase(repo);
   const controller = new GetTaskController(useCase);
 
   return controller.handle(req, res);

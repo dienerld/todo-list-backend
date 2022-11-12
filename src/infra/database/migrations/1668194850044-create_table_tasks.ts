@@ -40,7 +40,8 @@ export class createTableTasks1668194850044 implements MigrationInterface {
         {
           name: 'updated_at',
           type: 'timestamp',
-          default: 'now()'
+          default: 'now()',
+          onUpdate: 'now()'
         },
         {
           name: 'user_id',

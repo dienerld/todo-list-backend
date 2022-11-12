@@ -1,19 +1,26 @@
+import { UserRepository } from '@database/repositories/user.repository';
+import { CustomError } from '@presentation/errors';
+import { HttpResponse } from '@presentation/helpers';
 import { NextFunction, Response } from 'express';
-import { getDatabase } from '../../database/index';
 import { CustomRequest } from '../interfaces/customRequest';
 
-function userAlreadyExistsMiddleware (req: CustomRequest, res: Response, next: NextFunction) {
-  const { email } = req.body;
-  try {
-    const users = getDatabase();
-    const userAlreadyExists = users.find(user => user.email === email);
-    req.user = userAlreadyExists;
+class UserAlreadyExistsMiddleware {
+  async handle (req: CustomRequest, res: Response, next: NextFunction) {
+    const { email } = req.body;
+    try {
+      const repository = new UserRepository();
+      const user = await repository.findByEmail(email);
 
-    next();
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Internal Server Error');
+      req.user = user;
+
+      return next();
+    } catch (error) {
+      if (error instanceof CustomError) {
+        return res.json(HttpResponse.badRequest(error));
+      }
+      return res.json(HttpResponse.serverError(error));
+    }
   }
 }
 
-export { userAlreadyExistsMiddleware };
+export { UserAlreadyExistsMiddleware };

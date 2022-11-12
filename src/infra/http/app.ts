@@ -1,8 +1,9 @@
+import { appDataSource } from '@database/data-source';
+import { User } from '@models/user/user.model';
 import express from 'express';
 
 import { cors } from './middleware';
-import { Database } from '../database/index';
-import { usersRouter, tasksRouter } from './routes';
+import { tasksRouter, usersRouter } from './routes';
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,9 @@ app.use('/tasks', tasksRouter);
 
 app.get('/', (_, response) => response.redirect('/api-docs'));
 
-app.get('/root/users', (_, res) => res.json(Database().getDatabase()));
+app.get('/root/users', async (_, res) => {
+  const user = await appDataSource.getRepository(User).find({ relations: ['tasks'] });
+  res.json(user);
+});
 
 export { app };

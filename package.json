@@ -8,11 +8,12 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "swc ./src/ -d dist/",
-    "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/http/server.ts",
+    "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/infra/http/server.ts",
     "start": "ts-node src/index.ts",
     "test": "jest --watch",
-    "typeorm": "typeorm-ts-node-esm",
-    "typeorm:run": "typeorm-ts-node-esm migration:run -d ./src/infra/database/data-source.ts"
+    "typeorm": "ts-node -r tsconfig-paths/register typeorm-ts-node-commonjs",
+    "typeorm:up": "typeorm-ts-node-commonjs migration:run -d ./src/infra/database/data-source.ts",
+    "typeorm:down": "typeorm-ts-node-commonjs  migration:revert -d ./src/infra/database/data-source.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

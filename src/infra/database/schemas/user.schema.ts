@@ -3,22 +3,23 @@ import { EntitySchema } from 'typeorm';
 
 const userSchema = new EntitySchema<User>({
   name: 'User',
+  tableName: 'users',
   target: User,
   columns: {
     id: {
-      type: String,
+      type: 'varchar',
       primary: true,
       generated: 'uuid'
     },
     name: {
-      type: String
+      type: 'varchar'
     },
     email: {
-      type: String,
+      type: 'varchar',
       unique: true
     },
     password: {
-      type: String
+      type: 'varchar'
     },
     created_at: {
       type: 'timestamp',
@@ -26,9 +27,18 @@ const userSchema = new EntitySchema<User>({
     },
     updated_at: {
       type: 'timestamp',
-      default: 'now()'
+      default: 'now()',
+      onUpdate: 'now()'
+    }
+  },
+  relations: {
+    tasks: {
+      type: 'one-to-many',
+      target: 'Task',
+      inverseSide: 'user_id'
     }
   }
+
 });
 
 export { userSchema };

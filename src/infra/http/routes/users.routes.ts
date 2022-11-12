@@ -8,16 +8,18 @@ import {
   CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
   LoginUserUsecase, UpdateUserUseCase
 } from '@usecases/user';
-import { hasAuthentication, userAlreadyExistsMiddleware } from '../middleware';
+import { hasAuthentication, UserAlreadyExistsMiddleware } from '../middleware';
 import { CustomRequest } from '../interfaces/customRequest';
+import { UserRepository } from '@database/repositories/user.repository';
 
 const usersRouter = Router();
 
-usersRouter.use(userAlreadyExistsMiddleware);
+usersRouter.use(new UserAlreadyExistsMiddleware().handle);
 
 // Create User
-usersRouter.post('/', (req, res) => {
-  const useCase = new CreateUserUseCase();
+usersRouter.post('/', async (req, res) => {
+  const userRepo = new UserRepository();
+  const useCase = new CreateUserUseCase(userRepo);
   const controller = new CreateUserController(useCase);
 
   return controller.handle(req, res);
@@ -25,7 +27,9 @@ usersRouter.post('/', (req, res) => {
 
 // login User
 usersRouter.post('/login', (req, res) => {
-  const useCase = new LoginUserUsecase();
+  const userRepo = new UserRepository();
+
+  const useCase = new LoginUserUsecase(userRepo);
   const controller = new LoginUserController(useCase);
 
   return controller.handle(req, res);
@@ -36,7 +40,8 @@ usersRouter.use(hasAuthentication);
 
 // Get User
 usersRouter.get('/', (req: CustomRequest, res) => {
-  const useCase = new GetUserUseCase();
+  const userRepo = new UserRepository();
+  const useCase = new GetUserUseCase(userRepo);
   const controller = new GetUserController(useCase);
 
   return controller.handle(req, res);
@@ -44,7 +49,8 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 
 // Update User
 usersRouter.put('/', (req, res) => {
-  const useCase = new UpdateUserUseCase();
+  const userRepo = new UserRepository();
+  const useCase = new UpdateUserUseCase(userRepo);
   const controller = new UpdateUserController(useCase);
 
   return controller.handle(req, res);
@@ -52,7 +58,8 @@ usersRouter.put('/', (req, res) => {
 
 // Delete User
 usersRouter.delete('/', (req, res) => {
-  const useCase = new DeleteUserUsecase();
+  const userRepo = new UserRepository();
+  const useCase = new DeleteUserUsecase(userRepo);
   const controller = new DeleteUserController(useCase);
 
   return controller.handle(req, res);

@@ -1,4 +1,4 @@
-import { CreateTaskUseCase } from '@usecases/task/createTask.usecase';
+import { CreateTaskUseCase } from '@usecases/task';
 import { Response } from 'express';
 import { CustomRequest } from '../../interfaces/customRequest';
 
@@ -9,9 +9,9 @@ class CreateTaskController {
     try {
       const { title, hour, date } = request.body;
 
-      const task = await this.createTask.execute(request.user!.id, { title, hour, date });
+      const { body, statusCode } = await this.createTask.execute(request.user!.id, { title, hour, date });
 
-      return response.status(201).json(task);
+      return response.status(statusCode).json(body);
     } catch (err: any) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.'

@@ -1,18 +1,18 @@
-import { getDatabase, saveDatabase } from '../../../infra/database/index';
 import { UserRequestDto } from '@models/user/user.dtos';
-import { User } from '@models/user/user.model';
+import { IUserRepository } from '@models/user/userRepository.interface';
+import { CustomError, NotFoundError } from '@presentation/errors';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class UpdateUserUseCase {
-  async execute (userId: string, userDto: UserRequestDto): Promise<User> {
+  constructor (private readonly userRepository: IUserRepository) {}
+
+  async execute (userId: string, userDto: UserRequestDto): Promise<IHttpResponse> {
     try {
-      const users = getDatabase();
-      const userIndex = users.findIndex(user => user.id === userId);
+      const user = await this.userRepository.findById(userId);
 
-      if (userIndex === -1) {
-        throw new Error('User not found');
+      if (!user) {
+        throw new NotFoundError('User not found');
       }
-
-      const user = users[userIndex];
       if (userDto.name) {
         user.name = userDto.name;
       }
@@ -28,13 +28,13 @@ class UpdateUserUseCase {
         user.password = userDto.password;
       }
 
-      users[userIndex] = user;
-      saveDatabase(users);
-
-      return user;
+      await this.userRepository.update(user);
+      return HttpResponse.noContent();
     } catch (error) {
-      console.error(error);
-      throw error;
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
+      }
+      return HttpResponse.serverError(error);
     }
   }
 }

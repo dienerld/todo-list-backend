@@ -1,7 +1,6 @@
 import { User } from './user.model';
 
 export interface IUserRepository {
-  create(user: User): Promise<User>;
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
   save(user: User): Promise<void>;
