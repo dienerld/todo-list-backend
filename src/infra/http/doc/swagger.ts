@@ -12,7 +12,7 @@ export default {
   },
   servers: [
     {
-      url: 'https://dnr-growdev.fly.dev',
+      url: 'https://dnr-todo-api.fly.dev',
       description: 'Production'
     },
     {

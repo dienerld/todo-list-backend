@@ -6,7 +6,7 @@ import { taskSchema } from './schemas/task.schema';
 
 const appDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.DB_URL,
+  url: process.env.DATABASE_URL,
   logging: true,
   // synchronize: true,
   entities: [userSchema, taskSchema],

@@ -7,10 +7,10 @@ COPY . .
 
 ENV PORT=8080
 RUN yarn
-CMD [ "yarn","typeorm:up" ]
 RUN yarn build
 ENV NODE_ENV=production
 RUN yarn
+
 ENTRYPOINT [ "yarn", "start" ]
 
 EXPOSE $PORT
