@@ -6,6 +6,9 @@ type TTask = {
   date: Date;
   hidden: boolean;
   hour: string;
+  created_at: Date;
+  updated_at: Date;
+  user_id: string;
 }
 
 type TaskRequestDto = {
@@ -14,12 +17,6 @@ type TaskRequestDto = {
   hour: string;
 };
 
-type TaskUpdateRequestDto = {
-  title?: string;
-  date?: Date;
-  hour?: string;
-  done?: boolean;
-  hidden?: boolean;
-}
+type TaskUpdateRequestDto = Omit<TTask, 'id'| 'created_at' | 'updated_at'>
 
 export { TaskRequestDto, TaskUpdateRequestDto, TTask };

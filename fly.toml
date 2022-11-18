@@ -1,18 +1,15 @@
-# fly.toml file generated for dnr-test on 2022-10-07T12:52:07-03:00
+# fly.toml file generated for dnr-todo-api on 2022-11-12T17:00:09-03:00
 
-app = "dnr-growdev"
+app = "dnr-todo-api"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
 [build]
-  image = "dienerld/dnr-express-growdev"
-
-[build.args]
-  PORT= 8080 # default port
+  image = "dienerld/todo-api"
 
 [env]
-PORT=8080 # default port
+
 
 [experimental]
   allowed_public_ports = []
@@ -20,7 +17,7 @@ PORT=8080 # default port
 
 [[services]]
   http_checks = []
-  internal_port = 8080 # default port
+  internal_port = 8080
   processes = ["app"]
   protocol = "tcp"
   script_checks = []

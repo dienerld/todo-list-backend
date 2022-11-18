@@ -1,21 +1,24 @@
-import { getDatabase } from '@database/index';
-import { User } from '@models/user/user.model';
+import { IUserRepository } from '@models/user/userRepository.interface';
+import { CustomError, NotFoundError } from '@presentation/errors';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class GetUserUseCase {
-  async execute (userId: string): Promise<User> {
-    try {
-      const users = getDatabase();
+  constructor (private readonly userRepository: IUserRepository) {}
 
-      const user = users.find((user) => user.id === userId);
+  async execute (userId: string): Promise<IHttpResponse> {
+    try {
+      const user = await this.userRepository.findByIdWithTasks(userId);
 
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundError('User');
       }
 
-      return user;
-    } catch (err) {
-      console.error(err);
-      throw err;
+      return HttpResponse.ok(user);
+    } catch (error) {
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
+      }
+      return HttpResponse.serverError(error);
     }
   }
 }

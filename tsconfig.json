@@ -4,7 +4,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "paths": {
-      "@database/*": ["./src/database/*"],
+      "@database/*": ["src/infra/database/*"],
       "@models/*": ["./src/core/models/*"],
       "@usecases/*": ["./src/core/usecases/*"],
       "@presentation/*": ["./src/core/presentation/*"],
@@ -12,11 +12,16 @@
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["src/**/*", "src/infra/database/data-source.ts"],
   "exclude": ["node_modules"]
 }

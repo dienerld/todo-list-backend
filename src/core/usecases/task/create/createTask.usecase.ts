@@ -1,30 +1,23 @@
-import { IDatabase } from '@database/index';
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
-import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
+import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { CustomError, MissingParamError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class CreateTaskUseCase {
-  constructor (private readonly database: IDatabase) {}
+  constructor (private readonly repository: ITaskRepository) {}
 
   async execute (userId: string, taskDto: TaskRequestDto): Promise<IHttpResponse> {
-    if (!userId) {
-      return HttpResponse.badRequest(new MissingParamError('userId'));
-    }
-
     try {
-      const users = this.database.getDatabase();
-      const userIndex = users.findIndex(user => user.id === userId);
-      if (userIndex === -1) {
-        throw new NotFoundError('User');
-      }
+      if (!userId) { throw new MissingParamError('userId'); }
 
-      const task = new Task(taskDto.title, taskDto.date, taskDto.hour);
+      if (!taskDto) { throw new MissingParamError('taskDto'); }
 
-      users[userIndex].tasks.push(task);
+      const task = Task.create(taskDto.title, taskDto.date, taskDto.hour, userId);
 
-      this.database.saveDatabase(users);
-      return HttpResponse.created<Task>(task);
+      await this.repository.save(userId, task);
+
+      return HttpResponse.created(task);
     } catch (error) {
       if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);

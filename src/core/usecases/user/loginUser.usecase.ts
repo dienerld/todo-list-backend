@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
 
-import { getDatabase } from '@database/index';
 import { jwtConfig } from '@configs/jwt';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
+import { IUserRepository } from '@models/user/userRepository.interface';
+import { CustomError } from '@presentation/errors';
 
 class LoginUserUsecase {
-  async execute (userId: string, password: string) {
+  constructor (private readonly userRepository: IUserRepository) {}
+  async execute (userId: string, password: string): Promise<IHttpResponse> {
     try {
-      const users = getDatabase();
-
-      const user = users.find(user => user.id === userId);
+      const user = await this.userRepository.findById(userId);
       if (!user) {
         throw new Error('User not found');
       }
@@ -23,12 +24,15 @@ class LoginUserUsecase {
           email: user.email,
           name: user.name
         },
-        jwtConfig.secret, { expiresIn: jwtConfig.expiresIn });
+        jwtConfig.secret, { expiresIn: jwtConfig.expiresIn }
+      );
 
-      return token;
-    } catch (err) {
-      console.error(err);
-      throw err;
+      return HttpResponse.ok({ token });
+    } catch (error) {
+      if (error instanceof CustomError) {
+        return HttpResponse.badRequest(error);
+      }
+      return HttpResponse.serverError(error);
     }
   }
 }
