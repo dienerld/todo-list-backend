@@ -29,6 +29,16 @@ class UserRepository implements IUserRepository {
   async delete (id: string): Promise<void> {
     await this.repository.delete(id);
   }
+
+  async findByIdWithTasks (id: string): Promise<User | undefined> {
+    return this.repository.findOne({
+      where: { id },
+      relations: ['tasks'],
+      order: {
+        tasks: { date: 'ASC', hour: 'ASC', created_at: 'ASC' }
+      }
+    });
+  }
 }
 
 export { UserRepository };

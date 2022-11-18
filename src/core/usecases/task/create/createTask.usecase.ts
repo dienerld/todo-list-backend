@@ -15,7 +15,7 @@ class CreateTaskUseCase {
 
       const task = Task.create(taskDto.title, taskDto.date, taskDto.hour, userId);
 
-      await this.repository.save(task);
+      await this.repository.save(userId, task);
 
       return HttpResponse.created(task);
     } catch (error) {

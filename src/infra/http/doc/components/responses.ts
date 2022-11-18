@@ -7,9 +7,11 @@ const responses = {
         schema: {
           type: 'object',
           properties: {
+            error: {
+              type: 'string'
+            },
             message: {
-              type: 'string',
-              example: 'Bad Request'
+              type: 'string'
             }
           }
         }
@@ -23,6 +25,10 @@ const responses = {
         schema: {
           type: 'object',
           properties: {
+            error: {
+              type: 'string',
+              example: 'UnauthorizedError'
+            },
             message: {
               type: 'string',
               example: 'Unauthorized'
@@ -39,6 +45,10 @@ const responses = {
         schema: {
           type: 'object',
           properties: {
+            error: {
+              type: 'string',
+              example: 'ServerError'
+            },
             message: {
               type: 'string',
               example: 'Internal Server Error'

@@ -12,9 +12,8 @@ class Task {
   hour: string;
   created_at: Date;
   updated_at: Date;
-  user_id: string;
 
-  private constructor (title: string, date:Date, hour: string, user_id: string) {
+  private constructor (title: string, date:Date, hour: string) {
     this.id = randomUUID();
     this.title = title;
     this.done = false;
@@ -23,16 +22,14 @@ class Task {
     this.hour = hour;
     this.created_at = new Date();
     this.updated_at = new Date();
-    this.user_id = user_id;
   }
 
-  static create (title: string, date:Date, hour: string, user_id: string): Task {
+  static create (title: string, date:Date, hour: string): Task {
     if (!title) { throw new MissingParamError('Title'); }
     if (!hour) { throw new MissingParamError('Hour'); }
     if (!date) { throw new MissingParamError('Date'); }
-    if (!user_id) { throw new MissingParamError('User ID'); }
 
-    return new Task(title, date, hour, user_id);
+    return new Task(title, date, hour);
   }
 
   update (task: Partial<TaskUpdateRequestDto>): void {

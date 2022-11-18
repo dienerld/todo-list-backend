@@ -1,22 +1,14 @@
-import { GetTaskUseCase } from '@usecases/task/getTask.usecase';
+import { FindWithFiltersUseCase } from '@usecases/task';
 import { Response } from 'express';
 import { CustomRequest } from '../../interfaces/customRequest';
 
-type TParamsRequest = {
-  hidden: string
-  title: string
-}
 class GetTaskController {
-  constructor (private getTaskUseCase: GetTaskUseCase) {}
+  constructor (private getTaskUseCase: FindWithFiltersUseCase) {}
 
   async handle (req: CustomRequest, res: Response) {
     try {
       const userId = req.user!.id;
-      // @ts-expect-error
-      const { hidden, title }: TParamsRequest = req.query;
-      // TODO: change validate hidden
-      const bool = hidden === 'true';
-      const { body, statusCode } = await this.getTaskUseCase.execute(userId, bool, title);
+      const { body, statusCode } = await this.getTaskUseCase.execute(userId, req.query);
 
       return res.status(statusCode).json(body);
     } catch (err: any) {

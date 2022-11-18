@@ -16,9 +16,11 @@ class UserAlreadyExistsMiddleware {
       return next();
     } catch (error) {
       if (error instanceof CustomError) {
-        return res.json(HttpResponse.badRequest(error));
+        const { statusCode, body } = HttpResponse.badRequest(error);
+        return res.status(statusCode).json(body);
       }
-      return res.json(HttpResponse.serverError(error));
+      const { statusCode, body } = HttpResponse.serverError(error);
+      return res.status(statusCode).json(body);
     }
   }
 }

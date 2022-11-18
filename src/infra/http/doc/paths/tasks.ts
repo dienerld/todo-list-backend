@@ -104,15 +104,8 @@ const taskWithId = {
       $ref: '#/components/requestBodies/UpdateTask'
     },
     responses: {
-      200: {
-        description: 'Success',
-        content: {
-          'application/json': {
-            schema: {
-              $ref: '#/components/schemas/Task'
-            }
-          }
-        }
+      204: {
+        description: 'No Content'
       },
       400: {
         description: 'Bad Request',

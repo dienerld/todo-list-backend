@@ -27,7 +27,7 @@ const Task = {
   }
 };
 
-const User = {
+const UserWithTasks = {
   type: 'object',
   properties: {
     id: {
@@ -55,6 +55,28 @@ const User = {
   }
 };
 
+const User = {
+  type: 'object',
+  properties: {
+    id: {
+      type: 'string',
+      format: 'uuid'
+    },
+    name: {
+      type: 'string',
+      example: 'User name'
+    },
+    email: {
+      type: 'string',
+      example: 'email@mail.com'
+    },
+    password: {
+      type: 'string',
+      example: 'password123'
+    }
+  }
+};
+
 const Login = {
   type: 'object',
   properties: {
@@ -73,8 +95,8 @@ const Login = {
 const schemas = {
   User,
   Task,
-  Login
-
+  Login,
+  UserWithTasks
 };
 
 export { schemas };

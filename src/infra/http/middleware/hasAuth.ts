@@ -10,7 +10,8 @@ async function hasAuthentication (req: CustomRequest, res: Response, next: NextF
 
     const token = auth?.split(' ')[1];
     if (!token) {
-      return res.status(401).json(HttpResponse.unauthorizedError());
+      const { statusCode, body } = HttpResponse.unauthorizedError();
+      return res.status(statusCode).json(body);
     }
     const decoded = jwt.verify(token, jwtConfig.secret);
 
@@ -19,9 +20,11 @@ async function hasAuthentication (req: CustomRequest, res: Response, next: NextF
     return next();
   } catch (err) {
     if (err instanceof jwt.TokenExpiredError) {
-      return res.status(401).json(HttpResponse.unauthorizedError());
+      const { statusCode, body } = HttpResponse.unauthorizedError();
+      return res.status(statusCode).json(body);
     }
-    return res.status(500).json(HttpResponse.serverError(err));
+    const { statusCode, body } = HttpResponse.serverError(err);
+    return res.status(statusCode).json(body);
   }
 }
 

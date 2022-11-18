@@ -1,8 +1,9 @@
 import { appDataSource } from '@database/data-source';
 import { taskSchema } from '@database/schemas/task.schema';
+import { TTask } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository, TFiltersQuery, TResultFind } from '@models/task/taskRepository.interface';
-import { Repository } from 'typeorm';
+import { Raw, Repository } from 'typeorm';
 
 class TaskRepository implements ITaskRepository {
   repository: Repository<Task>;
@@ -22,8 +23,8 @@ class TaskRepository implements ITaskRepository {
     return { tasks, total };
   }
 
-  async save (task: Task): Promise<void> {
-    await this.repository.save(task);
+  async save (userId: string, task: Task): Promise<void> {
+    await this.repository.save({ ...task, user_id: userId });
   }
 
   async update (task: Task): Promise<void> {
@@ -35,19 +36,18 @@ class TaskRepository implements ITaskRepository {
   }
 
   async findWithFilters (userId: string, filters: TFiltersQuery): Promise<TResultFind> {
-    const { title, date, hour, done, hidden } = filters;
+    const { title, hidden } = filters;
 
     const [tasks, total] = await this.repository.findAndCount({
-      where: [
-        { user_id: userId, title: title || undefined },
-        { user_id: userId, date: date || undefined },
-        { user_id: userId, hour: hour || undefined },
-        { user_id: userId, done: done || undefined },
-        { user_id: userId, hidden: hidden || undefined }
-      ],
+      where: {
+        user_id: userId,
+        // convert query values in lowercase to compare
+        ...(title && { title: Raw(alias => `LOWER(${alias}) Like '%${title.toLowerCase()}%'`) }),
+        ...(hidden && { hidden })
+      },
       order: { date: 'ASC', hour: 'ASC' }
     });
-    return { tasks, total };
+    return { total, tasks };
   }
 }
 

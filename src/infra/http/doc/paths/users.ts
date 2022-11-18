@@ -16,7 +16,7 @@ const users = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/UserWithTasks'
             }
           }
         }

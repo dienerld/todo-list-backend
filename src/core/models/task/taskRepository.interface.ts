@@ -1,7 +1,7 @@
 import { TTask } from './task.dtos';
 import { Task } from './task.model';
 
-export type TFiltersQuery = Omit<Partial<TTask>, 'id' | 'created_at' | 'updated_at' | 'user_id'>
+export type TFiltersQuery = Omit<Partial<TTask>, 'id' | 'created_at' | 'updated_at' | 'user_id'| 'hour'|'done'>
 
 export type TResultFind = {
   tasks: Task[];
@@ -11,7 +11,7 @@ export interface ITaskRepository {
   findById(id: string, userId: string): Promise<Task | undefined>;
   findAll(userId: string): Promise<TResultFind>;
   findWithFilters(userId: string, filters: TFiltersQuery): Promise<TResultFind>;
-  save(task: Task): Promise<void>;
+  save(userId: string, task: Task): Promise<void>;
   update(task: Task): Promise<void>;
   delete(id: string): Promise<void>;
 }

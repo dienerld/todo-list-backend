@@ -7,7 +7,7 @@ class GetUserUseCase {
 
   async execute (userId: string): Promise<IHttpResponse> {
     try {
-      const user = await this.userRepository.findById(userId);
+      const user = await this.userRepository.findByIdWithTasks(userId);
 
       if (!user) {
         throw new NotFoundError('User');

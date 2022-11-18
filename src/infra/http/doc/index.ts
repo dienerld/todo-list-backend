@@ -12,12 +12,12 @@ import {
 const swaggerFile: swagger.JsonObject = {
   ...swaggerHeader,
   paths: {
-    '/user': users,
-    '/user/login': userLogin,
-    '/user/{id}': userWithId,
-    tasks,
-    'tasks/{id}': taskWithId,
-    'tasks/search': taskSearch
+    '/users': users,
+    '/users/login': userLogin,
+    '/users/{id}': userWithId,
+    '/tasks': tasks,
+    '/tasks/{id}': taskWithId,
+    '/tasks/search': taskSearch
   },
 
   components: {
