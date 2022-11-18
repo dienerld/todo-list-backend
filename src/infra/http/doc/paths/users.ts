@@ -61,6 +61,34 @@ const users = {
         $ref: '#/components/responses/500'
       }
     }
+  },
+  delete: {
+    tags: ['User'],
+    summary: 'Delete user authenticated',
+    description: 'Delete user authenticated',
+    operationId: 'deleteUser',
+    security: [
+      {
+        bearerAuth: ['delete:user']
+      }
+    ],
+    responses: {
+      204: {
+        description: 'Success'
+      },
+      400: {
+        description: 'Bad Request',
+        $ref: '#/components/responses/400'
+      },
+      401: {
+        description: 'Unauthorized',
+        $ref: '#/components/responses/401'
+      },
+      500: {
+        description: 'Internal Server Error',
+        $ref: '#/components/responses/500'
+      }
+    }
   }
 };
 
@@ -143,46 +171,6 @@ const userWithId = {
             }
           }
         }
-      },
-      400: {
-        description: 'Bad Request',
-        $ref: '#/components/responses/400'
-      },
-      401: {
-        description: 'Unauthorized',
-        $ref: '#/components/responses/401'
-      },
-      500: {
-        description: 'Internal Server Error',
-        $ref: '#/components/responses/500'
-      }
-    }
-  },
-  delete: {
-    tags: ['User'],
-    summary: 'Delete user authenticated',
-    description: 'Delete user authenticated',
-    operationId: 'deleteUser',
-    parameters: [
-      {
-        name: 'id',
-        in: 'path',
-        description: 'ID of user to return',
-        required: true,
-        schema: {
-          type: 'string',
-          format: 'uuid'
-        }
-      }
-    ],
-    security: [
-      {
-        bearerAuth: ['delete:user']
-      }
-    ],
-    responses: {
-      204: {
-        description: 'Success'
       },
       400: {
         description: 'Bad Request',

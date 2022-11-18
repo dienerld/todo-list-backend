@@ -159,7 +159,48 @@ const taskWithId = {
         }
       }
     }
+  },
+  // Delete
+  delete: {
+    summary: 'Delete task',
+    description: 'Delete task',
+    operationId: 'deleteTask',
+    tags: ['Task'],
+    parameters: [
+      {
+        name: 'id',
+        in: 'path',
+        description: 'ID of task to return',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+    ],
+    security: [
+      {
+        bearerAuth: ['delete:task']
+      }
+    ],
+    responses: {
+      204: {
+        description: 'Success'
+      },
+      400: {
+        description: 'Bad Request',
+        $ref: '#/components/responses/400'
+      },
+      401: {
+        description: 'Unauthorized',
+        $ref: '#/components/responses/401'
+      },
+      500: {
+        description: 'Internal Server Error',
+        $ref: '#/components/responses/500'
+      }
+    }
   }
+
 };
 
 const taskSearch = {

@@ -15,9 +15,9 @@ const swaggerFile: swagger.JsonObject = {
     '/users': users,
     '/users/login': userLogin,
     '/users/{id}': userWithId,
+    '/tasks/search': taskSearch,
     '/tasks': tasks,
-    '/tasks/{id}': taskWithId,
-    '/tasks/search': taskSearch
+    '/tasks/{id}': taskWithId
   },
 
   components: {
