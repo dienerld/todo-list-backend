@@ -1,7 +1,7 @@
-import { IMailProvider, IMessage } from '@presentation/interfaces/IMailProvider';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
+import { IMailProvider, IMessage } from '@presentation/interfaces/IMailProvider';
 export class MailTrapMailProvider implements IMailProvider {
   transport: Mail;
   constructor () {
