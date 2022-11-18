@@ -6,7 +6,8 @@ COPY . .
 
 
 ENV NODE_ENV=development
-ARG PORT=8080
+ENV PORT=8080
+ENV DB_URL=postgres://todo:todo@todo-db:5432/todo
 RUN yarn
 
 ENTRYPOINT [ "yarn", "dev" ]

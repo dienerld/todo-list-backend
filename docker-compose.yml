@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  tododb:
+    image: postgres
+    container_name: growdev-db
+    volumes:
+      - todo-data:/var/lib/postgresql/data
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_DB=todo
+      - POSTGRES_USER=todo
+      - POSTGRES_PASSWORD=todo
+
+  todo-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: todo-api
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=postgres://todo:todo@tododb:5432/todo
+    depends_on:
+      - tododb
+    volumes:
+      - .:/app
+
+volumes:
+  todo-data:

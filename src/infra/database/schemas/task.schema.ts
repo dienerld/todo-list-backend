@@ -1,12 +1,11 @@
 import { Task } from '../../../core/models/task/task.model';
 import { EntitySchema } from 'typeorm';
 
-const taskSchema = new EntitySchema({
+const taskSchema = new EntitySchema<Task>({
   name: 'Task',
   tableName: 'tasks',
   target: Task,
   columns: {
-    // @ts-expect-error
     id: {
       type: 'uuid',
       primary: true,
