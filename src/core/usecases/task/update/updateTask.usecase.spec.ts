@@ -51,9 +51,7 @@ describe('[UseCase] Update Task', () => {
       throw new Error();
     });
 
-    const { statusCode, body } = await sut.execute(user.id, task.id, {
-      title: 'any_title'
-    });
+    const { statusCode, body } = await sut.execute(user.id, task.id, { title: 'any_title' });
 
     expect(statusCode).toBe(500);
     expect(body).toHaveProperty('error', 'Error');

@@ -20,14 +20,14 @@ const users: User[] = [createUser()];
 class UserRepositoryMock implements IUserRepository {
   async findByIdWithTasks (id: string): Promise<User | undefined> {
     const user = users.find((user) => user.id === id);
-    if (!user) return;
+    if (!user) throw new NotFoundError('User');
 
     return user;
   }
 
   async findById (id: string): Promise<User | undefined> {
     const user = users.find((user) => user.id === id);
-    if (!user) return;
+    if (!user) throw new NotFoundError('User');
     user.tasks = [];
     return user;
   }
@@ -75,11 +75,10 @@ class TaskRepositoryMock implements ITaskRepository {
     };
   }
 
-  async findById (id: string, userId: string): Promise<Task> {
+  async findById (id: string, userId: string): Promise<Task | undefined> {
     const user = users.find((user) => user.id === userId);
     if (!user) throw new NotFoundError('User');
     const task = user.tasks.find((task) => task.id === id);
-    if (!task) throw new NotFoundError('Task');
     return task;
   }
 
