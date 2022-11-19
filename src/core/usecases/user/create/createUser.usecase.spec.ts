@@ -101,4 +101,17 @@ describe('[Use Case] Create User', () => {
     expect(body).toHaveProperty('error', 'InvalidParamError');
     expect(body).toHaveProperty('message', 'Invalid param: Email already in use');
   });
+
+  it('should return serverError if repository not provided', async () => {
+    const createUserUseCase = new CreateUserUseCase(undefined as unknown as IUserRepository);
+
+    const { statusCode } = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_mail@mail.com',
+      password: 'any_password',
+      password_confirm: 'any_password'
+    });
+
+    expect(statusCode).toBe(500);
+  });
 });
