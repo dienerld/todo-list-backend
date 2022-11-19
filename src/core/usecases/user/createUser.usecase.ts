@@ -5,7 +5,7 @@ import { CustomError, InvalidParamError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 import { IJwtService } from '@presentation/interfaces/IJwtService';
 import { IMailProvider } from '@presentation/interfaces/IMailProvider';
-import { prettyBody } from './html/bodyFormated';
+import { prettyBody } from './html/bodyFormatted';
 
 class CreateUserUseCase {
   constructor (
