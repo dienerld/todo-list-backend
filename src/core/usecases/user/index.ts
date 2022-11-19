@@ -1,5 +1,5 @@
-export { CreateUserUseCase } from './create/createUser.usecase';
-export { DeleteUserUsecase } from './deleteUser.usecase';
-export { GetUserUseCase } from './getUser.usecase';
-export { UpdateUserUseCase } from './updateUser.usecase';
-export { LoginUserUsecase } from './loginUser.usecase';
+export * from './create/createUser.usecase';
+export * from './deleteUser.usecase';
+export * from './getUser.usecase';
+export * from './updateUser.usecase';
+export * from './loginUser.usecase';
