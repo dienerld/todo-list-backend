@@ -14,4 +14,12 @@ describe('[Use Case] Update User', () => {
     const { statusCode } = await useCase.execute(user.id, { name: 'updated name' });
     expect(statusCode).toEqual(204);
   });
+
+  it('should return a 404 status code if user is not found', async () => {
+    const useCase = new UpdateUserUseCase(userRepository);
+
+    const { statusCode, body } = await useCase.execute('invalid id', { name: 'updated name' });
+    expect(statusCode).toEqual(400);
+    expect(body).toHaveProperty('error', 'NotFoundError');
+  });
 });
