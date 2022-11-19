@@ -1,5 +1,5 @@
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { resetUsers, UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
 import { DeleteUserUsecase } from './deleteUser.usecase';
 
 describe('[Use case] Delete User', () => {
@@ -7,6 +7,7 @@ describe('[Use case] Delete User', () => {
 
   beforeEach(() => {
     userRepository = new UserRepositoryMock();
+    resetUsers();
   });
 
   it('should return a 204 status code if user is deleted', async () => {
@@ -16,5 +17,15 @@ describe('[Use case] Delete User', () => {
     const { statusCode } = await useCase.execute(user.id);
 
     expect(statusCode).toBe(204);
+  });
+
+  it('should return a 404 error if user not found', async () => {
+    const useCase = new DeleteUserUsecase(userRepository);
+    const user = UsersMock[0];
+
+    const { body, statusCode } = await useCase.execute(user.id + '1');
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message');
   });
 });
