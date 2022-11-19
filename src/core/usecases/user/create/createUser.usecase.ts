@@ -11,6 +11,8 @@ class CreateUserUseCase {
       if (userDto.password !== userDto.password_confirm) {
         throw new InvalidParamError('Password does not match');
       }
+      const userAlreadyExists = await this.userRepository.findByEmail(userDto.email);
+      if (userAlreadyExists) { throw new InvalidParamError('Email already in use') }
 
       const user = User.create(userDto.name, userDto.email, userDto.password);
       await this.userRepository.save(user);

@@ -17,6 +17,13 @@ function createUser () {
   return user;
 }
 const users: User[] = [createUser()];
+function resetUsers () {
+  while (users.length > 0) {
+    users.pop();
+  }
+
+  users.push(createUser());
+}
 class UserRepositoryMock implements IUserRepository {
   async findByIdWithTasks (id: string): Promise<User | undefined> {
     const user = users.find((user) => user.id === id);
@@ -116,4 +123,4 @@ class TaskRepositoryMock implements ITaskRepository {
   }
 }
 
-export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock };
+export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock, resetUsers };

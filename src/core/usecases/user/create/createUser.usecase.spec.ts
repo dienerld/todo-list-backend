@@ -1,12 +1,13 @@
 
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { UserRepositoryMock } from '../../../__tests__/repositories/databaseMock';
+import { resetUsers, UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
 import { CreateUserUseCase } from './createUser.usecase';
 
 describe('[Use Case] Create User', () => {
   let repository: IUserRepository;
 
   beforeEach(() => {
+    resetUsers();
     repository = new UserRepositoryMock();
   });
 
@@ -83,5 +84,21 @@ describe('[Use Case] Create User', () => {
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
     expect(body).toHaveProperty('message', 'Invalid param: Password does not match');
+  });
+
+  it('should return badRequest if email is already in use', async () => {
+    const createUserUseCase = new CreateUserUseCase(repository);
+    const user = UsersMock[0];
+
+    const { body, statusCode } = await createUserUseCase.execute({
+      name: 'any_name',
+      email: user.email,
+      password: 'any_password',
+      password_confirm: 'any_password'
+    });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+    expect(body).toHaveProperty('message', 'Invalid param: Email already in use');
   });
 });
