@@ -16,7 +16,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-  semi: ["error", "always", { "omitLastInOneLineBlock": true}],
+    semi: ['error', 'always', { omitLastInOneLineBlock: true }],
     'no-useless-constructor': 'off',
     camelcase: 'off'
   }
