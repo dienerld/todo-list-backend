@@ -7,7 +7,7 @@ class User {
   name: string;
   email: string;
   password: string;
-  tasks: Task[];
+  tasks!: Task[];
   created_at: Date;
   updated_at: Date;
 
@@ -22,9 +22,9 @@ class User {
 
   // use to create user with validations -- previne error typeorm
   static create (name: string, email: string, password: string) {
-    if (!name) { throw new MissingParamError('Name'); }
-    if (!email) { throw new MissingParamError('Email'); }
-    if (!password) { throw new MissingParamError('Password'); }
+    if (!name) { throw new MissingParamError('Name') }
+    if (!email) { throw new MissingParamError('Email') }
+    if (!password) { throw new MissingParamError('Password') }
 
     return new User(name, email, password);
   }
