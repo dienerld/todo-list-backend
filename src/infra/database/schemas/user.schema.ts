@@ -25,6 +25,10 @@ const userSchema = new EntitySchema<User>({
       type: 'timestamp',
       default: 'now()'
     },
+    verified: {
+      type: 'boolean',
+      default: false
+    },
     updated_at: {
       type: 'timestamp',
       default: 'now()',

@@ -11,31 +11,45 @@ import {
 import { hasAuthentication, UserAlreadyExistsMiddleware } from '../middleware';
 import { CustomRequest } from '../interfaces/customRequest';
 import { UserRepository } from '@database/repositories/user.repository';
+import { MailTrapMailProvider } from '../../Providers/email/MailTrapMailProvider';
+import { JWTService } from '../../Providers/jwt/jwt.provider';
+import { VerifyUserUseCase } from '@usecases/user/verifyUser.usecase';
+import { VerifyUserController } from '../controllers/user/verifyUser.controller';
 
 const usersRouter = Router();
 
-usersRouter.use(new UserAlreadyExistsMiddleware().handle);
-
 // Create User
-usersRouter.post('/', async (req, res) => {
+usersRouter.post('/', new UserAlreadyExistsMiddleware().handle, async (req, res) => {
   const userRepo = new UserRepository();
-  const useCase = new CreateUserUseCase(userRepo);
+  const mailProvider = new MailTrapMailProvider();
+  const jwtService = new JWTService();
+  const useCase = new CreateUserUseCase(userRepo, mailProvider, jwtService);
   const controller = new CreateUserController(useCase);
 
   return controller.handle(req, res);
 });
 
 // login User
-usersRouter.post('/login', (req, res) => {
+usersRouter.post('/login', new UserAlreadyExistsMiddleware().handle, async (req, res) => {
   const userRepo = new UserRepository();
-
-  const useCase = new LoginUserUsecase(userRepo);
+  const jwtService = new JWTService();
+  const useCase = new LoginUserUsecase(userRepo, jwtService);
   const controller = new LoginUserController(useCase);
 
   return controller.handle(req, res);
 });
 
-// This route is protected by the middleware
+// verify User
+usersRouter.get('/:token/verify', (req, res) => {
+  const userRepo = new UserRepository();
+  const jwtService = new JWTService();
+  const useCase = new VerifyUserUseCase(userRepo, jwtService);
+  const controller = new VerifyUserController(useCase);
+
+  return controller.handle(req, res);
+});
+
+// This route is protected by middleware
 usersRouter.use(hasAuthentication);
 
 // Get User
@@ -50,7 +64,8 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 // Update User
 usersRouter.put('/', (req, res) => {
   const userRepo = new UserRepository();
-  const useCase = new UpdateUserUseCase(userRepo);
+  const mailProvider = new MailTrapMailProvider();
+  const useCase = new UpdateUserUseCase(userRepo, mailProvider);
   const controller = new UpdateUserController(useCase);
 
   return controller.handle(req, res);

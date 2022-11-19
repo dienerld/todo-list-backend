@@ -186,7 +186,43 @@ const userWithId = {
       }
     }
   }
-
 };
 
-export { users, userLogin, userWithId };
+const userVerify = {
+  get: {
+    tags: ['User'],
+    summary: 'Verify user',
+    description: 'Verify user',
+    operationId: 'verifyUser',
+    parameters: [
+      {
+        name: 'token',
+        in: 'path',
+        description: 'Token of verify user',
+        required: true,
+        schema: {
+          type: 'string',
+          format: 'string'
+        }
+      }
+    ],
+    responses: {
+      204: {
+        description: 'Success'
+      },
+      400: {
+        description: 'Bad Request',
+        $ref: '#/components/responses/400'
+      },
+      401: {
+        description: 'Unauthorized',
+        $ref: '#/components/responses/401'
+      },
+      500: {
+        description: 'Internal Server Error',
+        $ref: '#/components/responses/500'
+      }
+    }
+  }
+};
+export { users, userLogin, userWithId, userVerify };

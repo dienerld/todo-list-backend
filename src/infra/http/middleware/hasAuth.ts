@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
+import { TokenExpiredError } from 'jsonwebtoken';
 import { NextFunction, Response } from 'express';
 import { CustomRequest } from '../interfaces/customRequest';
-import { jwtConfig } from '@configs/jwt';
 import { HttpResponse } from '@presentation/helpers';
+import { JWTService } from '../../Providers/jwt/jwt.provider';
 
 async function hasAuthentication (req: CustomRequest, res: Response, next: NextFunction) {
   try {
@@ -13,13 +13,13 @@ async function hasAuthentication (req: CustomRequest, res: Response, next: NextF
       const { statusCode, body } = HttpResponse.unauthorizedError();
       return res.status(statusCode).json(body);
     }
-    const decoded = jwt.verify(token, jwtConfig.secret);
+    const decoded = new JWTService().decode(token);
 
-    req.user = decoded as { id: string };
+    req.user = decoded;
 
     return next();
   } catch (err) {
-    if (err instanceof jwt.TokenExpiredError) {
+    if (err instanceof TokenExpiredError) {
       const { statusCode, body } = HttpResponse.unauthorizedError();
       return res.status(statusCode).json(body);
     }

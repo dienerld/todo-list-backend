@@ -1,9 +1,8 @@
 import { appDataSource } from '@database/data-source';
 import { taskSchema } from '@database/schemas/task.schema';
-import { TTask } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository, TFiltersQuery, TResultFind } from '@models/task/taskRepository.interface';
-import { Raw, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 class TaskRepository implements ITaskRepository {
   repository: Repository<Task>;
@@ -42,8 +41,8 @@ class TaskRepository implements ITaskRepository {
       where: {
         user_id: userId,
         // convert query values in lowercase to compare
-        ...(title && { title: Raw(alias => `LOWER(${alias}) Like '%${title.toLowerCase()}%'`) }),
-        ...(hidden && { hidden })
+        ...(hidden && { hidden }),
+        ...(title && { title: ILike(`%${title}%`) })
       },
       order: { date: 'ASC', hour: 'ASC' }
     });

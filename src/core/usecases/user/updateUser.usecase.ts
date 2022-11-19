@@ -2,9 +2,13 @@ import { UserRequestDto } from '@models/user/user.dtos';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
+import { IMailProvider } from '@presentation/interfaces/IMailProvider';
 
 class UpdateUserUseCase {
-  constructor (private readonly userRepository: IUserRepository) {}
+  constructor (
+    private readonly userRepository: IUserRepository,
+    private readonly mailer: IMailProvider
+  ) {}
 
   async execute (userId: string, userDto: UserRequestDto): Promise<IHttpResponse> {
     try {
@@ -19,6 +23,7 @@ class UpdateUserUseCase {
 
       if (userDto.email) {
         user.email = userDto.email;
+        user.verified = false;
       }
 
       if (userDto.password) {
@@ -29,6 +34,12 @@ class UpdateUserUseCase {
       }
 
       await this.userRepository.update(user);
+      await this.mailer.sendMail({
+        to: { name: user.name, email: user.email },
+        subject: 'Account updated',
+        body: 'Your account has been updated'
+      });
+
       return HttpResponse.noContent();
     } catch (error) {
       if (error instanceof CustomError) {

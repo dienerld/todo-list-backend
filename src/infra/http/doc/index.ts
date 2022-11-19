@@ -6,7 +6,7 @@ import { securitySchemes } from './components/security';
 import { swaggerHeader } from './header';
 import {
   users, userLogin, userWithId,
-  tasks, taskWithId, taskSearch
+  tasks, taskWithId, taskSearch, userVerify
 } from './paths';
 
 const swaggerFile: swagger.JsonObject = {
@@ -15,6 +15,7 @@ const swaggerFile: swagger.JsonObject = {
     '/users': users,
     '/users/login': userLogin,
     '/users/{id}': userWithId,
+    '/users/{id}/verify': userVerify,
     '/tasks/search': taskSearch,
     '/tasks': tasks,
     '/tasks/{id}': taskWithId

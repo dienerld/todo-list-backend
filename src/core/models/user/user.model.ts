@@ -1,5 +1,4 @@
 import { Task } from '@models/task/task.model';
-import { MissingParamError } from '@presentation/errors';
 import { randomUUID } from 'crypto';
 
 class User {
@@ -8,6 +7,7 @@ class User {
   email: string;
   password: string;
   tasks: Task[];
+  verified: boolean;
   created_at: Date;
   updated_at: Date;
 
@@ -16,16 +16,9 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.verified = false;
     this.created_at = new Date();
     this.updated_at = new Date();
-  }
-
-  static create (name: string, email: string, password: string) {
-    if (!name) { throw new MissingParamError('Name'); }
-    if (!email) { throw new MissingParamError('Email'); }
-    if (!password) { throw new MissingParamError('Password'); }
-
-    return new User(name, email, password);
   }
 }
 

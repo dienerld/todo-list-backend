@@ -1,12 +1,15 @@
-import jwt from 'jsonwebtoken';
-
-import { jwtConfig } from '@configs/jwt';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { CustomError } from '@presentation/errors';
+import { IJwtService } from '@presentation/interfaces/IJwtService';
 
 class LoginUserUsecase {
-  constructor (private readonly userRepository: IUserRepository) {}
+  constructor (
+    private readonly userRepository: IUserRepository,
+    private readonly jwtService: IJwtService
+
+  ) {}
+
   async execute (userId: string, password: string): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
@@ -18,13 +21,12 @@ class LoginUserUsecase {
         throw new Error('Invalid password');
       }
 
-      const token = jwt.sign(
+      const token = this.jwtService.sign(
         {
           id: user.id,
           email: user.email,
           name: user.name
-        },
-        jwtConfig.secret, { expiresIn: jwtConfig.expiresIn }
+        }
       );
 
       return HttpResponse.ok({ token });
