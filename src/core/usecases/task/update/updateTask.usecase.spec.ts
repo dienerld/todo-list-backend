@@ -9,22 +9,20 @@ describe('[UseCase] Update Task', () => {
   };
   it('should update a task', async () => {
     const { sut } = makeSut();
-    const [task] = UsersMock[0].tasks;
+    const user = UsersMock[0];
+    const task = user.tasks[0];
 
-    const { statusCode } = await sut.execute(task.user_id, task.id, {
-      title: 'any_title'
-    });
+    const { statusCode } = await sut.execute(user.id, task.id, { title: 'any_title' });
 
     expect(statusCode).toBe(204);
   });
 
   it('should return 404 if task not found', async () => {
     const { sut } = makeSut();
-    const [task] = UsersMock[0].tasks;
+    const user = UsersMock[0];
+    const task = user.tasks[0];
 
-    const { statusCode, body } = await sut.execute(task.user_id, task.id + '1', {
-      title: 'any_title'
-    });
+    const { statusCode, body } = await sut.execute(user.id, task.id + '1', { title: 'any_title' });
 
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'NotFoundError');
@@ -32,9 +30,10 @@ describe('[UseCase] Update Task', () => {
   });
   it('should return 404 if user not found', async () => {
     const { sut } = makeSut();
-    const [task] = UsersMock[0].tasks;
+    const user = UsersMock[0];
+    const task = user.tasks[0];
 
-    const { statusCode, body } = await sut.execute(task.user_id + '1', task.id, {
+    const { statusCode, body } = await sut.execute(user.id + '1', task.id, {
       title: 'any_title'
     });
 
@@ -45,13 +44,14 @@ describe('[UseCase] Update Task', () => {
 
   it('should return 500 if repository throws', async () => {
     const { sut, repository } = makeSut();
-    const [task] = UsersMock[0].tasks;
+    const user = UsersMock[0];
+    const task = user.tasks[0];
 
     jest.spyOn(repository, 'findById').mockImplementationOnce(() => {
       throw new Error();
     });
 
-    const { statusCode, body } = await sut.execute(task.user_id, task.id, {
+    const { statusCode, body } = await sut.execute(user.id, task.id, {
       title: 'any_title'
     });
 

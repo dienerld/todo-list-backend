@@ -11,9 +11,8 @@ class UpdateTaskUseCase {
       const task = await this.taskRepository.findById(taskId, userId);
       if (!task) { throw new NotFoundError('Task'); }
 
-      console.log(taskDto);
       task.update(taskDto);
-      await this.taskRepository.update(task);
+      await this.taskRepository.update(userId, task);
 
       return HttpResponse.noContent();
     } catch (error) {
