@@ -12,6 +12,7 @@ describe('[Use Case] Create User', () => {
 
   it('should create user with correct params', async () => {
     const createUserUseCase = new CreateUserUseCase(repository);
+
     const { body, statusCode } = await createUserUseCase.execute({
       name: 'any_name',
       email: 'any_mail@mail.com',
@@ -26,13 +27,13 @@ describe('[Use Case] Create User', () => {
 
   it('should return badRequest if name is not provided', async () => {
     const createUserUseCase = new CreateUserUseCase(repository);
+
     const { statusCode, body } = await createUserUseCase.execute({
       name: '',
       email: 'any_mail@mail.com',
       password: 'any_password',
       password_confirm: 'any_password'
     });
-    console.log(body);
 
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'MissingParamError');
@@ -41,6 +42,7 @@ describe('[Use Case] Create User', () => {
 
   it('should return badRequest if email is not provided', async () => {
     const createUserUseCase = new CreateUserUseCase(repository);
+
     const { statusCode, body } = await createUserUseCase.execute({
       name: 'any_name',
       email: '',
@@ -55,14 +57,31 @@ describe('[Use Case] Create User', () => {
 
   it('should return badRequest if password is not provided', async () => {
     const createUserUseCase = new CreateUserUseCase(repository);
+
     const { statusCode, body } = await createUserUseCase.execute({
       name: 'any_name',
       email: 'any_mail@mail.com',
       password: '',
       password_confirm: ''
     });
+
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'MissingParamError');
     expect(body).toHaveProperty('message', 'Missing param: Password');
+  });
+
+  it('should return badRequest if password does not match', async () => {
+    const createUserUseCase = new CreateUserUseCase(repository);
+
+    const { statusCode, body } = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_mail@mail.com',
+      password: 'any_password',
+      password_confirm: 'any_password2'
+    });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+    expect(body).toHaveProperty('message', 'Invalid param: Password does not match');
   });
 });
