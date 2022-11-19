@@ -23,10 +23,11 @@ class CreateUserUseCase {
     try {
       await this.userRepository.save(user);
       const tokenVerify = this.jwtService.sign({ id: user.id });
+
       this.mailer.sendMail({
         to: { name: user.name, email: user.email },
         subject: 'Account created',
-        body: prettyBody(`http://localhost:${process.env.PORT}/users/${tokenVerify}/verify`)
+        body: prettyBody('Click on the button below to confirm email', tokenVerify)
       });
       return HttpResponse.created(user);
     } catch (error) {

@@ -2,19 +2,18 @@ import { Router } from 'express';
 
 import {
   CreateUserController, DeleteUserController, GetUserController,
-  LoginUserController, UpdateUserController
+  LoginUserController, UpdateUserController, VerifyUserController
 } from '../controllers/user';
 import {
   CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
-  LoginUserUsecase, UpdateUserUseCase
+  LoginUserUsecase, UpdateUserUseCase, VerifyUserUseCase
 } from '@usecases/user';
-import { hasAuthentication, UserAlreadyExistsMiddleware } from '../middleware';
 import { CustomRequest } from '../interfaces/customRequest';
-import { UserRepository } from '@database/repositories/user.repository';
+
+import { UserRepository } from '@database/repositories';
 import { MailTrapMailProvider } from '../../Providers/email/MailTrapMailProvider';
+import { hasAuthentication, UserAlreadyExistsMiddleware } from '../middleware';
 import { JWTService } from '../../Providers/jwt/jwt.provider';
-import { VerifyUserUseCase } from '@usecases/user/verifyUser.usecase';
-import { VerifyUserController } from '../controllers/user/verifyUser.controller';
 
 const usersRouter = Router();
 
@@ -65,7 +64,8 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 usersRouter.put('/', (req, res) => {
   const userRepo = new UserRepository();
   const mailProvider = new MailTrapMailProvider();
-  const useCase = new UpdateUserUseCase(userRepo, mailProvider);
+  const jwtService = new JWTService();
+  const useCase = new UpdateUserUseCase(userRepo, mailProvider, jwtService);
   const controller = new UpdateUserController(useCase);
 
   return controller.handle(req, res);
