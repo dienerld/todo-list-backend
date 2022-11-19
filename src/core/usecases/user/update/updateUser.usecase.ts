@@ -6,7 +6,7 @@ import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 class UpdateUserUseCase {
   constructor (private readonly userRepository: IUserRepository) {}
 
-  async execute (userId: string, userDto: UserRequestDto): Promise<IHttpResponse> {
+  async execute (userId: string, userDto: Partial<UserRequestDto>): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
 
