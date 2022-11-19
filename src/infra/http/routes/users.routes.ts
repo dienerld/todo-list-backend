@@ -39,7 +39,7 @@ usersRouter.post('/login', new UserAlreadyExistsMiddleware().handle, async (req,
 });
 
 // verify User
-usersRouter.get('/:token/verify', (req, res) => {
+usersRouter.put('/:token/verify', (req, res) => {
   const userRepo = new UserRepository();
   const jwtService = new JWTService();
   const useCase = new VerifyUserUseCase(userRepo, jwtService);

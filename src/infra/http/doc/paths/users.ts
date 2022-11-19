@@ -189,7 +189,7 @@ const userWithId = {
 };
 
 const userVerify = {
-  get: {
+  put: {
     tags: ['User'],
     summary: 'Verify user',
     description: 'Verify user',
