@@ -1,4 +1,3 @@
-import { Task } from '@models/task/task.model';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
 import { CustomError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
@@ -8,9 +7,9 @@ class FindAllTaskUseCase {
 
   async execute (userId: string): Promise<IHttpResponse> {
     try {
-      const resultDB = await this.repository.findAll(userId);
+      const result = await this.repository.findAll(userId);
 
-      return HttpResponse.ok<Task[]>(resultDB);
+      return HttpResponse.ok(result);
     } catch (error) {
       if (error instanceof CustomError) {
         return HttpResponse.badRequest(error);
