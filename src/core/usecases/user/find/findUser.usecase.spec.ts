@@ -27,4 +27,14 @@ describe('[Use Case] Find User', () => {
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('message');
   });
+
+  it('should return a 500 error if repository not provided', async () => {
+    const useCase = new FindUserUseCase(undefined as unknown as IUserRepository);
+    const user = UsersMock[0];
+
+    const { body, statusCode } = await useCase.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
 });
