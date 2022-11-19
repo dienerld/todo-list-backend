@@ -23,5 +23,5 @@
     "require": ["tsconfig-paths/register"]
   },
   "include": ["src/**/*", "src/infra/database/data-source.ts"],
-  "exclude": ["node_modules", "src/**/*.spec.ts"]
+  "exclude": ["node_modules"]
 }
