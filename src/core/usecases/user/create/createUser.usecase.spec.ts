@@ -52,4 +52,17 @@ describe('[Use Case] Create User', () => {
     expect(body).toHaveProperty('error', 'MissingParamError');
     expect(body).toHaveProperty('message', 'Missing param: Email');
   });
+
+  it('should return badRequest if password is not provided', async () => {
+    const createUserUseCase = new CreateUserUseCase(repository);
+    const { statusCode, body } = await createUserUseCase.execute({
+      name: 'any_name',
+      email: 'any_mail@mail.com',
+      password: '',
+      password_confirm: ''
+    });
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('error', 'MissingParamError');
+    expect(body).toHaveProperty('message', 'Missing param: Password');
+  });
 });
