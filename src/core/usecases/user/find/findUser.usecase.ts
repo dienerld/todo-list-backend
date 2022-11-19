@@ -2,7 +2,7 @@ import { IUserRepository } from '@models/user/userRepository.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
-class GetUserUseCase {
+class FindUserUseCase {
   constructor (private readonly userRepository: IUserRepository) {}
 
   async execute (userId: string): Promise<IHttpResponse> {
@@ -23,4 +23,4 @@ class GetUserUseCase {
   }
 }
 
-export { GetUserUseCase };
+export { FindUserUseCase };
