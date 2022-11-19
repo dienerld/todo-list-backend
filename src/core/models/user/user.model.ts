@@ -20,6 +20,7 @@ class User {
     this.updated_at = new Date();
   }
 
+  // use to create user with validations -- previne error typeorm
   static create (name: string, email: string, password: string) {
     if (!name) { throw new MissingParamError('Name'); }
     if (!email) { throw new MissingParamError('Email'); }
