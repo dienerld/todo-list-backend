@@ -5,7 +5,7 @@ import {
   LoginUserController, UpdateUserController
 } from '../controllers/user';
 import {
-  CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
+  CreateUserUseCase, DeleteUserUsecase, FindUserUseCase,
   LoginUserUsecase, UpdateUserUseCase
 } from '@usecases/user';
 import { hasAuthentication, UserAlreadyExistsMiddleware } from '../middleware';
@@ -41,7 +41,7 @@ usersRouter.use(hasAuthentication);
 // Get User
 usersRouter.get('/', (req: CustomRequest, res) => {
   const userRepo = new UserRepository();
-  const useCase = new GetUserUseCase(userRepo);
+  const useCase = new FindUserUseCase(userRepo);
   const controller = new GetUserController(useCase);
 
   return controller.handle(req, res);

@@ -1,6 +1,6 @@
+import { LoginUserUsecase } from '@usecases/user';
 import { Response } from 'express';
 
-import { LoginUserUsecase } from '@usecases/user/loginUser.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class LoginUserController {
@@ -11,14 +11,10 @@ class LoginUserController {
     if (!userId) {
       return response.status(400).json({ error: 'User not found' });
     }
-    try {
-      const { password } = request.body;
-      const { body, statusCode } = await this.loginUserUseCase.execute(userId, password);
+    const { password } = request.body;
+    const { body, statusCode } = await this.loginUserUseCase.execute(userId, password);
 
-      return response.status(statusCode).json(body);
-    } catch (err: any) {
-      return response.status(400).json({ error: err.message || 'Unexpected error.' });
-    }
+    return response.status(statusCode).json(body);
   }
 }
 
