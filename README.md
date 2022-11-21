@@ -20,5 +20,5 @@ O objetivo deste projeto é criar uma API REST para gerenciar uma lista de taref
 - Rode o projeto com `yarn dev`
 
 ---
-
+🚀[todo-api](https://dnr-todo-api.fly.dev/)
 Desenvolvido por [Diener](https://github.com/dienerld)
