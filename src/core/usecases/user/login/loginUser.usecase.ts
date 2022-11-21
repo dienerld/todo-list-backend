@@ -22,13 +22,11 @@ class LoginUserUsecase {
         throw new InvalidParamError('Password');
       }
 
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          name: user.name
-        },
-        jwtConfig.secret, { expiresIn: jwtConfig.expiresIn }
+      const token = jwt.sign({
+        id: user.id,
+        email: user.email,
+        name: user.name
+      }, jwtConfig.secret, { expiresIn: jwtConfig.expiresIn }
       );
 
       return HttpResponse.ok({ token });
