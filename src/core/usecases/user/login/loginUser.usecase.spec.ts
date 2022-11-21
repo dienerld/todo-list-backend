@@ -42,4 +42,13 @@ describe('[Use Case] Login User', () => {
     expect(result.statusCode).toBe(400);
     expect(result.body).toHaveProperty('error');
   });
+
+  it('should return an error when the password is not provided', async () => {
+    const useCase = new LoginUserUsecase(userRepository);
+    const [user] = UsersMock;
+    const result = await useCase.execute(user.id, '');
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body).toHaveProperty('error');
+  });
 });
