@@ -33,7 +33,8 @@ describe('[Use Case] Login User', () => {
     const result = await useCase.execute(user.id, 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error');
+    expect(result.body).toHaveProperty('error', 'InvalidParamError');
+    expect(result.body).toHaveProperty('message', 'Invalid param: Password');
   });
 
   it('should return an error when the user id is not provided', async () => {
