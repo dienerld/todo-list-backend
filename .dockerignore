@@ -1,3 +1,4 @@
 _http/
 node_modules
 Dockerfile
+.env

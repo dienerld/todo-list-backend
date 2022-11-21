@@ -4,11 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-
-ENV NODE_ENV=development
-ARG PORT=8080
+RUN yarn
+RUN yarn build
+ENV NODE_ENV=production
 RUN yarn
 
-ENTRYPOINT [ "yarn", "dev" ]
-
-EXPOSE $PORT
+ENTRYPOINT [ "yarn", "start" ]

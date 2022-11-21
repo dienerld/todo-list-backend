@@ -1,0 +1,13 @@
+FROM node:16.16.0-alpine
+
+WORKDIR /app
+COPY . .
+
+ENV NODE_ENV=development
+ENV PORT=8080
+ENV DB_URL=postgres://todo:todo@todo-db:5432/todo
+RUN yarn
+
+ENTRYPOINT [ "yarn", "dev" ]
+
+EXPOSE $PORT
