@@ -14,7 +14,8 @@ class UpdateUserUseCase {
         throw new NotFoundError('User not found');
       }
       if (userDto.name !== undefined) {
-        if (userDto.name.trim().length < 3) { throw new InvalidParamError('Name') }
+        const regexName = /[A-Z][a-z].* [A-Z][a-z].*/;
+        if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
       }
 
