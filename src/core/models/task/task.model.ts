@@ -24,10 +24,11 @@ class Task {
     this.updated_at = new Date();
   }
 
+  // use to create user with validations -- previne error typeorm
   static create (title: string, date:Date, hour: string): Task {
-    if (!title) { throw new MissingParamError('Title'); }
-    if (!hour) { throw new MissingParamError('Hour'); }
-    if (!date) { throw new MissingParamError('Date'); }
+    if (!title) { throw new MissingParamError('Title') }
+    if (!hour) { throw new MissingParamError('Hour') }
+    if (!date) { throw new MissingParamError('Date') }
 
     return new Task(title, date, hour);
   }

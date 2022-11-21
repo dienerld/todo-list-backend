@@ -12,6 +12,6 @@ export interface ITaskRepository {
   findAll(userId: string): Promise<TResultFind>;
   findWithFilters(userId: string, filters: TFiltersQuery): Promise<TResultFind>;
   save(userId: string, task: Task): Promise<void>;
-  update(task: Task): Promise<void>;
+  update(userId: string, task: Task): Promise<void>;
   delete(id: string): Promise<void>;
 }

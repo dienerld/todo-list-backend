@@ -9,11 +9,10 @@ class UpdateTaskUseCase {
   async execute (userId: string, taskId: string, taskDto: Partial<TaskUpdateRequestDto>): Promise<IHttpResponse> {
     try {
       const task = await this.taskRepository.findById(taskId, userId);
-      if (!task) { throw new NotFoundError('Task'); }
+      if (!task) { throw new NotFoundError('Task') }
 
-      console.log(taskDto);
       task.update(taskDto);
-      await this.taskRepository.update(task);
+      await this.taskRepository.update(userId, task);
 
       return HttpResponse.noContent();
     } catch (error) {

@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { CustomRequest } from '../../interfaces/customRequest';
 import { UserRequestDto } from '@models/user/user.dtos';
-import { CreateUserUseCase } from '@usecases/user/createUser.usecase';
+import { CreateUserUseCase } from '@usecases/user/create/createUser.usecase';
 import { CustomError } from '@presentation/errors';
 
 class CreateUserController {

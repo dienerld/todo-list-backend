@@ -7,11 +7,11 @@ class DeleteTaskUseCase {
 
   async execute (userId: string, taskId: string): Promise<IHttpResponse> {
     try {
-      if (!userId) { throw new MissingParamError('userId'); };
-      if (!taskId) { throw new MissingParamError('taskId'); };
+      if (!userId) { throw new MissingParamError('userId') };
+      if (!taskId) { throw new MissingParamError('taskId') };
 
       const task = await this.repository.findById(taskId, userId);
-      if (!task) { throw new NotFoundError('Task'); };
+      if (!task) { throw new NotFoundError('Task') };
 
       await this.repository.delete(taskId);
 

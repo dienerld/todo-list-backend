@@ -4,7 +4,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "paths": {
-      "@database/*": ["src/infra/database/*"],
+      "@database/*": ["./src/infra/database/*"],
       "@models/*": ["./src/core/models/*"],
       "@usecases/*": ["./src/core/usecases/*"],
       "@presentation/*": ["./src/core/presentation/*"],
@@ -16,7 +16,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true
   },
   "ts-node": {
