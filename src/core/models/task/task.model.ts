@@ -26,8 +26,8 @@ class Task {
 
   // use to create user with validations -- previne error typeorm
   static create (title: string, date:Date, hour: string): Task {
-    if (!title) { throw new MissingParamError('Title') }
-    if (!hour) { throw new MissingParamError('Hour') }
+    if (!title.trim()) { throw new MissingParamError('Title') }
+    if (!hour.trim()) { throw new MissingParamError('Hour') }
     if (!date) { throw new MissingParamError('Date') }
 
     return new Task(title, date, hour);

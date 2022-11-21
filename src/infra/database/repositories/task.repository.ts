@@ -1,9 +1,8 @@
 import { appDataSource } from '@database/data-source';
 import { taskSchema } from '@database/schemas/task.schema';
-import { TTask } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository, TFiltersQuery, TResultFind } from '@models/task/taskRepository.interface';
-import { Raw, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 class TaskRepository implements ITaskRepository {
   repository: Repository<Task>;
@@ -27,8 +26,8 @@ class TaskRepository implements ITaskRepository {
     await this.repository.save({ ...task, user_id: userId });
   }
 
-  async update (task: Task): Promise<void> {
-    await this.repository.update(task.id, task);
+  async update (id: string, task: Task): Promise<void> {
+    await this.repository.update(id, task);
   }
 
   async delete (id: string): Promise<void> {
@@ -41,9 +40,8 @@ class TaskRepository implements ITaskRepository {
     const [tasks, total] = await this.repository.findAndCount({
       where: {
         user_id: userId,
-        // convert query values in lowercase to compare
-        ...(title && { title: Raw(alias => `LOWER(${alias}) Like '%${title.toLowerCase()}%'`) }),
-        ...(hidden && { hidden })
+        ...(hidden && { hidden }),
+        ...(title && { title: ILike(`%${title}%`) })
       },
       order: { date: 'ASC', hour: 'ASC' }
     });

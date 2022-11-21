@@ -25,22 +25,22 @@ function resetUsers () {
   users.push(createUser());
 }
 class UserRepositoryMock implements IUserRepository {
-  async findByIdWithTasks (id: string): Promise<User | undefined> {
+  async findByIdWithTasks (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
     if (!user) throw new NotFoundError('User');
 
     return user;
   }
 
-  async findById (id: string): Promise<User | undefined> {
+  async findById (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
     if (!user) throw new NotFoundError('User');
     user.tasks = [];
     return user;
   }
 
-  async findByEmail (email: string): Promise<User | undefined> {
-    return users.find((user) => user.email === email);
+  async findByEmail (email: string): Promise<User | null> {
+    return users.find((user) => user.email === email) || null;
   }
 
   async save (user: User): Promise<void> {
@@ -82,11 +82,11 @@ class TaskRepositoryMock implements ITaskRepository {
     };
   }
 
-  async findById (id: string, userId: string): Promise<Task | undefined> {
+  async findById (id: string, userId: string): Promise<Task | null> {
     const user = users.find((user) => user.id === userId);
     if (!user) throw new NotFoundError('User');
     const task = user.tasks.find((task) => task.id === id);
-    return task;
+    return task || null;
   }
 
   async findAll (userId: string): Promise<TResultFind> {

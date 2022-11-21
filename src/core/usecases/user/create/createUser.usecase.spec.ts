@@ -15,7 +15,7 @@ describe('[Use Case] Create User', () => {
     const createUserUseCase = new CreateUserUseCase(repository);
 
     const { body, statusCode } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: 'any_mail@mail.com',
       password: 'any_password',
       password_confirm: 'any_password'
@@ -23,7 +23,7 @@ describe('[Use Case] Create User', () => {
 
     expect(statusCode).toBe(201);
     expect(body).toHaveProperty('id');
-    expect(body).toHaveProperty('name', 'any_name');
+    expect(body).toHaveProperty('name', 'Any Name');
   });
 
   it('should return badRequest if name is not provided', async () => {
@@ -45,7 +45,7 @@ describe('[Use Case] Create User', () => {
     const createUserUseCase = new CreateUserUseCase(repository);
 
     const { statusCode, body } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: '',
       password: 'any_password',
       password_confirm: 'any_password'
@@ -60,7 +60,7 @@ describe('[Use Case] Create User', () => {
     const createUserUseCase = new CreateUserUseCase(repository);
 
     const { statusCode, body } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: 'any_mail@mail.com',
       password: '',
       password_confirm: ''
@@ -75,7 +75,7 @@ describe('[Use Case] Create User', () => {
     const createUserUseCase = new CreateUserUseCase(repository);
 
     const { statusCode, body } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: 'any_mail@mail.com',
       password: 'any_password',
       password_confirm: 'any_password2'
@@ -91,7 +91,7 @@ describe('[Use Case] Create User', () => {
     const user = UsersMock[0];
 
     const { body, statusCode } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: user.email,
       password: 'any_password',
       password_confirm: 'any_password'
@@ -106,7 +106,7 @@ describe('[Use Case] Create User', () => {
     const createUserUseCase = new CreateUserUseCase(undefined as unknown as IUserRepository);
 
     const { statusCode } = await createUserUseCase.execute({
-      name: 'any_name',
+      name: 'Any Name',
       email: 'any_mail@mail.com',
       password: 'any_password',
       password_confirm: 'any_password'
