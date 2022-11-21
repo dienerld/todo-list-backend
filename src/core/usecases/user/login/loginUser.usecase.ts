@@ -10,7 +10,7 @@ class LoginUserUsecase {
   async execute (userId: string, password: string): Promise<IHttpResponse> {
     try {
       if (!userId) {
-        throw new NotFoundError('User');
+        throw new InvalidParamError('UserId');
       }
 
       const user = await this.userRepository.findById(userId);
