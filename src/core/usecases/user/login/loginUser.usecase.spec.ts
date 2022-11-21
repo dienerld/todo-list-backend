@@ -42,7 +42,8 @@ describe('[Use Case] Login User', () => {
     const result = await useCase.execute('', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error');
+    expect(result.body).toHaveProperty('error', 'NotFoundError');
+    expect(result.body).toHaveProperty('message', 'User not found');
   });
 
   it('should return an error when the password is not provided', async () => {
