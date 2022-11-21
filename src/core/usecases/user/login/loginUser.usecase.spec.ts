@@ -23,7 +23,8 @@ describe('[Use Case] Login User', () => {
     const result = await useCase.execute('invalidId', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error');
+    expect(result.body).toHaveProperty('error', 'NotFoundError');
+    expect(result.body).toHaveProperty('message', 'User not found');
   });
 
   it('should return an error when the password is invalid', async () => {
@@ -47,6 +48,14 @@ describe('[Use Case] Login User', () => {
     const useCase = new LoginUserUsecase(userRepository);
     const [user] = UsersMock;
     const result = await useCase.execute(user.id, '');
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body).toHaveProperty('error');
+  });
+
+  it('should return an error when the user id is invalid', async () => {
+    const useCase = new LoginUserUsecase(userRepository);
+    const result = await useCase.execute('invalidId', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
     expect(result.body).toHaveProperty('error');
