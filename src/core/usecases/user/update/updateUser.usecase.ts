@@ -1,6 +1,6 @@
 import { UserRequestDto } from '@models/user/user.dtos';
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { CustomError, NotFoundError } from '@presentation/errors';
+import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class UpdateUserUseCase {
@@ -13,19 +13,22 @@ class UpdateUserUseCase {
       if (!user) {
         throw new NotFoundError('User not found');
       }
-      if (userDto.name) {
+      if (userDto.name !== undefined) {
+        if (userDto.name.trim().length < 3) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
       }
 
-      if (userDto.email) {
+      if (userDto.email !== undefined) {
+        const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+        if (!userDto.email.match(regexEmail)) { throw new InvalidParamError('Email') }
         user.email = userDto.email;
       }
 
-      if (userDto.password) {
+      if (userDto.password !== undefined || userDto.password_confirm !== undefined) {
         if (userDto.password !== userDto.password_confirm) {
-          throw new Error('Password does not match');
+          throw new InvalidParamError('Password does not match');
         }
-        user.password = userDto.password;
+        user.password = userDto.password!;
       }
 
       await this.userRepository.update(user);

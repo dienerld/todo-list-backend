@@ -22,4 +22,13 @@ describe('[Use Case] Update User', () => {
     expect(statusCode).toEqual(400);
     expect(body).toHaveProperty('error', 'NotFoundError');
   });
+
+  it('should return a 400 status code if user is not valid', async () => {
+    const useCase = new UpdateUserUseCase(userRepository);
+    const user = UsersMock[0];
+
+    const { statusCode, body } = await useCase.execute(user.id, { name: '' });
+    expect(statusCode).toEqual(400);
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+  });
 });
