@@ -17,4 +17,12 @@ describe('[Use Case] Login User', () => {
     expect(result.statusCode).toBe(200);
     expect(result.body).toHaveProperty('token');
   });
+
+  it('should return an error when the user is not found', async () => {
+    const useCase = new LoginUserUsecase(userRepository);
+    const result = await useCase.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(400);
+    expect(result.body).toHaveProperty('error');
+  });
 });
