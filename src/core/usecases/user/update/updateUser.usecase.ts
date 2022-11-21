@@ -2,6 +2,7 @@ import { UserRequestDto } from '@models/user/user.dtos';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
+import { regexEmail, regexName } from '@presentation/helpers/validations';
 
 class UpdateUserUseCase {
   constructor (private readonly userRepository: IUserRepository) {}
@@ -14,13 +15,11 @@ class UpdateUserUseCase {
         throw new NotFoundError('User not found');
       }
       if (userDto.name !== undefined) {
-        const regexName = /[A-Z][a-z].* [A-Z][a-z].*/;
         if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
       }
 
       if (userDto.email !== undefined) {
-        const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
         if (!userDto.email.match(regexEmail)) { throw new InvalidParamError('Email') }
         user.email = userDto.email;
       }

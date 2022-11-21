@@ -1,5 +1,6 @@
 import { Task } from '@models/task/task.model';
 import { MissingParamError } from '@presentation/errors';
+import { regexEmail, regexName } from '@presentation/helpers/validations';
 import { randomUUID } from 'crypto';
 
 class User {
@@ -22,8 +23,8 @@ class User {
 
   // use to create user with validations -- previne error typeorm
   static create (name: string, email: string, password: string) {
-    if (!name) { throw new MissingParamError('Name') }
-    if (!email) { throw new MissingParamError('Email') }
+    if (!name.match(regexName)) { throw new MissingParamError('Name') }
+    if (!email.match(regexEmail)) { throw new MissingParamError('Email') }
     if (!password) { throw new MissingParamError('Password') }
 
     return new User(name, email, password);
