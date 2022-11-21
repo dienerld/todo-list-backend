@@ -24,7 +24,8 @@ class UpdateUserUseCase {
         user.email = userDto.email;
       }
 
-      if (userDto.password !== undefined || userDto.password_confirm !== undefined) {
+      if (userDto.password?.trim() &&
+        (userDto.password !== undefined || userDto.password_confirm !== undefined)) {
         if (userDto.password !== userDto.password_confirm) {
           throw new InvalidParamError('Password does not match');
         }
