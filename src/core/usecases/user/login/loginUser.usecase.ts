@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken';
 import { jwtConfig } from '@configs/jwt';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
+import { CustomError, NotFoundError } from '@presentation/errors';
 
 class LoginUserUsecase {
   constructor (private readonly userRepository: IUserRepository) {}
   async execute (userId: string, password: string): Promise<IHttpResponse> {
     try {
       if (!userId) {
-        throw new InvalidParamError('UserId');
+        throw new CustomError('EmailError', 'User or password incorrect');
       }
 
       const user = await this.userRepository.findById(userId);
@@ -19,7 +19,7 @@ class LoginUserUsecase {
       }
 
       if (user.password !== password) {
-        throw new InvalidParamError('Password');
+        throw new CustomError('PasswordError', 'User or password incorrect');
       }
 
       const token = jwt.sign({
