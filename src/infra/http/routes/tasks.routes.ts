@@ -10,7 +10,7 @@ import {
   FindAllTaskUseCase, UpdateTaskUseCase,
   FindWithFiltersUseCase
 } from '@usecases/task';
-import { TaskRepository } from '@database/repositories/task.repository';
+import { TaskRepository } from '@database/repositories';
 
 const tasksRouter = Router();
 // This route is protected by the middleware - user can access only after login
