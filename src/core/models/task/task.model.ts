@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { randomUUID } from 'crypto';
-import { MissingParamError } from '../../presentation/errors/missingParamsError';
-import { TaskUpdateRequestDto, TTask } from './task.dtos';
+import { MissingParamError } from '@presentation/errors';
+import { TaskUpdateRequestDto } from './task.dtos';
 
 class Task {
   id: string;

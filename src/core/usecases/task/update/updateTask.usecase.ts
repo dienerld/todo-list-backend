@@ -1,5 +1,4 @@
-import { TaskUpdateRequestDto } from '@models/task/task.dtos';
-import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { TaskUpdateRequestDto, ITaskRepository } from '@models/task';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 

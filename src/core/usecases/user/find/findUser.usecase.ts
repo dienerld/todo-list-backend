@@ -1,4 +1,4 @@
-import { IUserRepository } from '@models/user/userRepository.interface';
+import { IUserRepository } from '@models/user';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 

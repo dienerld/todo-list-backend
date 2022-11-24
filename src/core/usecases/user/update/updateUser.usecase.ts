@@ -1,10 +1,7 @@
-import { UserRequestDto } from '@models/user/user.dtos';
-import { IUserRepository } from '@models/user/userRepository.interface';
+import { UserRequestDto, IUserRepository } from '@models/user';
 import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
-import { HttpResponse, IHttpResponse } from '@presentation/helpers';
-import { regexEmail, regexName } from '@presentation/helpers/validations';
-import { IJwtService } from '@presentation/interfaces/IJwtService';
-import { IMailProvider } from '@presentation/interfaces/IMailProvider';
+import { HttpResponse, IHttpResponse, regexEmail, regexName } from '@presentation/helpers';
+import { IJwtService, IMailProvider } from '@presentation/interfaces';
 import { prettyBody } from '../html/bodyFormatted';
 
 class UpdateUserUseCase {

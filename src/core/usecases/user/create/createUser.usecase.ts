@@ -1,11 +1,8 @@
-import { UserRequestDto } from '@models/user/user.dtos';
-import { User } from '@models/user/user.model';
-import { IUserRepository } from '@models/user/userRepository.interface';
+import { User, IUserRepository, UserRequestDto } from '@models/user';
 import { CustomError, InvalidParamError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
-import { IJwtService } from '@presentation/interfaces/IJwtService';
-import { IMailProvider } from '@presentation/interfaces/IMailProvider';
-import { prettyBody } from './html/bodyFormatted';
+import { IJwtService, IMailProvider } from '@presentation/interfaces';
+import { prettyBody } from '../html/bodyFormatted';
 
 class CreateUserUseCase {
   constructor (
@@ -22,7 +19,7 @@ class CreateUserUseCase {
       const userAlreadyExists = await this.userRepository.findByEmail(userDto.email);
       if (userAlreadyExists) { throw new InvalidParamError('Email already in use') }
 
-      const user = User.create(userDto.name, userDto.email, userDto.password);
+      const user = new User(userDto.name, userDto.email, userDto.password);
       await this.userRepository.save(user);
       const tokenVerify = this.jwtService.sign({ id: user.id });
 

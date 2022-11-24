@@ -1,6 +1,6 @@
-import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { ITaskRepository } from '@models/task';
 import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
-import { HttpResponse, IHttpResponse } from '@presentation/helpers/httpResponse';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class DeleteTaskUseCase {
   constructor (private readonly repository: ITaskRepository) {}

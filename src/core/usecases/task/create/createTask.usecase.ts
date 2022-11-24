@@ -1,6 +1,4 @@
-import { TaskRequestDto } from '@models/task/task.dtos';
-import { Task } from '@models/task/task.model';
-import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { ITaskRepository, Task, TaskRequestDto } from '@models/task';
 import { CustomError, MissingParamError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 

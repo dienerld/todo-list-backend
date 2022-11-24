@@ -1,7 +1,7 @@
+import { IUserRepository } from '@models/user';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
-import { IUserRepository } from '@models/user/userRepository.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
-import { IJwtService } from '@presentation/interfaces/IJwtService';
+import { IJwtService } from '@presentation/interfaces';
 
 class LoginUserUsecase {
   constructor (

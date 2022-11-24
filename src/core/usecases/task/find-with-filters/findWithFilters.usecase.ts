@@ -1,4 +1,4 @@
-import { ITaskRepository, TFiltersQuery } from '@models/task/taskRepository.interface';
+import { ITaskRepository, TFiltersQuery } from '@models/task';
 import { CustomError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 

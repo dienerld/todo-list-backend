@@ -9,7 +9,7 @@ import { IUserRepository } from '@models/user/userRepository.interface';
 import { NotFoundError } from '@presentation/errors';
 
 function createUser () {
-  const user = User.create('John Doe', 'john@mail.com', '12345');
+  const user = new User('John Doe', 'john@mail.com', '12345');
   user.id = 'any_id';
   const task = Task.create('Test', new Date(), '01:01');
   task.id = 'any_task_id';
