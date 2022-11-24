@@ -47,7 +47,7 @@ describe('[UseCase] Create Task', () => {
     const createTaskUseCase = new CreateTaskUseCase(repository);
     const { statusCode } = await createTaskUseCase.execute('1', {
       title: 'Test',
-      date: null,
+      date: undefined as unknown as Date,
       hour: '12:00'
     });
 
@@ -77,7 +77,7 @@ describe('[UseCase] Create Task', () => {
   });
 
   it('should return serverError if database throws', async () => {
-    const createTaskUseCase = new CreateTaskUseCase(null);
+    const createTaskUseCase = new CreateTaskUseCase(undefined as unknown as ITaskRepository);
     jest.spyOn(repository, 'save').mockImplementationOnce(() => {
       throw new Error();
     });

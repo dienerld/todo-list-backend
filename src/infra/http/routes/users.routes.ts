@@ -5,7 +5,7 @@ import {
   LoginUserController, UpdateUserController, VerifyUserController
 } from '../controllers/user';
 import {
-  CreateUserUseCase, DeleteUserUsecase, GetUserUseCase,
+  CreateUserUseCase, DeleteUserUsecase, FindUserUseCase,
   LoginUserUsecase, UpdateUserUseCase, VerifyUserUseCase
 } from '@usecases/user';
 import { CustomRequest } from '../interfaces/customRequest';
@@ -54,7 +54,7 @@ usersRouter.use(hasAuthentication);
 // Get User
 usersRouter.get('/', (req: CustomRequest, res) => {
   const userRepo = new UserRepository();
-  const useCase = new GetUserUseCase(userRepo);
+  const useCase = new FindUserUseCase(userRepo);
   const controller = new GetUserController(useCase);
 
   return controller.handle(req, res);

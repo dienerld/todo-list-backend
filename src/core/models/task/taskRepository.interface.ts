@@ -8,10 +8,10 @@ export type TResultFind = {
   total: number;
 }
 export interface ITaskRepository {
-  findById(id: string, userId: string): Promise<Task | undefined>;
+  findById(id: string, userId: string): Promise<Task | null>;
   findAll(userId: string): Promise<TResultFind>;
   findWithFilters(userId: string, filters: TFiltersQuery): Promise<TResultFind>;
   save(userId: string, task: Task): Promise<void>;
-  update(task: Task): Promise<void>;
+  update(userId: string, task: Task): Promise<void>;
   delete(id: string): Promise<void>;
 }

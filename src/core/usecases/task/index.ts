@@ -1,5 +1,5 @@
-export { CreateTaskUseCase } from './create/createTask.usecase';
-export { UpdateTaskUseCase } from './update/updateTask.usecase';
-export { DeleteTaskUseCase } from './delete/deleteTask.usecase';
-export { FindAllTaskUseCase } from './find-all/findAllTask.usecase';
-export { FindWithFiltersUseCase } from './find-with-filters/findWithFilters.usecase';
+export * from './create/createTask.usecase';
+export * from './update/updateTask.usecase';
+export * from './delete/deleteTask.usecase';
+export * from './find-all/findAllTask.usecase';
+export * from './find-with-filters/findWithFilters.usecase';

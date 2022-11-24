@@ -51,7 +51,7 @@ describe('[UseCase] Delete', () => {
 
   it('should return serverError if database throws', async () => {
     const databaseMock = repository;
-    jest.spyOn(databaseMock, 'findById').mockImplementation(() => { throw new Error(); });
+    jest.spyOn(databaseMock, 'findById').mockImplementation(() => { throw new Error() });
 
     const deleteTaskUseCase = new DeleteTaskUseCase(databaseMock);
     const { statusCode, body } = await deleteTaskUseCase.execute('any_id', 'valid_id');

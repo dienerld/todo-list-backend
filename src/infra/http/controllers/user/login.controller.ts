@@ -1,6 +1,7 @@
 import { Response } from 'express';
+import { NotFoundError } from '@presentation/errors';
+import { LoginUserUsecase } from '@usecases/user';
 
-import { LoginUserUsecase } from '@usecases/user/loginUser.usecase';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class LoginUserController {
@@ -8,17 +9,18 @@ class LoginUserController {
 
   async handle (request: CustomRequest, response: Response): Promise<Response> {
     const userId = request.user?.id;
+    const { password } = request.body;
     if (!userId) {
-      return response.status(400).json({ error: 'User not found' });
+      const error = new NotFoundError('User');
+      return response.status(400).json({
+        error: error.name,
+        message: error.message
+      });
     }
-    try {
-      const { password } = request.body;
-      const { body, statusCode } = await this.loginUserUseCase.execute(userId, password);
 
-      return response.status(statusCode).json(body);
-    } catch (err: any) {
-      return response.status(400).json({ error: err.message || 'Unexpected error.' });
-    }
+    const { body, statusCode } = await this.loginUserUseCase.execute(userId, password);
+
+    return response.status(statusCode).json(body);
   }
 }
 

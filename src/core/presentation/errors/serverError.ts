@@ -2,8 +2,7 @@ import { CustomError } from './customError';
 
 class ServerError extends CustomError {
   constructor () {
-    super('Internal server error');
-    this.name = 'ServerError';
+    super('ServerError', 'Internal server error');
   }
 }
 

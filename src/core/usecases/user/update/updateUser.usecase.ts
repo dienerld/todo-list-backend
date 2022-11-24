@@ -1,10 +1,11 @@
 import { UserRequestDto } from '@models/user/user.dtos';
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { CustomError, NotFoundError } from '@presentation/errors';
+import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
+import { regexEmail, regexName } from '@presentation/helpers/validations';
 import { IJwtService } from '@presentation/interfaces/IJwtService';
 import { IMailProvider } from '@presentation/interfaces/IMailProvider';
-import { prettyBody } from './html/bodyFormatted';
+import { prettyBody } from '../html/bodyFormatted';
 
 class UpdateUserUseCase {
   constructor (
@@ -13,7 +14,7 @@ class UpdateUserUseCase {
     private readonly jwtService: IJwtService
   ) {}
 
-  async execute (userId: string, userDto: UserRequestDto): Promise<IHttpResponse> {
+  async execute (userId: string, userDto: Partial<UserRequestDto>): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
       let changedEmail = false;
@@ -21,21 +22,23 @@ class UpdateUserUseCase {
       if (!user) {
         throw new NotFoundError('User not found');
       }
-      if (userDto.name) {
+      if (userDto.name !== undefined) {
+        if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
       }
 
-      if (userDto.email) {
+      if (userDto.email !== undefined) {
+        if (!userDto.email.match(regexEmail)) { throw new InvalidParamError('Email') }
         user.email = userDto.email;
         user.verified = false;
         changedEmail = true;
       }
 
-      if (userDto.password) {
+      if (userDto.password !== undefined || userDto.password_confirm !== undefined) {
         if (userDto.password !== userDto.password_confirm) {
-          throw new Error('Password does not match');
+          throw new InvalidParamError('Password does not match');
         }
-        user.password = userDto.password;
+        user.password = userDto.password!;
       }
 
       await this.userRepository.update(user);

@@ -10,8 +10,8 @@ class TaskRepository implements ITaskRepository {
     this.repository = appDataSource.getRepository<Task>(taskSchema);
   }
 
-  async findById (id: string): Promise<Task> {
-    return this.repository.findOneOrFail({ where: { id } });
+  async findById (id: string): Promise<Task | null> {
+    return this.repository.findOne({ where: { id } });
   }
 
   async findAll (userId: string): Promise<TResultFind> {
@@ -26,8 +26,10 @@ class TaskRepository implements ITaskRepository {
     await this.repository.save({ ...task, user_id: userId });
   }
 
-  async update (task: Task): Promise<void> {
-    await this.repository.update(task.id, task);
+  async update (userId: string, task: Task): Promise<void> {
+    console.log('TaskRepository:update');
+    console.log(task);
+    await this.repository.update({ id: task.id, user_id: userId }, task);
   }
 
   async delete (id: string): Promise<void> {

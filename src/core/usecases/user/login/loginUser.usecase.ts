@@ -1,6 +1,6 @@
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 import { IUserRepository } from '@models/user/userRepository.interface';
-import { CustomError } from '@presentation/errors';
+import { CustomError, NotFoundError } from '@presentation/errors';
 import { IJwtService } from '@presentation/interfaces/IJwtService';
 
 class LoginUserUsecase {
@@ -12,13 +12,17 @@ class LoginUserUsecase {
 
   async execute (userId: string, password: string): Promise<IHttpResponse> {
     try {
+      if (!userId) {
+        throw new CustomError('EmailError', 'User or password incorrect');
+      }
+
       const user = await this.userRepository.findById(userId);
       if (!user) {
-        throw new Error('User not found');
+        throw new NotFoundError('User');
       }
 
       if (user.password !== password) {
-        throw new Error('Invalid password');
+        throw new CustomError('PasswordError', 'User or password incorrect');
       }
 
       const token = this.jwtService.sign(

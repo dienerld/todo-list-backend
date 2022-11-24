@@ -11,19 +11,36 @@ import { NotFoundError } from '@presentation/errors';
 function createUser () {
   const user = User.create('John Doe', 'john@mail.com', '12345');
   user.id = 'any_id';
-  const task = Task.create('Test', new Date(), '01:01', user.id);
+  const task = Task.create('Test', new Date(), '01:01');
   task.id = 'any_task_id';
   user.tasks = [task];
   return user;
 }
 const users: User[] = [createUser()];
-class UserRepositoryMock implements IUserRepository {
-  async findById (id: string): Promise<User> {
-    return users.find((user) => user.id === id);
+function resetUsers () {
+  while (users.length > 0) {
+    users.pop();
   }
 
-  async findByEmail (email: string): Promise<User> {
-    return users.find((user) => user.email === email);
+  users.push(createUser());
+}
+class UserRepositoryMock implements IUserRepository {
+  async findByIdWithTasks (id: string): Promise<User | null> {
+    const user = users.find((user) => user.id === id);
+    if (!user) throw new NotFoundError('User');
+
+    return user;
+  }
+
+  async findById (id: string): Promise<User | null> {
+    const user = users.find((user) => user.id === id);
+    if (!user) throw new NotFoundError('User');
+    user.tasks = [];
+    return user;
+  }
+
+  async findByEmail (email: string): Promise<User | null> {
+    return users.find((user) => user.email === email) || null;
   }
 
   async save (user: User): Promise<void> {
@@ -53,18 +70,11 @@ class TaskRepositoryMock implements ITaskRepository {
       };
     }
 
-    const { title, date, hour, done, hidden } = filters;
     const tasks = user.tasks.filter((task) => {
-      if (
-        (title && task.title === title) ||
-        (date && task.date === date) ||
-        (hour && task.hour === hour) ||
-        (done && task.done === done) ||
-        (hidden && task.hidden === hidden)
-      ) {
-        return true;
-      }
-      return false;
+      if (filters.title && !task.title.includes(filters.title)) return false;
+      if (filters.date && task.date !== filters.date) return false;
+      if (filters.hidden && task.hidden !== filters.hidden) return false;
+      return true;
     });
     return {
       tasks,
@@ -72,10 +82,11 @@ class TaskRepositoryMock implements ITaskRepository {
     };
   }
 
-  async findById (id: string, userId: string): Promise<Task> {
+  async findById (id: string, userId: string): Promise<Task | null> {
     const user = users.find((user) => user.id === userId);
     if (!user) throw new NotFoundError('User');
-    return user.tasks.find((task) => task.id === id);
+    const task = user.tasks.find((task) => task.id === id);
+    return task || null;
   }
 
   async findAll (userId: string): Promise<TResultFind> {
@@ -87,14 +98,14 @@ class TaskRepositoryMock implements ITaskRepository {
     };
   }
 
-  async save (task: Task): Promise<void> {
-    const user = users.find((user) => user.id === task.user_id);
+  async save (userId: string, task: Task): Promise<void> {
+    const user = users.find((user) => user.id === userId);
     if (!user) throw new NotFoundError('User');
     user.tasks.push(task);
   }
 
-  async update (task: Task): Promise<void> {
-    const userIndex = users.findIndex((user) => user.id === task.user_id);
+  async update (userId: string, task: Task): Promise<void> {
+    const userIndex = users.findIndex((user) => user.id === userId);
     if (userIndex === -1) throw new NotFoundError('User');
     const taskIndex = users[userIndex].tasks.findIndex((t) => t.id === task.id);
     if (taskIndex === -1) throw new NotFoundError('Task');
@@ -106,12 +117,10 @@ class TaskRepositoryMock implements ITaskRepository {
       user.tasks.find((task) => task.id === id)
     );
     if (userIndex === -1) return;
-    const taskIndex = users[userIndex].tasks.findIndex(
-      (task) => task.id === id
-    );
+    const taskIndex = users[userIndex].tasks.findIndex((task) => task.id === id);
     if (taskIndex === -1) return;
     users[userIndex].tasks.splice(taskIndex, 1);
   }
 }
 
-export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock };
+export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock, resetUsers };

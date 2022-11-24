@@ -10,11 +10,11 @@ class UserRepository implements IUserRepository {
     this.repository = appDataSource.getRepository(userSchema);
   }
 
-  async findById (id: string): Promise<User | undefined> {
+  async findById (id: string): Promise<User | null> {
     return this.repository.findOne({ where: { id } });
   }
 
-  async findByEmail (email: string): Promise<User | undefined> {
+  async findByEmail (email: string): Promise<User | null> {
     return this.repository.findOne({ where: { email } });
   }
 
@@ -30,7 +30,7 @@ class UserRepository implements IUserRepository {
     await this.repository.delete(id);
   }
 
-  async findByIdWithTasks (id: string): Promise<User | undefined> {
+  async findByIdWithTasks (id: string): Promise<User | null> {
     return this.repository.findOne({
       where: { id },
       relations: ['tasks'],

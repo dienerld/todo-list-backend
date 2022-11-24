@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "Diener Dornelas <dienezim@hotmail.com>",
   "license": "MIT",
-  "packageManager": "yarn@3.2.3",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "swc ./src/ -d dist/",
