@@ -129,7 +129,9 @@ class RedisCacheMock implements ITaskRepositoryCache {
     return null;
   }
 
-  async set (userId: string, result: TResultFind, expiresInMin: number): Promise<void> { }
+  async set<T> (userId: string, result: T, expiresInMin: number): Promise<void> { }
+
+  async delete (id: string): Promise<void> { }
 }
 
 export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock, resetUsers, RedisCacheMock };

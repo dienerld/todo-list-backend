@@ -1,10 +1,14 @@
 import { TaskUpdateRequestDto } from '@models/task/task.dtos';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
+import { ITaskRepositoryCache } from '@models/task/taskRepositoryCache.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 
 class UpdateTaskUseCase {
-  constructor (private readonly taskRepository: ITaskRepository) {}
+  constructor (
+    private readonly taskRepository: ITaskRepository,
+    private readonly repositoryCache: ITaskRepositoryCache
+  ) {}
 
   async execute (userId: string, taskId: string, taskDto: Partial<TaskUpdateRequestDto>): Promise<IHttpResponse> {
     try {
@@ -13,6 +17,7 @@ class UpdateTaskUseCase {
 
       task.update(taskDto);
       await this.taskRepository.update(userId, task);
+      await this.repositoryCache.delete(userId);
 
       return HttpResponse.noContent();
     } catch (error) {

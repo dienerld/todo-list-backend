@@ -1,6 +1,5 @@
-import { TResultFind } from './taskRepository.interface';
-
 export interface ITaskRepositoryCache {
-  get<T>(userId: string): Promise<T | null>;
-  set(userId: string, result: TResultFind, expiresInMin?: number): Promise<void>;
+  get<T>(id: string): Promise<T | null>;
+  set<T>(id: string, value: T, expiresInMin?: number): Promise<void>;
+  delete(id: string): Promise<void>;
 }
