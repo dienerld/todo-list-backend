@@ -1,15 +1,17 @@
-import { ITaskRepository } from '@models/task/taskRepository.interface';
-import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { TaskRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories/databaseMock';
 import { FindAllTaskUseCase } from './findAllTask.usecase';
 
 describe('[UseCase] Find All Tasks', () => {
-  let repository: ITaskRepository;
+  const makeSut = () => {
+    const repository = new TaskRepositoryMock();
+    const repositoryCache = new RedisCacheMock();
+    const sut = new FindAllTaskUseCase(repository, repositoryCache);
 
-  beforeEach(() => {
-    repository = new TaskRepositoryMock();
-  });
+    return { sut, repository, repositoryCache };
+  };
+
   it('Should return all tasks', async () => {
-    const sut = new FindAllTaskUseCase(repository);
+    const { sut } = makeSut();
 
     const { body: tasks } = await sut.execute('any_id');
 
@@ -17,7 +19,7 @@ describe('[UseCase] Find All Tasks', () => {
   });
 
   it('Should return empty array if user has no tasks', async () => {
-    const sut = new FindAllTaskUseCase(repository);
+    const { sut, repository } = makeSut();
     const user = UsersMock[0];
     await repository.delete(user.tasks[0].id);
 
@@ -27,7 +29,7 @@ describe('[UseCase] Find All Tasks', () => {
   });
 
   it('Should return 404 if user not found', async () => {
-    const sut = new FindAllTaskUseCase(repository);
+    const { sut } = makeSut();
 
     const { statusCode } = await sut.execute('invalid_id');
 
