@@ -1,14 +1,14 @@
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
-import { ITaskRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
 import { CustomError, MissingParamError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class CreateTaskUseCase {
   constructor (
     private readonly repository: ITaskRepository,
-    private readonly repositoryCache: ITaskRepositoryCache
+    private readonly repositoryCache: IRepositoryCache
   ) {}
 
   async execute (userId: string, taskDto: TaskRequestDto): Promise<IHttpResponse> {

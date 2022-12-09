@@ -1,12 +1,12 @@
 import { ITaskRepository } from '@models/task/taskRepository.interface';
-import { ITaskRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
 import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers/httpResponse';
 
 class DeleteTaskUseCase {
   constructor (
     private readonly repository: ITaskRepository,
-    private readonly repositoryCache: ITaskRepositoryCache
+    private readonly repositoryCache: IRepositoryCache
   ) {}
 
   async execute (userId: string, taskId: string): Promise<IHttpResponse> {

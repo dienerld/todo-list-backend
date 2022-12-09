@@ -1,13 +1,13 @@
 import { cacheConfig } from '@configs/cache';
 import { ITaskRepository, TResultFind } from '@models/task/taskRepository.interface';
-import { ITaskRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
 import { CustomError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
 class FindAllTaskUseCase {
   constructor (
     private readonly repository: ITaskRepository,
-    private readonly repositoryCache: ITaskRepositoryCache
+    private readonly repositoryCache: IRepositoryCache
   ) {}
 
   async execute (userId: string): Promise<IHttpResponse> {
