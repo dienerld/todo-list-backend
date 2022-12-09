@@ -1,7 +1,7 @@
 import { TaskRequestDto } from '@models/task/task.dtos';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
-import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, MissingParamError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 

@@ -4,7 +4,7 @@ import {
   TFiltersQuery,
   TResultFind
 } from '@models/task/taskRepository.interface';
-import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { User } from '@models/user/user.model';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { NotFoundError } from '@presentation/errors';

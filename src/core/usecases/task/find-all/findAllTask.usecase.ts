@@ -1,6 +1,6 @@
 import { cacheConfig } from '@configs/cache';
 import { ITaskRepository, TResultFind } from '@models/task/taskRepository.interface';
-import { IRepositoryCache } from '@models/task/taskRepositoryCache.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError } from '@presentation/errors';
 import { IHttpResponse, HttpResponse } from '@presentation/helpers';
 
