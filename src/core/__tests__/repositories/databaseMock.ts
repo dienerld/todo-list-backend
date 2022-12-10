@@ -4,6 +4,7 @@ import {
   TFiltersQuery,
   TResultFind
 } from '@models/task/taskRepository.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { User } from '@models/user/user.model';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { NotFoundError } from '@presentation/errors';
@@ -123,4 +124,14 @@ class TaskRepositoryMock implements ITaskRepository {
   }
 }
 
-export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock, resetUsers };
+class RedisCacheMock implements IRepositoryCache {
+  async get<TResultFind> (userId: string): Promise<TResultFind | null> {
+    return null;
+  }
+
+  async set<T> (userId: string, result: T, expiresInMin: number): Promise<void> { }
+
+  async delete (id: string): Promise<void> { }
+}
+
+export { UserRepositoryMock, TaskRepositoryMock, users as UsersMock, resetUsers, RedisCacheMock };

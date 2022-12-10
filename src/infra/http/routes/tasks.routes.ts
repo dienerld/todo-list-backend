@@ -11,6 +11,7 @@ import {
   FindWithFiltersUseCase
 } from '@usecases/task';
 import { TaskRepository } from '@database/repositories/task.repository';
+import { RedisRepository } from '../../cache/redis.repository';
 
 const tasksRouter = Router();
 // This route is protected by the middleware - user can access only after login
@@ -19,7 +20,8 @@ tasksRouter.use(hasAuthentication);
 // Get tasks list for user
 tasksRouter.get('/', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new FindAllTaskUseCase(repo);
+  const repoCache = new RedisRepository();
+  const useCase = new FindAllTaskUseCase(repo, repoCache);
   const controller = new GetAllTaskController(useCase);
 
   return controller.handle(req, res);
@@ -28,7 +30,9 @@ tasksRouter.get('/', (req, res) => {
 // Create task
 tasksRouter.post('/', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new CreateTaskUseCase(repo);
+  const repoCache = new RedisRepository();
+
+  const useCase = new CreateTaskUseCase(repo, repoCache);
   const controller = new CreateTaskController(useCase);
 
   return controller.handle(req, res);
@@ -37,7 +41,9 @@ tasksRouter.post('/', (req, res) => {
 // Update task
 tasksRouter.put('/:id', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new UpdateTaskUseCase(repo);
+  const repoCache = new RedisRepository();
+
+  const useCase = new UpdateTaskUseCase(repo, repoCache);
   const controller = new UpdateTaskController(useCase);
 
   return controller.handle(req, res);
@@ -46,7 +52,9 @@ tasksRouter.put('/:id', (req, res) => {
 // Delete task
 tasksRouter.delete('/:id', (req, res) => {
   const repo = new TaskRepository();
-  const useCase = new DeleteTaskUseCase(repo);
+  const repoCache = new RedisRepository();
+
+  const useCase = new DeleteTaskUseCase(repo, repoCache);
   const controller = new DeleteTaskController(useCase);
 
   return controller.handle(req, res);
