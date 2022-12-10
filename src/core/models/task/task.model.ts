@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { randomUUID } from 'crypto';
 import { MissingParamError } from '../../presentation/errors/missingParamsError';
-import { TaskUpdateRequestDto, TTask } from './task.dtos';
+import { TaskUpdateRequestDto } from './task.dtos';
 
 class Task {
   id: string;
@@ -12,8 +12,9 @@ class Task {
   hour: string;
   created_at: Date;
   updated_at: Date;
+  userId: string;
 
-  private constructor (title: string, date:Date, hour: string) {
+  private constructor (title: string, date:Date, hour: string, userId: string) {
     this.id = randomUUID();
     this.title = title;
     this.done = false;
@@ -22,15 +23,16 @@ class Task {
     this.hour = hour;
     this.created_at = new Date();
     this.updated_at = new Date();
+    this.userId = userId;
   }
 
   // use to create user with validations -- previne error typeorm
-  static create (title: string, date:Date, hour: string): Task {
+  static create (title: string, date: Date, hour: string, userId: string): Task {
     if (!title.trim()) { throw new MissingParamError('Title') }
     if (!hour.trim()) { throw new MissingParamError('Hour') }
     if (!date) { throw new MissingParamError('Date') }
 
-    return new Task(title, date, hour);
+    return new Task(title, date, hour, userId);
   }
 
   update (task: Partial<TaskUpdateRequestDto>): void {

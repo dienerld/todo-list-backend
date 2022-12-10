@@ -20,7 +20,7 @@ class CreateTaskUseCase {
 
       if (!taskDto) { throw new MissingParamError('taskDto') }
 
-      const task = Task.create(taskDto.title, taskDto.date, taskDto.hour);
+      const task = Task.create(taskDto.title, taskDto.date, taskDto.hour, userId);
 
       await this.repository.save(userId, task);
       await this.repositoryCache.delete(keyCache);

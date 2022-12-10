@@ -1,5 +1,4 @@
 import { appDataSource } from '@database/data-source';
-import { userSchema } from '@database/schemas/user.schema';
 import { User } from '@models/user/user.model';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { Repository } from 'typeorm';
@@ -7,7 +6,7 @@ import { Repository } from 'typeorm';
 class UserRepository implements IUserRepository {
   repository: Repository<User>;
   constructor () {
-    this.repository = appDataSource.getRepository(userSchema);
+    this.repository = appDataSource.getRepository(User);
   }
 
   async findById (id: string): Promise<User | null> {

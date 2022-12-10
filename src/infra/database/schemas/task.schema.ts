@@ -1,15 +1,14 @@
-import { Task } from '../../../core/models/task/task.model';
+import { Task } from '@models/task/task.model';
 import { EntitySchema } from 'typeorm';
 
 const taskSchema = new EntitySchema<Task>({
   name: 'Task',
   tableName: 'tasks',
-  target: Task,
+  target: () => Task,
   columns: {
     id: {
       type: 'uuid',
-      primary: true,
-      nullable: false
+      primary: true
     },
     title: {
       type: 'varchar'
@@ -35,13 +34,14 @@ const taskSchema = new EntitySchema<Task>({
       default: 'now()',
       onUpdate: 'now()'
     },
-    user_id: {
+    userId: {
+      name: 'user_id',
       type: 'uuid',
       nullable: false
     }
   },
   relations: {
-    user_id: {
+    userId: {
       type: 'many-to-one',
       target: 'User',
       joinColumn: {

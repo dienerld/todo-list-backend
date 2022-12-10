@@ -24,7 +24,7 @@ class RedisRepository implements IRepositoryCache {
   }
 
   async delete (id: string): Promise<void> {
-    await this.client.del(id);
+    await this.client.del([id]);
   }
 }
 

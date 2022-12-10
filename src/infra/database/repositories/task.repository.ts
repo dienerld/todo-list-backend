@@ -1,5 +1,4 @@
 import { appDataSource } from '@database/data-source';
-import { taskSchema } from '@database/schemas/task.schema';
 import { Task } from '@models/task/task.model';
 import { ITaskRepository, TFiltersQuery, TResultFind } from '@models/task/taskRepository.interface';
 import { ILike, Repository } from 'typeorm';
@@ -7,7 +6,7 @@ import { ILike, Repository } from 'typeorm';
 class TaskRepository implements ITaskRepository {
   repository: Repository<Task>;
   constructor () {
-    this.repository = appDataSource.getRepository<Task>(taskSchema);
+    this.repository = appDataSource.getRepository<Task>(Task);
   }
 
   async findById (id: string): Promise<Task | null> {
@@ -16,20 +15,18 @@ class TaskRepository implements ITaskRepository {
 
   async findAll (userId: string): Promise<TResultFind> {
     const [tasks, total] = await this.repository.findAndCount({
-      where: { user_id: userId },
+      where: { userId },
       order: { date: 'ASC', hour: 'ASC' }
     });
     return { tasks, total };
   }
 
   async save (userId: string, task: Task): Promise<void> {
-    await this.repository.save({ ...task, user_id: userId });
+    await this.repository.save({ ...task, userId });
   }
 
   async update (userId: string, task: Task): Promise<void> {
-    console.log('TaskRepository:update');
-    console.log(task);
-    await this.repository.update({ id: task.id, user_id: userId }, task);
+    await this.repository.update({ id: task.id, userId }, task);
   }
 
   async delete (id: string): Promise<void> {
@@ -41,7 +38,7 @@ class TaskRepository implements ITaskRepository {
 
     const [tasks, total] = await this.repository.findAndCount({
       where: {
-        user_id: userId,
+        userId,
         ...(hidden && { hidden }),
         ...(title && { title: ILike(`%${title}%`) })
       },

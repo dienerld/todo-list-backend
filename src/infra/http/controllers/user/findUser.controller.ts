@@ -1,9 +1,9 @@
-import { GetUserUseCase } from '@usecases/user/getUser.usecase';
 import { Response } from 'express';
+import { FindUserUseCase } from '@usecases/user';
 import { CustomRequest } from '../../interfaces/customRequest';
 
-class GetUserController {
-  constructor (private readonly getUserUseCase: GetUserUseCase) {}
+class FindUserController {
+  constructor (private readonly findUserUseCase: FindUserUseCase) {}
 
   async handle (request: CustomRequest, response: Response) {
     try {
@@ -12,7 +12,7 @@ class GetUserController {
         return response.status(400).json({ error: 'User not found' });
       }
 
-      const { body, statusCode } = await this.getUserUseCase.execute(userId);
+      const { body, statusCode } = await this.findUserUseCase.execute(userId);
 
       return response.status(statusCode).json(body);
     } catch (err: any) {
@@ -22,4 +22,4 @@ class GetUserController {
   }
 }
 
-export { GetUserController };
+export { FindUserController };

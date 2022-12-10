@@ -18,7 +18,7 @@ class DeleteUserUsecase {
       }
       Promise.all([
         await this.userRepository.delete(userId),
-        await this.cacheRepository.delete(userId),
+        await this.cacheRepository.delete(`${cacheConfig.prefix.tasks}-${userId}`),
         await this.cacheRepository.delete(`${cacheConfig.prefix.user}-${userId}`)
       ]);
       return HttpResponse.noContent();
