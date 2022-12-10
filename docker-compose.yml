@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   todo-db:
@@ -13,6 +13,14 @@ services:
       - POSTGRES_USER=todo
       - POSTGRES_PASSWORD=todo
 
+  todo-redis:
+    image: bitnami/redis
+    container_name: growdev-redis-dev
+    environment:
+      - REDIS_PASSWORD=todo
+    ports:
+      - 6379:6379
+
   todo-api:
     build:
       context: .
@@ -22,7 +30,12 @@ services:
       - 8080:8080
     environment:
       - DATABASE_URL=postgres://todo:todo@todo-db:5432/todo
+      - REDIS_HOST=todo-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=todo
+
     depends_on:
+      - todo-redis
       - todo-db
     volumes:
       - .:/app
