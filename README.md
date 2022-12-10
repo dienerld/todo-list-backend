@@ -12,11 +12,15 @@ O objetivo deste projeto é criar uma API REST para gerenciar uma lista de taref
 
 - NodeJS
 - Yarn
+- PostgresQL
+- Redis
 
 ### Instalação
 
 - Clone o repositório
 - Instale as dependências com `yarn`
+- Inicie instâncias do Postgres e Redis
+- Defina as variáveis de ambiente
 - Rode o projeto com `yarn dev`
 
 ---
