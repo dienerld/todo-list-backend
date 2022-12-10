@@ -1,3 +1,4 @@
+import { cacheConfig } from '@configs/cache';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
@@ -18,7 +19,7 @@ class DeleteUserUsecase {
       Promise.all([
         await this.userRepository.delete(userId),
         await this.cacheRepository.delete(userId),
-        await this.cacheRepository.delete(`user-with-tasks${userId}`)
+        await this.cacheRepository.delete(`${cacheConfig.prefix.user}-${userId}`)
       ]);
       return HttpResponse.noContent();
     } catch (error) {

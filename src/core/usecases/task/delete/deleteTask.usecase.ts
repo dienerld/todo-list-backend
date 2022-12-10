@@ -1,3 +1,4 @@
+import { cacheConfig } from '@configs/cache';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
 import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, MissingParamError, NotFoundError } from '@presentation/errors';
@@ -10,6 +11,7 @@ class DeleteTaskUseCase {
   ) {}
 
   async execute (userId: string, taskId: string): Promise<IHttpResponse> {
+    const keyCache = `${cacheConfig.prefix.tasks}-${userId}`;
     try {
       if (!userId) { throw new MissingParamError('userId') };
       if (!taskId) { throw new MissingParamError('taskId') };
@@ -18,7 +20,7 @@ class DeleteTaskUseCase {
       if (!task) { throw new NotFoundError('Task') };
 
       await this.repository.delete(taskId);
-      await this.repositoryCache.delete(userId);
+      await this.repositoryCache.delete(keyCache);
 
       return HttpResponse.noContent();
     } catch (error) {

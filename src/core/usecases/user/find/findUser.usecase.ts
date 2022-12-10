@@ -1,3 +1,4 @@
+import { cacheConfig } from '@configs/cache';
 import { IUserRepository } from '@models/user/userRepository.interface';
 import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
@@ -16,7 +17,7 @@ class FindUserUseCase {
       const user = await this.userRepository.findByIdWithTasks(userId);
       if (!user) { throw new NotFoundError('User') }
 
-      await this.cacheRepository.set(`user-with-tasks${userId}`, user);
+      await this.cacheRepository.set(`${cacheConfig.prefix.user}-${userId}`, user);
 
       return HttpResponse.ok(user);
     } catch (error) {

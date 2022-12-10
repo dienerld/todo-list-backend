@@ -12,11 +12,12 @@ class FindAllTaskUseCase {
 
   async execute (userId: string): Promise<IHttpResponse> {
     try {
-      const cached = await this.repositoryCache.get<TResultFind>(userId);
+      const keyCache = `${cacheConfig.prefix.tasks}-${userId}`;
+      const cached = await this.repositoryCache.get<TResultFind>(keyCache);
       if (cached) { return HttpResponse.ok(cached) }
 
       const result = await this.repository.findAll(userId);
-      await this.repositoryCache.set(userId, result, cacheConfig.expiresInMin);
+      await this.repositoryCache.set(keyCache, result, cacheConfig.expiresInMin);
 
       return HttpResponse.ok(result);
     } catch (error) {

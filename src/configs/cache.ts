@@ -4,5 +4,9 @@ export const cacheConfig = {
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,
   password: process.env.REDIS_PASSWORD,
-  expiresInMin: 30
+  expiresInMin: 30,
+  prefix: {
+    user: 'user',
+    tasks: 'task'
+  }
 };
