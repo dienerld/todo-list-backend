@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn
+RUN yarn --frozen-lockfile
 RUN yarn build
 ENV NODE_ENV=production
-RUN yarn
+RUN yarn --frozen-lockfile --production
 
 ENTRYPOINT [ "yarn", "start" ]
