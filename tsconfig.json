@@ -2,13 +2,14 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "rootDir": "./src",
+    "rootDir": "./src/",
+    "baseUrl": "./src",
     "paths": {
-      "@database/*": ["./src/infra/database/*"],
-      "@models/*": ["./src/core/models/*"],
-      "@usecases/*": ["./src/core/usecases/*"],
-      "@presentation/*": ["./src/core/presentation/*"],
-      "@configs/*": ["./src/configs/*"]
+      "@database/*": ["./infra/database/*"],
+      "@models/*": ["./core/models/*"],
+      "@usecases/*": ["./core/usecases/*"],
+      "@presentation/*": ["./core/presentation/*"],
+      "@configs/*": ["./configs/*"]
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
@@ -22,6 +23,6 @@
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },
-  "include": ["src/**/*", "src/infra/database/data-source.ts"],
-  "exclude": ["node_modules"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/core/__tests__"]
 }
