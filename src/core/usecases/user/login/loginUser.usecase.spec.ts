@@ -33,8 +33,8 @@ describe('[Use Case] Login User', () => {
     const result = await sut.execute(user.id, 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error', 'InvalidParamError');
-    expect(result.body).toHaveProperty('message', 'Invalid param: Password');
+    expect(result.body).toHaveProperty('error', 'PasswordError');
+    expect(result.body).toHaveProperty('message', 'User or password incorrect');
   });
 
   it('should return an error when the user id is not provided', async () => {
@@ -42,8 +42,8 @@ describe('[Use Case] Login User', () => {
     const result = await sut.execute('', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error', 'InvalidParamError');
-    expect(result.body).toHaveProperty('message', 'Invalid param: UserId');
+    expect(result.body).toHaveProperty('error', 'MissingParamError');
+    expect(result.body).toHaveProperty('message', 'Missing param: UserId');
   });
 
   it('should return an error when the password is not provided', async () => {
