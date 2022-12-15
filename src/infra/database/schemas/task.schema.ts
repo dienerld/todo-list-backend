@@ -1,5 +1,5 @@
-import { Task } from '@models/task/task.model';
 import { EntitySchema } from 'typeorm';
+import { Task } from '@models/task/task.model';
 
 const taskSchema = new EntitySchema<Task>({
   name: 'Task',
