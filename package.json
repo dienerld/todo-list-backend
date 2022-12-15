@@ -10,10 +10,14 @@
     "postbuild": "tscpaths -p ./tsconfig.json -s ./src -o ./dist",
     "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
-    "test": "jest --watch",
     "typeorm": "typeorm-ts-node-commonjs",
     "typeorm:up": "typeorm-ts-node-commonjs migration:run -d ./src/infra/database/data-source.ts",
-    "typeorm:down": "typeorm-ts-node-commonjs  migration:revert -d ./src/infra/database/data-source.ts"
+    "typeorm:down": "typeorm-ts-node-commonjs  migration:revert -d ./src/infra/database/data-source.ts",
+    "test": "jest --silent --noStackTrace --passWithNoTests",
+    "test:unit": "yarn test --watch -c jest-unit.config.ts",
+    "test:integration": "yarn test --watch -c jest-integration.config.ts",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage"
   },
   "dependencies": {
     "cors": "^2.8.5",
