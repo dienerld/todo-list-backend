@@ -42,9 +42,10 @@ describe('[UseCase] Create Task', () => {
 
   it('should return badRequest if taskDto is not provided', async () => {
     const { sut } = makeSut();
-    const { statusCode } = await sut.execute('1', undefined as unknown as TaskRequestDto);
+    const { statusCode, body } = await sut.execute('1', undefined as unknown as TaskRequestDto);
 
     expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('message', 'Missing param: taskDto');
   });
 
   it('should return badRequest if title is not provided', async () => {
