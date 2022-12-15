@@ -1,5 +1,5 @@
 import { cacheConfig } from '@configs/cache';
-import { IUserRepository } from '@models/user/userRepository.interface';
+import { IUserRepository } from '@models/user';
 import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
