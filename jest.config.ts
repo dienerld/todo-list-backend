@@ -3,7 +3,8 @@ export default {
   transform: { '^.+\\.ts?$': '@swc/jest' },
   testEnvironment: 'node',
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['**/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/core/**/*.ts'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/core/__tests__'],
   testMatch: ['**/*.{test,spec}.ts'],
   moduleNameMapper: {
     '@models/(.*)': '<rootDir>/src/core/models/$1',
