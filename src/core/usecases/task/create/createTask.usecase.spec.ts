@@ -1,6 +1,6 @@
 
 import { ITaskRepository } from '@models/task/taskRepository.interface';
-import { TaskRepositoryMock, RedisCacheMock } from '../../../__tests__/repositories/databaseMock';
+import { TaskRepositoryMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { CreateTaskUseCase } from './createTask.usecase';
 
 describe('[UseCase] Create Task', () => {

@@ -1,33 +1,35 @@
-import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories';
 import { UpdateUserUseCase } from './updateUser.usecase';
-import { IUserRepository } from '@models/user/userRepository.interface';
 
 describe('[Use Case] Update User', () => {
-  let userRepository: IUserRepository;
+  const makeSut = () => {
+    const userRepository = new UserRepositoryMock();
+    const sut = new UpdateUserUseCase(userRepository);
 
-  beforeAll(() => { userRepository = new UserRepositoryMock() });
+    return { userRepository, sut };
+  };
 
   it('should return a 204 status code if user is updated', async () => {
-    const useCase = new UpdateUserUseCase(userRepository);
+    const { sut } = makeSut();
     const user = UsersMock[0];
 
-    const { statusCode } = await useCase.execute(user.id, { name: 'Updated Name' });
+    const { statusCode } = await sut.execute(user.id, { name: 'Updated Name' });
     expect(statusCode).toEqual(204);
   });
 
   it('should return a 404 status code if user is not found', async () => {
-    const useCase = new UpdateUserUseCase(userRepository);
+    const { sut } = makeSut();
 
-    const { statusCode, body } = await useCase.execute('invalid id', { name: 'any name' });
+    const { statusCode, body } = await sut.execute('invalid id', { name: 'any name' });
     expect(statusCode).toEqual(400);
     expect(body).toHaveProperty('error', 'NotFoundError');
   });
 
   it('should return a 400 status code if user is not valid', async () => {
-    const useCase = new UpdateUserUseCase(userRepository);
+    const { sut } = makeSut();
     const user = UsersMock[0];
 
-    const { statusCode, body } = await useCase.execute(user.id, { name: '' });
+    const { statusCode, body } = await sut.execute(user.id, { name: '' });
     expect(statusCode).toEqual(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });

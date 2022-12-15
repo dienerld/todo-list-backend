@@ -1,4 +1,4 @@
-import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories';
 import { FindWithFiltersUseCase } from './findWithFilters.usecase';
 
 describe('[UseCase] Find With Filters', () => {

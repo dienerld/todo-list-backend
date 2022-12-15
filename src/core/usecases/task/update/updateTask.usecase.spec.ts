@@ -1,4 +1,4 @@
-import { TaskRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories/databaseMock';
+import { TaskRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { UpdateTaskUseCase } from './updateTask.usecase';
 
 describe('[UseCase] Update Task', () => {
