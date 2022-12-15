@@ -1,10 +1,10 @@
 import { User } from '@models/user/user.model';
 import { EntitySchema } from 'typeorm';
 
-const userSchema = new EntitySchema({
+const userSchema = new EntitySchema<User>({
   name: 'User',
   tableName: 'users',
-  target: () => User,
+  target: User,
   columns: {
     id: {
       type: 'varchar',
@@ -29,6 +29,16 @@ const userSchema = new EntitySchema({
       type: 'timestamp',
       default: 'now()',
       onUpdate: 'now()'
+    }
+  },
+  relations: {
+    tasks: {
+      type: 'one-to-many',
+      target: 'Task',
+      inverseSide: 'userId',
+      joinColumn: {
+        name: 'user_id'
+      }
     }
   }
 });

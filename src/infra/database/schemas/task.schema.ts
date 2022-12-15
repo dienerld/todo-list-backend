@@ -4,11 +4,12 @@ import { EntitySchema } from 'typeorm';
 const taskSchema = new EntitySchema<Task>({
   name: 'Task',
   tableName: 'tasks',
-  target: () => Task,
+  target: Task,
   columns: {
     id: {
       type: 'uuid',
-      primary: true
+      primary: true,
+      generated: 'uuid'
     },
     title: {
       type: 'varchar'

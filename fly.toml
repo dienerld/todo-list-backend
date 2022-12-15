@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "dienerld/todo-api"
+  image = "dienerld/todo-api:latest"
 
 [env]
 
