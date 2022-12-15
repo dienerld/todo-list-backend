@@ -1,4 +1,5 @@
 
+import { TaskRequestDto } from '@models/task/task.dtos';
 import { ITaskRepository } from '@models/task/taskRepository.interface';
 import { TaskRepositoryMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { CreateTaskUseCase } from './createTask.usecase';
@@ -35,6 +36,13 @@ describe('[UseCase] Create Task', () => {
       date: new Date(),
       hour: '12:00'
     });
+
+    expect(statusCode).toBe(400);
+  });
+
+  it('should return badRequest if taskDto is not provided', async () => {
+    const { sut } = makeSut();
+    const { statusCode } = await sut.execute('1', undefined as unknown as TaskRequestDto);
 
     expect(statusCode).toBe(400);
   });
