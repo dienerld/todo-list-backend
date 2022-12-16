@@ -1,6 +1,7 @@
 import { FindUserUseCase } from './findUser.usecase';
 import { UserRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { IUserRepository } from '@models/user';
+import { cacheConfig } from '@configs/cache';
 
 describe('[Use Case] Find User', () => {
   const makeSut = () => {
@@ -10,10 +11,23 @@ describe('[Use Case] Find User', () => {
 
     return { userRepository, sut, cacheRepository };
   };
+
   it('should return a user with tasks', async () => {
     const { sut } = makeSut();
     const user = UsersMock[0];
 
+    const { body, statusCode } = await sut.execute(user.id);
+
+    expect(statusCode).toBe(200);
+    expect(body).toHaveProperty('id');
+  });
+
+  it('Should return a user with tasks from cache', async () => {
+    const { sut, cacheRepository } = makeSut();
+    const user = UsersMock[0];
+
+    await cacheRepository.set(`${cacheConfig.prefix.user}-${user.id}`, user);
+    await sut.execute(user.id);
     const { body, statusCode } = await sut.execute(user.id);
 
     expect(statusCode).toBe(200);
