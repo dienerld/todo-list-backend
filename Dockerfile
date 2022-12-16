@@ -1,28 +1,26 @@
 ## build
-FROM node:16.16.0-alpine AS BUILD_IMAGE
+FROM node:16.16.0-alpine AS BUILD_IMAGE_TEMP
 
-RUN apk update && apk add curl && rm -rf /var/cache/apk/*
-RUN curl -sf https://gobinaries.com/tj/node-prune | sh
+RUN apk update --no-cache && apk add curl --no-cache && rm -rf /var/cache/apk/* \
+  && curl -sf https://gobinaries.com/tj/node-prune | sh
 
 WORKDIR /app
 
 
 COPY . .
 
-RUN yarn --frozen-lockfile
-RUN yarn build
-ENV NODE_ENV=production
-RUN npm prune --production
-RUN node-prune
+RUN yarn --frozen-lockfile && yarn build \
+  && NODE_ENV=production \
+  npm prune --production && node-prune
 
 ## Prod
-FROM node:16-alpine
+FROM node:16.16.0-alpine
 WORKDIR /app
 
 ENV NODE_ENV=production
 # copy from build image
-COPY --from=BUILD_IMAGE /app/dist ./dist
-COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
+COPY --from=BUILD_IMAGE_TEMP /app/dist ./dist
+COPY --from=BUILD_IMAGE_TEMP /app/node_modules ./node_modules
 
 
-ENTRYPOINT [ "node", "./dist/infra/http/server.js" ]
+ENTRYPOINT [ "node", "dist/infra/http/server.js" ]
