@@ -33,4 +33,13 @@ describe('[Use Case] Update User', () => {
     expect(statusCode).toEqual(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
+
+  it('should return a 400 status code if invalid email', async () => {
+    const { sut } = makeSut();
+    const user = UsersMock[0];
+
+    const { statusCode, body } = await sut.execute(user.id, { email: 'invalid email' });
+    expect(statusCode).toEqual(400);
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+  });
 });
