@@ -15,14 +15,14 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode } = await sut.execute(user.id, { name: 'Updated Name' });
 
-    expect(statusCode).toEqual(204);
+    expect(statusCode).toBe(204);
   });
 
   it('should return a 404 status code if user is not found', async () => {
     const { sut } = makeSut();
     const { statusCode, body } = await sut.execute('invalid id', { name: 'any name' });
 
-    expect(statusCode).toEqual(400);
+    expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'NotFoundError');
   });
 
@@ -31,7 +31,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { name: '' });
 
-    expect(statusCode).toEqual(400);
+    expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
 
@@ -40,7 +40,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { email: 'invalid email' });
 
-    expect(statusCode).toEqual(400);
+    expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
 
@@ -49,7 +49,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { password: '123', password_confirm: '123' });
 
-    expect(statusCode).toEqual(400);
+    expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
 
@@ -58,7 +58,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { password: 'any_password', password_confirm: 'any_password2' });
 
-    expect(statusCode).toEqual(400);
+    expect(statusCode).toBe(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
 
@@ -67,7 +67,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { name: 'any name' });
 
-    expect(statusCode).toEqual(500);
+    expect(statusCode).toBe(500);
     expect(body).toHaveProperty('error');
   });
 
@@ -77,7 +77,7 @@ describe('[Use Case] Update User', () => {
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { name: 'any name' });
 
-    expect(statusCode).toEqual(500);
+    expect(statusCode).toBe(500);
     expect(body).toHaveProperty('error');
   });
 });
