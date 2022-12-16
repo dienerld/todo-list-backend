@@ -72,4 +72,16 @@ describe('[Use Case] Login User', () => {
     expect(result.statusCode).toBe(500);
     expect(result.body).toHaveProperty('error');
   });
+
+  it('should return 500 if database repository throws', async () => {
+    const userRepository = new UserRepositoryMock();
+    jest.spyOn(userRepository, 'findById').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const sut = new LoginUserUsecase(userRepository);
+    const result = await sut.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(500);
+    expect(result.body).toHaveProperty('error');
+  });
 });
