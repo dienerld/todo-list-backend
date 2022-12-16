@@ -51,7 +51,8 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 // Update User
 usersRouter.put('/', (req, res) => {
   const userRepo = new UserRepository();
-  const useCase = new UpdateUserUseCase(userRepo);
+  const cacheRepo = new RedisRepository();
+  const useCase = new UpdateUserUseCase(userRepo, cacheRepo);
   const controller = new UpdateUserController(useCase);
 
   return controller.handle(req, res);
