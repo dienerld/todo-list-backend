@@ -1,4 +1,5 @@
-import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { ITaskRepository } from '@models/task';
+import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories';
 import { FindWithFiltersUseCase } from './findWithFilters.usecase';
 
 describe('[UseCase] Find With Filters', () => {
@@ -56,5 +57,23 @@ describe('[UseCase] Find With Filters', () => {
 
     expect(statusCode).toBe(200);
     expect(body.total).toBe(0);
+  });
+
+  it('should return 500 if repository not provided', async () => {
+    const sut = new FindWithFiltersUseCase(null as unknown as ITaskRepository);
+    const { statusCode } = await sut.execute('any_id', {});
+
+    expect(statusCode).toBe(500);
+  });
+
+  it('should return 500 if repository throws', async () => {
+    const { sut, taskRepository } = makeSut();
+    jest.spyOn(taskRepository, 'findWithFilters').mockImplementationOnce(() => {
+      throw new Error();
+    });
+
+    const { statusCode } = await sut.execute('any_id', {});
+
+    expect(statusCode).toBe(500);
   });
 });

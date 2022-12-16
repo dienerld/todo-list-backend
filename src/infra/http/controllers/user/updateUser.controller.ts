@@ -1,5 +1,5 @@
-import { UpdateUserUseCase } from '@usecases/user';
 import { Response } from 'express';
+import { UpdateUserUseCase } from '@usecases/user';
 import { CustomRequest } from '../../interfaces/customRequest';
 
 class UpdateUserController {

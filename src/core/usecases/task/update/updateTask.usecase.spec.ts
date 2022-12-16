@@ -1,10 +1,11 @@
-import { TaskRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
+import { TaskRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { UpdateTaskUseCase } from './updateTask.usecase';
 
 describe('[UseCase] Update Task', () => {
   const makeSut = () => {
     const repository = new TaskRepositoryMock();
-    const sut = new UpdateTaskUseCase(repository);
+    const repositoryCache = new RedisCacheMock();
+    const sut = new UpdateTaskUseCase(repository, repositoryCache);
     return { sut, repository };
   };
   it('should update a task', async () => {

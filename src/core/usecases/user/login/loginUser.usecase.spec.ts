@@ -1,26 +1,27 @@
-import { IUserRepository } from '@models/user/userRepository.interface';
+import { IUserRepository } from '@models/user';
 import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
 import { LoginUserUsecase } from './loginUser.usecase';
 
 describe('[Use Case] Login User', () => {
-  let userRepository: IUserRepository;
+  const makeSut = () => {
+    const userRepository = new UserRepositoryMock();
+    const sut = new LoginUserUsecase(userRepository);
 
-  beforeEach(() => {
-    userRepository = new UserRepositoryMock();
-  });
+    return { userRepository, sut };
+  };
 
   it('should return a token when the user is found', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
+    const { sut } = makeSut();
     const [user] = UsersMock;
-    const result = await useCase.execute(user.id, user.password);
+    const result = await sut.execute(user.id, user.password);
 
     expect(result.statusCode).toBe(200);
     expect(result.body).toHaveProperty('token');
   });
 
   it('should return an error when the user is not found', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
-    const result = await useCase.execute('invalidId', 'invalidPassword');
+    const { sut } = makeSut();
+    const result = await sut.execute('invalidId', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
     expect(result.body).toHaveProperty('error', 'NotFoundError');
@@ -28,28 +29,28 @@ describe('[Use Case] Login User', () => {
   });
 
   it('should return an error when the password is invalid', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
+    const { sut } = makeSut();
     const [user] = UsersMock;
-    const result = await useCase.execute(user.id, 'invalidPassword');
+    const result = await sut.execute(user.id, 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error', 'InvalidParamError');
-    expect(result.body).toHaveProperty('message', 'Invalid param: Password');
+    expect(result.body).toHaveProperty('error', 'PasswordError');
+    expect(result.body).toHaveProperty('message', 'User or password incorrect');
   });
 
   it('should return an error when the user id is not provided', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
-    const result = await useCase.execute('', 'invalidPassword');
+    const { sut } = makeSut();
+    const result = await sut.execute('', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
-    expect(result.body).toHaveProperty('error', 'InvalidParamError');
-    expect(result.body).toHaveProperty('message', 'Invalid param: UserId');
+    expect(result.body).toHaveProperty('error', 'MissingParamError');
+    expect(result.body).toHaveProperty('message', 'Missing param: UserId');
   });
 
   it('should return an error when the password is not provided', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
+    const { sut } = makeSut();
     const [user] = UsersMock;
-    const result = await useCase.execute(user.id, '');
+    const result = await sut.execute(user.id, '');
 
     expect(result.statusCode).toBe(400);
     expect(result.body).toHaveProperty('error', 'InvalidParamError');
@@ -57,10 +58,30 @@ describe('[Use Case] Login User', () => {
   });
 
   it('should return an error when the user id is invalid', async () => {
-    const useCase = new LoginUserUsecase(userRepository);
-    const result = await useCase.execute('invalidId', 'invalidPassword');
+    const { sut } = makeSut();
+    const result = await sut.execute('invalidId', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
+    expect(result.body).toHaveProperty('error');
+  });
+
+  it('should return 500 if database repository is not provided', async () => {
+    const sut = new LoginUserUsecase(null as unknown as IUserRepository);
+    const result = await sut.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(500);
+    expect(result.body).toHaveProperty('error');
+  });
+
+  it('should return 500 if database repository throws', async () => {
+    const userRepository = new UserRepositoryMock();
+    jest.spyOn(userRepository, 'findById').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const sut = new LoginUserUsecase(userRepository);
+    const result = await sut.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(500);
     expect(result.body).toHaveProperty('error');
   });
 });

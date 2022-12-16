@@ -11,7 +11,7 @@ import { NotFoundError } from '@presentation/errors';
 function createUser () {
   const user = User.create('John Doe', 'john@mail.com', '12345');
   user.id = 'any_id';
-  const task = Task.create('Test', new Date(), '01:01');
+  const task = Task.create('Test', new Date(), '01:01', user.id);
   task.id = 'any_task_id';
   user.tasks = [task];
   return user;
@@ -27,14 +27,14 @@ function resetUsers () {
 class UserRepositoryMock implements IUserRepository {
   async findByIdWithTasks (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
-    if (!user) throw new NotFoundError('User');
-
-    return user;
+    return user || null;
   }
 
   async findById (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
-    if (!user) throw new NotFoundError('User');
+    if (!user) {
+      return null;
+    }
     user.tasks = [];
     return user;
   }

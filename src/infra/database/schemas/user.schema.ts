@@ -35,15 +35,12 @@ const userSchema = new EntitySchema<User>({
     tasks: {
       type: 'one-to-many',
       target: 'Task',
-      inverseSide: 'user_id',
+      inverseSide: 'userId',
       joinColumn: {
-        name: 'id'
-      },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+        name: 'user_id'
+      }
     }
   }
-
 });
 
 export { userSchema };
