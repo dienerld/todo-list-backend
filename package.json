@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc",
+    "build": "tsc -p tsconfig-prod.json",
     "postbuild": "tscpaths -p ./tsconfig.json -s ./src -o ./dist",
     "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
