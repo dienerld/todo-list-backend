@@ -1,13 +1,15 @@
+import { cacheConfig } from '@configs/cache';
 import { IUserRepository } from '@models/user';
-import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories';
+import { RedisCacheMock, UserRepositoryMock, UsersMock } from '../../../__tests__/repositories';
 import { UpdateUserUseCase } from './updateUser.usecase';
 
 describe('[Use Case] Update User', () => {
   const makeSut = () => {
     const userRepository = new UserRepositoryMock();
-    const sut = new UpdateUserUseCase(userRepository);
+    const cacheRepository = new RedisCacheMock();
+    const sut = new UpdateUserUseCase(userRepository, cacheRepository);
 
-    return { userRepository, sut };
+    return { userRepository, sut, cacheRepository };
   };
 
   it('should return a 204 status code if user is updated', async () => {
@@ -16,6 +18,16 @@ describe('[Use Case] Update User', () => {
     const { statusCode } = await sut.execute(user.id, { name: 'Updated Name' });
 
     expect(statusCode).toBe(204);
+  });
+
+  it('should confirm if has user in cache', async () => {
+    const { sut, cacheRepository } = makeSut();
+    const user = UsersMock[0];
+    const spy = jest.spyOn(cacheRepository, 'set');
+    await sut.execute(user.id, { name: 'Updated Name' });
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(`${cacheConfig.prefix.user}-${user.id}`, user);
   });
 
   it('should return a 204 status code if updated email', async () => {
@@ -79,7 +91,8 @@ describe('[Use Case] Update User', () => {
   });
 
   it('should return a 500 status code if database repository not provided', async () => {
-    const sut = new UpdateUserUseCase(null as unknown as IUserRepository);
+    const { cacheRepository } = makeSut();
+    const sut = new UpdateUserUseCase(null as unknown as IUserRepository, cacheRepository);
     const user = UsersMock[0];
     const { statusCode, body } = await sut.execute(user.id, { name: 'any name' });
 

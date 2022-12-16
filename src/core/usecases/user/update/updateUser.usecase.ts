@@ -1,14 +1,20 @@
+import { cacheConfig } from '@configs/cache';
 import { UserRequestDto } from '@models/user/user.dtos';
 import { IUserRepository } from '@models/user/userRepository.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
 import { regexEmail, regexName } from '@presentation/helpers/validations';
 
 class UpdateUserUseCase {
-  constructor (private readonly userRepository: IUserRepository) {}
+  constructor (
+    private readonly userRepository: IUserRepository,
+    private readonly cacheRepository: IRepositoryCache
+  ) {}
 
   async execute (userId: string, userDto: Partial<UserRequestDto>): Promise<IHttpResponse> {
     try {
+      const keyCache = `${cacheConfig.prefix.user}-${userId}`;
       const user = await this.userRepository.findById(userId);
       if (!user) { throw new NotFoundError('User') }
 
@@ -33,6 +39,8 @@ class UpdateUserUseCase {
       }
 
       await this.userRepository.update(user);
+      await this.cacheRepository.set(keyCache, user);
+
       return HttpResponse.noContent();
     } catch (error) {
       if (error instanceof CustomError) {
