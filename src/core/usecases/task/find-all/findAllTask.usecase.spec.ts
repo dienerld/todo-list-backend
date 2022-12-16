@@ -67,7 +67,7 @@ describe('[UseCase] Find All Tasks', () => {
     expect(statusCode).toBe(500);
   });
 
-  it('Should return 500 if repository throws', async () => {
+  it('Should return 500 if database repository throws', async () => {
     const { sut, repository } = makeSut();
     jest.spyOn(repository, 'findAll').mockImplementationOnce(() => {
       throw new Error();
