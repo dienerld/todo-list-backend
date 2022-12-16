@@ -76,4 +76,14 @@ describe('[UseCase] Find All Tasks', () => {
 
     expect(statusCode).toBe(500);
   });
+
+  it('Should return 500 if cache repository throws', async () => {
+    const { sut, repositoryCache } = makeSut();
+    jest.spyOn(repositoryCache, 'set').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const { statusCode } = await sut.execute('any_id');
+
+    expect(statusCode).toBe(500);
+  });
 });
