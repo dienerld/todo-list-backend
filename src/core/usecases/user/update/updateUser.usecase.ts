@@ -10,10 +10,8 @@ class UpdateUserUseCase {
   async execute (userId: string, userDto: Partial<UserRequestDto>): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
+      if (!user) { throw new NotFoundError('User') }
 
-      if (!user) {
-        throw new NotFoundError('User not found');
-      }
       if (userDto.name !== undefined) {
         if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;

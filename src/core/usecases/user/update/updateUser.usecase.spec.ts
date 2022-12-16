@@ -1,3 +1,4 @@
+import { IUserRepository } from '@models/user';
 import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories';
 import { UpdateUserUseCase } from './updateUser.usecase';
 
@@ -59,5 +60,14 @@ describe('[Use Case] Update User', () => {
 
     expect(statusCode).toEqual(400);
     expect(body).toHaveProperty('error', 'InvalidParamError');
+  });
+
+  it('should return a 500 status code if database repository not provided', async () => {
+    const sut = new UpdateUserUseCase(null as unknown as IUserRepository);
+    const user = UsersMock[0];
+    const { statusCode, body } = await sut.execute(user.id, { name: 'any name' });
+
+    expect(statusCode).toEqual(500);
+    expect(body).toHaveProperty('error');
   });
 });
