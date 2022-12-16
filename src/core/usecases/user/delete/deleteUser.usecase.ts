@@ -13,9 +13,8 @@ class DeleteUserUsecase {
   async execute (userId: string): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
-      if (!user) {
-        throw new NotFoundError('User');
-      }
+      if (!user) { throw new NotFoundError('User') }
+
       Promise.all([
         await this.userRepository.delete(userId),
         await this.cacheRepository.delete(`${cacheConfig.prefix.tasks}-${userId}`),
