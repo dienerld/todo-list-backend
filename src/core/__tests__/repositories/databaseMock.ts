@@ -27,14 +27,14 @@ function resetUsers () {
 class UserRepositoryMock implements IUserRepository {
   async findByIdWithTasks (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
-    if (!user) throw new NotFoundError('User');
-
-    return user;
+    return user || null;
   }
 
   async findById (id: string): Promise<User | null> {
     const user = users.find((user) => user.id === id);
-    if (!user) throw new NotFoundError('User');
+    if (!user) {
+      return null;
+    }
     user.tasks = [];
     return user;
   }

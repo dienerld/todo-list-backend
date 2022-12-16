@@ -1,3 +1,4 @@
+import { IUserRepository } from '@models/user';
 import { UserRepositoryMock, UsersMock } from '../../../__tests__/repositories/databaseMock';
 import { LoginUserUsecase } from './loginUser.usecase';
 
@@ -61,6 +62,26 @@ describe('[Use Case] Login User', () => {
     const result = await sut.execute('invalidId', 'invalidPassword');
 
     expect(result.statusCode).toBe(400);
+    expect(result.body).toHaveProperty('error');
+  });
+
+  it('should return 500 if database repository is not provided', async () => {
+    const sut = new LoginUserUsecase(null as unknown as IUserRepository);
+    const result = await sut.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(500);
+    expect(result.body).toHaveProperty('error');
+  });
+
+  it('should return 500 if database repository throws', async () => {
+    const userRepository = new UserRepositoryMock();
+    jest.spyOn(userRepository, 'findById').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const sut = new LoginUserUsecase(userRepository);
+    const result = await sut.execute('invalidId', 'invalidPassword');
+
+    expect(result.statusCode).toBe(500);
     expect(result.body).toHaveProperty('error');
   });
 });

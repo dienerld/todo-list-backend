@@ -10,10 +10,8 @@ class UpdateUserUseCase {
   async execute (userId: string, userDto: Partial<UserRequestDto>): Promise<IHttpResponse> {
     try {
       const user = await this.userRepository.findById(userId);
+      if (!user) { throw new NotFoundError('User') }
 
-      if (!user) {
-        throw new NotFoundError('User not found');
-      }
       if (userDto.name !== undefined) {
         if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
@@ -27,6 +25,9 @@ class UpdateUserUseCase {
       if (userDto.password !== undefined || userDto.password_confirm !== undefined) {
         if (userDto.password !== userDto.password_confirm) {
           throw new InvalidParamError('Password does not match');
+        }
+        if (userDto.password!.length < 6) {
+          throw new InvalidParamError('Password must have at least 6 characters');
         }
         user.password = userDto.password!;
       }

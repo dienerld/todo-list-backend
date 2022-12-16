@@ -34,7 +34,7 @@ describe('[Model] Task', () => {
     task.update({ date: new Date() });
 
     expect(task).toHaveProperty('date');
-    expect(task.date).not.toEqual(date);
+    expect(task.date).not.toBe(date);
   });
 
   it('should update hour', async () => {
