@@ -43,9 +43,19 @@ describe('[Use Case] Find User', () => {
     expect(body).toHaveProperty('message');
   });
 
-  it('should return a 500 error if repository not provided', async () => {
+  it('should return a 500 error if database repository not provided', async () => {
     const { cacheRepository } = makeSut();
     const useCase = new FindUserUseCase(undefined as unknown as IUserRepository, cacheRepository);
+    const user = UsersMock[0];
+    const { body, statusCode } = await useCase.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('should return a 500 error if cache repository not provided', async () => {
+    const { userRepository } = makeSut();
+    const useCase = new FindUserUseCase(userRepository, undefined as unknown as RedisCacheMock);
     const user = UsersMock[0];
     const { body, statusCode } = await useCase.execute(user.id);
 
