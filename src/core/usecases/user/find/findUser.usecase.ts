@@ -18,7 +18,7 @@ class FindUserUseCase {
       const user = await this.userRepository.findByIdWithTasks(userId);
       if (!user) { throw new NotFoundError('User') }
 
-      await this.cacheRepository.set(keyCache, user);
+      await this.cacheRepository.set(keyCache, user, cacheConfig.expiresInMin);
 
       return HttpResponse.ok(user);
     } catch (error) {

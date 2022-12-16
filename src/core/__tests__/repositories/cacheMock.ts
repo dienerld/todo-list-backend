@@ -4,10 +4,10 @@ type TDataCache = {
   [key: string]: any;
 }
 class RedisCacheMock implements IRepositoryCache {
-  cache: TDataCache[];
+  cache: TDataCache;
 
   constructor () {
-    this.cache = [];
+    this.cache = {};
   }
 
   async get<T> (id: string): Promise<T | null> {
@@ -18,7 +18,7 @@ class RedisCacheMock implements IRepositoryCache {
     return result as T;
   }
 
-  async set<T> (id: string, result: T, expiresInMin: number): Promise<void> {
+  async set<T> (id: string, result: T, expiresInMin?: number): Promise<void> {
     if (!expiresInMin) {
       this.cache[id] = result;
     } else if (expiresInMin <= 0) {

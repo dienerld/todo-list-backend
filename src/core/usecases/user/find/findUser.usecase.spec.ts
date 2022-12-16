@@ -26,7 +26,7 @@ describe('[Use Case] Find User', () => {
     const { sut, cacheRepository } = makeSut();
     const user = UsersMock[0];
 
-    await cacheRepository.set(`${cacheConfig.prefix.user}-${user.id}`, user);
+    await cacheRepository.set(`${cacheConfig.prefix.user}-${user.id}`, user, cacheConfig.expiresInMin);
     await sut.execute(user.id);
     const { body, statusCode } = await sut.execute(user.id);
 
