@@ -28,6 +28,9 @@ class UpdateUserUseCase {
         if (userDto.password !== userDto.password_confirm) {
           throw new InvalidParamError('Password does not match');
         }
+        if (userDto.password!.length < 6) {
+          throw new InvalidParamError('Password must have at least 6 characters');
+        }
         user.password = userDto.password!;
       }
 
