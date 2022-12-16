@@ -70,4 +70,14 @@ describe('[Use Case] Update User', () => {
     expect(statusCode).toEqual(500);
     expect(body).toHaveProperty('error');
   });
+
+  it('should return a 500 status code if database repository throws', async () => {
+    const { sut, userRepository } = makeSut();
+    jest.spyOn(userRepository, 'findById').mockImplementationOnce(() => { throw new Error() });
+    const user = UsersMock[0];
+    const { statusCode, body } = await sut.execute(user.id, { name: 'any name' });
+
+    expect(statusCode).toEqual(500);
+    expect(body).toHaveProperty('error');
+  });
 });
