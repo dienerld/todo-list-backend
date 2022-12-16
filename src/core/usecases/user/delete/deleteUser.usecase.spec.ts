@@ -1,4 +1,5 @@
 import { IUserRepository } from '@models/user/userRepository.interface';
+import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import {
   RedisCacheMock, resetUsers,
   UserRepositoryMock, UsersMock
@@ -36,5 +37,27 @@ describe('[Use case] Delete User', () => {
 
     expect(statusCode).toBe(400);
     expect(body).toHaveProperty('message', 'User not found');
+  });
+
+  it('should return a 500 error if repository not provided', async () => {
+    const { cacheRepository } = makeSut();
+    const useCase = new DeleteUserUsecase(undefined as unknown as IUserRepository, cacheRepository);
+    const user = UsersMock[0];
+
+    const { body, statusCode } = await useCase.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('should return a 500 error if cache repository not provided', async () => {
+    const { repository } = makeSut();
+    const useCase = new DeleteUserUsecase(repository, undefined as unknown as IRepositoryCache);
+    const user = UsersMock[0];
+
+    const { body, statusCode } = await useCase.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
   });
 });
