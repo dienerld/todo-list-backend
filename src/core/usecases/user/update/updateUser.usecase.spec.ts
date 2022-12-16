@@ -18,6 +18,14 @@ describe('[Use Case] Update User', () => {
     expect(statusCode).toBe(204);
   });
 
+  it('should return a 204 status code if updated email', async () => {
+    const { sut } = makeSut();
+    const user = UsersMock[0];
+    const { statusCode } = await sut.execute(user.id, { email: 'new_mail@mail.com' });
+
+    expect(statusCode).toBe(204);
+  });
+
   it('should return a 404 status code if user is not found', async () => {
     const { sut } = makeSut();
     const { statusCode, body } = await sut.execute('invalid id', { name: 'any name' });
