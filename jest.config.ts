@@ -4,7 +4,10 @@ export default {
   testEnvironment: 'node',
   coverageDirectory: 'coverage',
   collectCoverageFrom: ['<rootDir>/src/core/**/*.ts'],
-  coveragePathIgnorePatterns: ['<rootDir>/src/core/__tests__'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/core/__tests__',
+    '<rootDir>/src/core/presentation'
+  ],
   testMatch: ['**/*.{test,spec}.ts'],
   moduleNameMapper: {
     '@models/(.*)': '<rootDir>/src/core/models/$1',
