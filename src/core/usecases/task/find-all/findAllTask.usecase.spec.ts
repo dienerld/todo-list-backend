@@ -1,5 +1,5 @@
 import { cacheConfig } from '@configs/cache';
-import { TResultFind } from '@models/task';
+import { ITaskRepository, TResultFind } from '@models/task';
 import { TaskRepositoryMock, UsersMock, RedisCacheMock } from '../../../__tests__/repositories';
 import { FindAllTaskUseCase } from './findAllTask.usecase';
 
@@ -49,5 +49,31 @@ describe('[UseCase] Find All Tasks', () => {
     const { statusCode } = await sut.execute('invalid_id');
 
     expect(statusCode).toBe(400);
+  });
+
+  it('Should return 500 if database repository not provided', async () => {
+    const { repositoryCache } = makeSut();
+    const sut = new FindAllTaskUseCase(null as unknown as ITaskRepository, repositoryCache);
+    const { statusCode } = await sut.execute('any_id');
+
+    expect(statusCode).toBe(500);
+  });
+
+  it('Should return 500 if cache repository not provided', async () => {
+    const { repository } = makeSut();
+    const sut = new FindAllTaskUseCase(repository, null as unknown as RedisCacheMock);
+    const { statusCode } = await sut.execute('any_id');
+
+    expect(statusCode).toBe(500);
+  });
+
+  it('Should return 500 if repository throws', async () => {
+    const { sut, repository } = makeSut();
+    jest.spyOn(repository, 'findAll').mockImplementationOnce(() => {
+      throw new Error();
+    });
+    const { statusCode } = await sut.execute('any_id');
+
+    expect(statusCode).toBe(500);
   });
 });
