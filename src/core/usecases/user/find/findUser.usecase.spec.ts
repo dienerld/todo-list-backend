@@ -36,9 +36,7 @@ describe('[Use Case] Find User', () => {
 
   it('should return a 404 error if user not found', async () => {
     const { sut } = makeSut();
-
     const user = UsersMock[0];
-
     const { body, statusCode } = await sut.execute(user.id + '1');
 
     expect(statusCode).toBe(400);
@@ -49,7 +47,6 @@ describe('[Use Case] Find User', () => {
     const { cacheRepository } = makeSut();
     const useCase = new FindUserUseCase(undefined as unknown as IUserRepository, cacheRepository);
     const user = UsersMock[0];
-
     const { body, statusCode } = await useCase.execute(user.id);
 
     expect(statusCode).toBe(500);
