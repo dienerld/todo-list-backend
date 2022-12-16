@@ -62,4 +62,24 @@ describe('[Use Case] Find User', () => {
     expect(statusCode).toBe(500);
     expect(body).toHaveProperty('message');
   });
+
+  it('should return a 500 error if database repository throws', async () => {
+    const { sut, userRepository } = makeSut();
+    jest.spyOn(userRepository, 'findByIdWithTasks').mockImplementationOnce(() => { throw new Error() });
+    const user = UsersMock[0];
+    const { body, statusCode } = await sut.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('should return a 500 error if cache repository throws', async () => {
+    const { sut, cacheRepository } = makeSut();
+    jest.spyOn(cacheRepository, 'set').mockImplementationOnce(() => { throw new Error() });
+    const user = UsersMock[0];
+    const { body, statusCode } = await sut.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
 });
