@@ -39,7 +39,7 @@ describe('[Use case] Delete User', () => {
     expect(body).toHaveProperty('message', 'User not found');
   });
 
-  it('should return a 500 error if repository not provided', async () => {
+  it('should return a 500 error if database repository not provided', async () => {
     const { cacheRepository } = makeSut();
     const useCase = new DeleteUserUsecase(undefined as unknown as IUserRepository, cacheRepository);
     const user = UsersMock[0];
@@ -56,6 +56,28 @@ describe('[Use case] Delete User', () => {
     const user = UsersMock[0];
 
     const { body, statusCode } = await useCase.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('should return a 500 error if database repository throws', async () => {
+    const { sut, repository } = makeSut();
+    const user = UsersMock[0];
+    jest.spyOn(repository, 'findById').mockImplementationOnce(() => { throw new Error() });
+
+    const { body, statusCode } = await sut.execute(user.id);
+
+    expect(statusCode).toBe(500);
+    expect(body).toHaveProperty('message');
+  });
+
+  it('should return a 500 error if cache repository throws', async () => {
+    const { sut, cacheRepository } = makeSut();
+    const user = UsersMock[0];
+    jest.spyOn(cacheRepository, 'delete').mockImplementationOnce(() => { throw new Error() });
+
+    const { body, statusCode } = await sut.execute(user.id);
 
     expect(statusCode).toBe(500);
     expect(body).toHaveProperty('message');
