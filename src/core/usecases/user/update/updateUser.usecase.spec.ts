@@ -90,6 +90,15 @@ describe('[Use Case] Update User', () => {
     expect(body).toHaveProperty('error', 'InvalidParamError');
   });
 
+  it('should return a 400 if undefined password and has password_confirm', async () => {
+    const { sut } = makeSut();
+    const user = UsersMock[0];
+    const { statusCode, body } = await sut.execute(user.id, { password_confirm: 'any_password' });
+
+    expect(statusCode).toBe(400);
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+  });
+
   it('should return a 500 status code if database repository not provided', async () => {
     const { cacheRepository } = makeSut();
     const sut = new UpdateUserUseCase(null as unknown as IUserRepository, cacheRepository);
