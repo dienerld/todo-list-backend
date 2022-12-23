@@ -8,9 +8,12 @@ class CreateUserUseCase {
   constructor (private readonly userRepository: IUserRepository) {}
   async execute (userDto: UserRequestDto): Promise<IHttpResponse> {
     try {
-      if (userDto.password !== userDto.password_confirm) {
-        throw new InvalidParamError('Password does not match');
+      if (userDto.password) {
+        if (userDto.password !== userDto.password_confirm) {
+          throw new InvalidParamError('Password does not match');
+        }
       }
+
       const userAlreadyExists = await this.userRepository.findByEmail(userDto.email);
       if (userAlreadyExists) { throw new InvalidParamError('Email already in use') }
 

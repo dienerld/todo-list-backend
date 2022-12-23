@@ -3,7 +3,7 @@ import { User } from './user.model';
 
 describe('[Model] User', () => {
   it('should create a new user with correct params', () => {
-    const user = User.create('John Doe', 'mail@mail.com', 'any_password');
+    const user = User.create('John Doe', 'mail@mail.com', 'any_password1');
 
     expect(user).toHaveProperty('id');
     expect(user).toHaveProperty('name', 'John Doe');

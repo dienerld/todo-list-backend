@@ -1,6 +1,6 @@
 import { Task } from '@models/task/task.model';
 import { InvalidParamError } from '@presentation/errors';
-import { regexEmail, regexName } from '@presentation/helpers/validations';
+import { regexEmail, regexName, regexPassword } from '@presentation/helpers/validations';
 import { randomUUID } from 'crypto';
 
 class User {
@@ -25,7 +25,7 @@ class User {
   static create (name: string, email: string, password: string) {
     if (!name.match(regexName)) { throw new InvalidParamError('Name') }
     if (!email.match(regexEmail)) { throw new InvalidParamError('Email') }
-    if (!password) { throw new InvalidParamError('Password') }
+    if (!password.match(regexPassword)) { throw new InvalidParamError('Password') }
 
     return new User(name, email, password);
   }

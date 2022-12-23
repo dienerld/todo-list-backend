@@ -17,8 +17,8 @@ describe('[Use Case] Create User', () => {
     const { body, statusCode } = await createUserUseCase.execute({
       name: 'Any Name',
       email: 'any_mail@mail.com',
-      password: 'any_password',
-      password_confirm: 'any_password'
+      password: 'valid_password@1',
+      password_confirm: 'valid_password@1'
     });
 
     expect(statusCode).toBe(201);
