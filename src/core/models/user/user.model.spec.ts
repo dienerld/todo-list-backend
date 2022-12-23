@@ -1,4 +1,4 @@
-import { MissingParamError } from '../../presentation/errors/missingParamsError';
+import { InvalidParamError } from '@presentation/errors';
 import { User } from './user.model';
 
 describe('[Model] User', () => {
@@ -11,18 +11,18 @@ describe('[Model] User', () => {
 
   it('should throw if no name is provided', () => {
     expect(() => User.create('', 'any_mail@mail.com', 'any_password'))
-      .toThrow(new MissingParamError('Name'));
+      .toThrow(new InvalidParamError('Name'));
   });
 
   it('should throw if no email is provided', () => {
     expect(() =>
       User.create('John Doe', '', 'any_password')
-    ).toThrow(new MissingParamError('Email'));
+    ).toThrow(new InvalidParamError('Email'));
   });
 
   it('should throw if no password is provided', () => {
     expect(() =>
       User.create('John Doe', 'any_mail@mail.com', '')
-    ).toThrow(new MissingParamError('Password'));
+    ).toThrow(new InvalidParamError('Password'));
   });
 });

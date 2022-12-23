@@ -37,8 +37,8 @@ describe('[Use Case] Create User', () => {
     });
 
     expect(statusCode).toBe(400);
-    expect(body).toHaveProperty('error', 'MissingParamError');
-    expect(body).toHaveProperty('message', 'Missing param: Name');
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+    expect(body).toHaveProperty('message', 'Invalid param: Name');
   });
 
   it('should return badRequest if email is not provided', async () => {
@@ -52,8 +52,8 @@ describe('[Use Case] Create User', () => {
     });
 
     expect(statusCode).toBe(400);
-    expect(body).toHaveProperty('error', 'MissingParamError');
-    expect(body).toHaveProperty('message', 'Missing param: Email');
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+    expect(body).toHaveProperty('message', 'Invalid param: Email');
   });
 
   it('should return badRequest if password is not provided', async () => {
@@ -67,8 +67,8 @@ describe('[Use Case] Create User', () => {
     });
 
     expect(statusCode).toBe(400);
-    expect(body).toHaveProperty('error', 'MissingParamError');
-    expect(body).toHaveProperty('message', 'Missing param: Password');
+    expect(body).toHaveProperty('error', 'InvalidParamError');
+    expect(body).toHaveProperty('message', 'Invalid param: Password');
   });
 
   it('should return badRequest if password does not match', async () => {
