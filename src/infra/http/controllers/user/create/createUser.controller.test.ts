@@ -85,4 +85,60 @@ describe('[Controller] Create User', () => {
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('message', 'Invalid param: Password');
   });
+
+  it('Should not be able a create a new user with invalid password confirmation', async () => {
+    const dataRequest: UserRequestDto = {
+      name: 'valid name',
+      email: 'any_mail@mail.com',
+      password: 'valid_password1',
+      password_confirm: 'invalid_password'
+    };
+
+    const response = await request(app).post('/users')
+      .set('Accept', 'application/json')
+      .send(dataRequest);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('message', 'Invalid param: Password does not match');
+  });
+
+  it('Should not be able a create a new user with email already in use', async () => {
+    const dataRequest: UserRequestDto = {
+      name: 'valid name',
+      email: 'any_mail@mail.com',
+      password: 'any_password1',
+      password_confirm: 'any_password1'
+    };
+
+    await request(app).post('/users')
+      .set('Accept', 'application/json')
+      .send(dataRequest);
+
+    const response = await request(app).post('/users')
+      .set('Accept', 'application/json')
+      .send(dataRequest);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('message', 'User already exists');
+  });
+
+  it('Should returns 500 status code when internal server error', async () => {
+    jest.spyOn(appDataSource.manager, 'save').mockImplementationOnce(() => {
+      throw new Error('Internal server error');
+    });
+
+    const dataRequest: UserRequestDto = {
+      name: 'valid name',
+      email: 'any_mail@mail.com',
+      password: 'any_password1',
+      password_confirm: 'any_password1'
+    };
+
+    const response = await request(app).post('/users')
+      .set('Accept', 'application/json')
+      .send(dataRequest);
+
+    expect(response.status).toBe(500);
+    expect(response.body).toHaveProperty('message', 'Internal server error');
+  });
 });
