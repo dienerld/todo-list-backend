@@ -5,11 +5,24 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "@database/*": ["infra/database/*"],
-      "@models/*": ["core/models/*"],
-      "@usecases/*": ["core/usecases/*"],
-      "@presentation/*": ["core/presentation/*"],
-      "@configs/*": ["configs/*"]
+      "@database/*": [
+        "infra/database/*"
+      ],
+      "@http/*": [
+        "infra/http/*"
+      ],
+      "@models/*": [
+        "core/models/*"
+      ],
+      "@usecases/*": [
+        "core/usecases/*"
+      ],
+      "@presentation/*": [
+        "core/presentation/*"
+      ],
+      "@configs/*": [
+        "configs/*"
+      ],
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
@@ -21,8 +34,15 @@
     "skipLibCheck": true
   },
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": [
+      "tsconfig-paths/register"
+    ]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

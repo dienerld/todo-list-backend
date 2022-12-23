@@ -1,4 +1,3 @@
-
 export default {
   transform: { '^.+\\.ts?$': '@swc/jest' },
   testEnvironment: 'node',
@@ -10,10 +9,11 @@ export default {
   ],
   testMatch: ['**/*.{test,spec}.ts'],
   moduleNameMapper: {
+    '@database/(.*)': '<rootDir>/src/infra/database/$1',
+    '@http/(.*)': '<rootDir>/src/infra/http/$1',
     '@models/(.*)': '<rootDir>/src/core/models/$1',
+    '@usecases/(.*)': '<rootDir>/src/core/usecases/$1',
     '@presentation/(.*)': '<rootDir>/src/core/presentation/$1',
-    '@infra/(.*)': '<rootDir>/src/infra/$1',
-    '@database/(.*)': '<rootDir>/src/database/$1',
     '@configs/(.*)': '<rootDir>/src/configs/$1'
   }
 };
