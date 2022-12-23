@@ -2,7 +2,7 @@ export default {
   transform: { '^.+\\.ts?$': '@swc/jest' },
   testEnvironment: 'node',
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['<rootDir>/src/core/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/core/**/*.ts', '<rootDir>/src/infra/http/controllers/**/*.ts'],
   coveragePathIgnorePatterns: [
     '<rootDir>/src/core/__tests__',
     '<rootDir>/src/core/presentation'
