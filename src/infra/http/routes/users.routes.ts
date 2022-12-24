@@ -15,31 +15,33 @@ import { RedisRepository } from '../../cache/redis.repository';
 
 const usersRouter = Router();
 
-usersRouter.use(new UserAlreadyExistsMiddleware().handle);
-
 // Create User
-usersRouter.post('/', async (req, res) => {
-  const userRepo = new UserRepository();
-  const useCase = new CreateUserUseCase(userRepo);
-  const controller = new CreateUserController(useCase);
+usersRouter.post('/',
+  new UserAlreadyExistsMiddleware().handle,
+  async (req, res) => {
+    const userRepo = new UserRepository();
+    const useCase = new CreateUserUseCase(userRepo);
+    const controller = new CreateUserController(useCase);
 
-  return controller.handle(req, res);
-});
+    return controller.handle(req, res);
+  });
 
 // login User
-usersRouter.post('/login', (req, res) => {
-  const userRepo = new UserRepository();
-  const useCase = new LoginUserUsecase(userRepo);
-  const controller = new LoginUserController(useCase);
+usersRouter.post('/login',
+  new UserAlreadyExistsMiddleware().handle,
+  async (req, res) => {
+    const userRepo = new UserRepository();
+    const useCase = new LoginUserUsecase(userRepo);
+    const controller = new LoginUserController(useCase);
 
-  return controller.handle(req, res);
-});
+    return controller.handle(req, res);
+  });
 
 // This route is protected by the middleware
 usersRouter.use(hasAuthentication);
 
 // Get User
-usersRouter.get('/', (req: CustomRequest, res) => {
+usersRouter.get('/', async (req: CustomRequest, res) => {
   const userRepo = new UserRepository();
   const cacheRepo = new RedisRepository();
   const useCase = new FindUserUseCase(userRepo, cacheRepo);
@@ -49,7 +51,7 @@ usersRouter.get('/', (req: CustomRequest, res) => {
 });
 
 // Update User
-usersRouter.put('/', (req, res) => {
+usersRouter.put('/', async (req, res) => {
   const userRepo = new UserRepository();
   const cacheRepo = new RedisRepository();
   const useCase = new UpdateUserUseCase(userRepo, cacheRepo);
@@ -59,7 +61,7 @@ usersRouter.put('/', (req, res) => {
 });
 
 // Delete User
-usersRouter.delete('/', (req, res) => {
+usersRouter.delete('/', async (req, res) => {
   const userRepo = new UserRepository();
   const cacheRepo = new RedisRepository();
   const useCase = new DeleteUserUsecase(userRepo, cacheRepo);

@@ -22,11 +22,11 @@ const userSchema = new EntitySchema<User>({
       type: 'varchar'
     },
     created_at: {
-      type: 'datetime',
+      type: 'timestamp',
       default: 'now()'
     },
     updated_at: {
-      type: 'datetime',
+      type: 'timestamp',
       default: 'now()',
       onUpdate: 'now()'
     }

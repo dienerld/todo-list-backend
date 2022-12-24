@@ -1,6 +1,7 @@
-import { appDataSource } from '@database/data-source';
-import 'dotenv/config';
 import 'reflect-metadata';
+import 'dotenv/config';
+
+import { appDataSource } from '@database/data-source';
 import { app } from './app';
 import { swaggerServe, swaggerUi } from './doc';
 

@@ -10,9 +10,8 @@ class UserAlreadyExistsMiddleware {
     try {
       const repository = new UserRepository();
       const user = await repository.findByEmail(email);
-      if (user) {
-        req.user = user;
-      }
+      if (user) { req.user = user }
+
       return next();
     } catch (error) {
       if (error instanceof CustomError) {

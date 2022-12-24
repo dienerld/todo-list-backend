@@ -11,6 +11,9 @@
       "@http/*": [
         "infra/http/*"
       ],
+      "@cache/*": [
+        "infra/cache/*"
+      ],
       "@models/*": [
         "core/models/*"
       ],

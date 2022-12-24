@@ -27,11 +27,11 @@ const taskSchema = new EntitySchema<Task>({
       type: 'varchar'
     },
     created_at: {
-      type: 'datetime',
+      type: 'timestamp',
       default: 'now()'
     },
     updated_at: {
-      type: 'datetime',
+      type: 'timestamp',
       default: 'now()',
       onUpdate: 'now()'
     },

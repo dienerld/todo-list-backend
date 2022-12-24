@@ -15,7 +15,7 @@ const cfgDev: DataSourceOptions = {
 };
 
 const cfgTest: DataSourceOptions = {
-  type: 'sqlite',
+  type: 'better-sqlite3',
   database: ':memory:',
   logging: false,
   entities: [userSchema, taskSchema],
