@@ -1,3 +1,4 @@
+import { envs } from '@configs/env';
 import { User } from '@models/user/user.model';
 import { EntitySchema } from 'typeorm';
 
@@ -22,11 +23,12 @@ const userSchema = new EntitySchema<User>({
       type: 'varchar'
     },
     created_at: {
-      type: 'timestamp',
+      type: envs.env === 'test' ? 'datetime' : 'timestamp',
       default: 'now()'
     },
     updated_at: {
-      type: 'timestamp',
+      type: envs.env === 'test' ? 'datetime' : 'timestamp',
+
       default: 'now()',
       onUpdate: 'now()'
     }

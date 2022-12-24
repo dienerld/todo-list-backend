@@ -1,5 +1,6 @@
 import { EntitySchema } from 'typeorm';
 import { Task } from '@models/task/task.model';
+const env = process.env.NODE_ENV;
 
 const taskSchema = new EntitySchema<Task>({
   name: 'Task',
@@ -15,7 +16,7 @@ const taskSchema = new EntitySchema<Task>({
       type: 'varchar'
     },
     date: {
-      type: 'date'
+      type: env === 'test' ? 'datetime' : 'timestamp with time zone'
     },
     done: {
       type: 'boolean'
@@ -27,11 +28,11 @@ const taskSchema = new EntitySchema<Task>({
       type: 'varchar'
     },
     created_at: {
-      type: 'timestamp',
+      type: env === 'test' ? 'datetime' : 'timestamp with time zone',
       default: 'now()'
     },
     updated_at: {
-      type: 'timestamp',
+      type: env === 'test' ? 'datetime' : 'timestamp with time zone',
       default: 'now()',
       onUpdate: 'now()'
     },

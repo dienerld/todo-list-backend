@@ -1,3 +1,4 @@
+import { envs } from '@configs/env';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class createTableTasks1668194850044 implements MigrationInterface {
@@ -26,7 +27,7 @@ export class createTableTasks1668194850044 implements MigrationInterface {
         },
         {
           name: 'date',
-          type: 'timestamp'
+          type: envs.env === 'test' ? 'datetime' : 'timestamp with time zone'
         },
         {
           name: 'hour',
@@ -34,12 +35,12 @@ export class createTableTasks1668194850044 implements MigrationInterface {
         },
         {
           name: 'created_at',
-          type: 'timestamp',
+          type: envs.env === 'test' ? 'datetime' : 'timestamp with time zone',
           default: 'now()'
         },
         {
           name: 'updated_at',
-          type: 'timestamp',
+          type: envs.env === 'test' ? 'datetime' : 'timestamp with time zone',
           default: 'now()',
           onUpdate: 'now()'
         },
