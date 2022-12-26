@@ -7,7 +7,7 @@ import { userSchema } from '@database/schemas/user.schema';
 import { User } from '@models/user';
 import { app } from '@http/app';
 
-describe('[Controller] Delete User', () => {
+describe('[Controller] Find User', () => {
   let user: User;
   const generateToken = (_user: User, expires?: number) => {
     const token = jwt.sign({
