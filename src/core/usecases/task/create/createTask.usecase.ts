@@ -17,7 +17,6 @@ class CreateTaskUseCase {
       const keyCache = `${cacheConfig.prefix.tasks}-${userId}`;
 
       if (!userId) { throw new MissingParamError('userId') }
-
       if (!taskDto) { throw new MissingParamError('taskDto') }
 
       const task = Task.create(taskDto.title, taskDto.date, taskDto.hour, userId);
