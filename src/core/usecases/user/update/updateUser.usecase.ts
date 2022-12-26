@@ -4,7 +4,7 @@ import { IUserRepository } from '@models/user/userRepository.interface';
 import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface';
 import { CustomError, InvalidParamError, NotFoundError } from '@presentation/errors';
 import { HttpResponse, IHttpResponse } from '@presentation/helpers';
-import { regexEmail, regexName } from '@presentation/helpers/validations';
+import { regexEmail, regexName, regexPassword } from '@presentation/helpers/validations';
 
 class UpdateUserUseCase {
   constructor (
@@ -21,21 +21,24 @@ class UpdateUserUseCase {
       if (userDto.name !== undefined) {
         if (!userDto.name.match(regexName)) { throw new InvalidParamError('Name') }
         user.name = userDto.name;
+        user.updated_at = new Date();
       }
 
       if (userDto.email !== undefined) {
         if (!userDto.email.match(regexEmail)) { throw new InvalidParamError('Email') }
         user.email = userDto.email;
+        user.updated_at = new Date();
       }
 
       if (userDto.password?.trim() || userDto.password_confirm?.trim()) {
         if (userDto.password !== userDto.password_confirm) {
           throw new InvalidParamError('Password does not match');
         }
-        if (userDto.password!.length < 6) {
-          throw new InvalidParamError('Password must have at least 6 characters');
+        if (!userDto.password!.match(regexPassword)) {
+          throw new InvalidParamError('Password must have at least 5 characters and special characters');
         }
         user.password = userDto.password!;
+        user.updated_at = new Date();
       }
 
       await this.userRepository.update(user);
