@@ -16,5 +16,6 @@ export default {
     '@usecases/(.*)': '<rootDir>/src/core/usecases/$1',
     '@presentation/(.*)': '<rootDir>/src/core/presentation/$1',
     '@configs/(.*)': '<rootDir>/src/configs/$1'
-  }
+  },
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup/ioredis.ts']
 };
