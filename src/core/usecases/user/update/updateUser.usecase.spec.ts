@@ -41,7 +41,7 @@ describe('[Use Case] Update User', () => {
   it('should return a 204 status code if updated password', async () => {
     const { sut } = makeSut();
     const user = UsersMock[0];
-    const { statusCode } = await sut.execute(user.id, { password: 'new_password', password_confirm: 'new_password' });
+    const { statusCode } = await sut.execute(user.id, { password: 'new_password1', password_confirm: 'new_password1' });
 
     expect(statusCode).toBe(204);
   });
