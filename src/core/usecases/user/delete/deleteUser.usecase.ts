@@ -14,16 +14,11 @@ class DeleteUserUsecase {
     try {
       const user = await this.userRepository.findById(userId);
       if (!user) { throw new NotFoundError('User') }
-      // await Promise.all([
-      await this.userRepository.delete(userId);
-      // console.log('SDFSDFSDFS');
-      // await this.cacheRepository.delete(`${cacheConfig.prefix.tasks}-${userId}`);
-      await this.cacheRepository.delete(`${cacheConfig.prefix.user}-${userId}`);
-      console.log('POS ALL');
-      // ]);
-
-      // await this.cacheRepository.disconnect();
-      console.log('POS DISCONNECT');
+      await Promise.all([
+        this.userRepository.delete(userId),
+        this.cacheRepository.delete(`${cacheConfig.prefix.tasks}-${userId}`),
+        this.cacheRepository.delete(`${cacheConfig.prefix.user}-${userId}`)
+      ]);
 
       return HttpResponse.noContent();
     } catch (error) {
