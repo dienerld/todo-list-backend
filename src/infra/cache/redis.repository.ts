@@ -3,13 +3,13 @@ import { IRepositoryCache } from '@presentation/cache/repositoryCache.interface'
 import { Redis } from './redis';
 
 class RedisRepository implements IRepositoryCache {
-  static client: ioRedis;
+  client: ioRedis;
   constructor () {
-    RedisRepository.client = Redis();
+    this.client = Redis.create();
   }
 
   async get<T> (id: string): Promise<T | null> {
-    const result = await RedisRepository.client.get(id);
+    const result = await this.client.get(id);
     if (!result) { return null }
 
     return JSON.parse(result);
@@ -18,17 +18,17 @@ class RedisRepository implements IRepositoryCache {
   async set<T> (id: string, value: T, expiresInMin?: number | undefined): Promise<void> {
     if (expiresInMin) {
       const seconds = expiresInMin * 60;
-      await RedisRepository.client.setex(id, seconds, JSON.stringify(value));
+      await this.client.setex(id, seconds, JSON.stringify(value));
     }
-    await RedisRepository.client.set(id, JSON.stringify(value));
+    await this.client.set(id, JSON.stringify(value));
   }
 
   async delete (id: string): Promise<void> {
-    await RedisRepository.client.del([id]);
+    await this.client.del([id]);
   }
 
   async disconnect (): Promise<void> {
-    RedisRepository.client.disconnect();
+    this.client.disconnect();
   }
 }
 
