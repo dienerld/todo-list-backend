@@ -5,7 +5,7 @@ import { Redis } from './redis';
 class RedisRepository implements IRepositoryCache {
   client: ioRedis;
   constructor () {
-    this.client = Redis();
+    this.client = Redis.create();
   }
 
   async get<T> (id: string): Promise<T | null> {
