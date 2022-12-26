@@ -6,15 +6,6 @@ import { UserRequestDto } from '@models/user';
 import { app } from '@http/app';
 
 describe('[Controller] Create User', () => {
-  beforeAll(async () => {
-    await appDataSource.initialize();
-    await appDataSource.runMigrations();
-  });
-
-  afterAll(async () => {
-    await appDataSource.destroy();
-  });
-
   beforeEach(async () => {
     await appDataSource.manager.clear(userSchema);
   });

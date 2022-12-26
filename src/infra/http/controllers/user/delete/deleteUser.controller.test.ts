@@ -23,14 +23,6 @@ describe('[Controller] Delete User', () => {
   const sleep = async (sec: number) => {
     return new Promise(resolve => setTimeout(resolve, sec * 1000));
   };
-  beforeAll(async () => {
-    await appDataSource.initialize();
-    await appDataSource.runMigrations();
-  });
-
-  afterAll(async () => {
-    await appDataSource.destroy();
-  });
 
   beforeEach(async () => {
     await appDataSource.manager.clear(userSchema);
