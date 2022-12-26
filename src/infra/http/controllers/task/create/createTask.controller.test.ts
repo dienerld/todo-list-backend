@@ -34,7 +34,7 @@ describe('[Controller] Create Task', () => {
     );
   };
 
-  it('Returns 200 when task is created', async () => {
+  it('Returns 201 when task is created', async () => {
     const body: TaskRequestDto = {
       title: 'any title',
       date: new Date(),
