@@ -1,0 +1,24 @@
+@host = http://localhost
+
+GET {{host}}:{{$dotenv PORT}}/ HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+POST {{host}}:{{$dotenv PORT}}/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"dnr@mail.com",
+  "password":"123Qw!"
+
+}
+
+
+###
+GET {{host}}:{{$dotenv PORT}}/users HTTP/1.1
+
+
+###
+GET {{host}}:{{$dotenv PORT}}/dienerld1/stats HTTP/1.1

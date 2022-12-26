@@ -1,0 +1,29 @@
+@host = http://localhost
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMyYTNhZmFjLTFmNDAtNDFmMy1iYmMzLWE4NDU1NGQ4MDhlYiIsImVtYWlsIjoiZG5yQG1haWwuY29tIiwibmFtZSI6IkRpZW5lciIsImlhdCI6MTY3MjA1MDUzNywiZXhwIjoxNjcyMTM2OTM3fQ.E_lFeexRAH_gwMAjRMaWKVJl13YnT0jNaArR6h2jEJs
+###
+POST {{host}}:{{$dotenv PORT}}/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"Diener",
+  "email":"dnr@mail.com",
+  "password":"123Qw!",
+  "password_confirm":"123Qw!"
+}
+
+# Expect
+# {
+  # "id": "c2a3afac-1f40-41f3-bbc3-a84554d808eb",
+  # "name": "Diener",
+  # "email": "dnr@mail.com",
+  # "password": "123Qw!",
+  # "created_at": "2022-12-26T10:27:07.061Z",
+  # "updated_at": "2022-12-26T10:27:07.061Z"
+# }
+
+###
+
+GET {{host}}:{{$dotenv PORT}}/users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
