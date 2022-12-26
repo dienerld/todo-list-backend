@@ -17,5 +17,7 @@ export default {
     '@presentation/(.*)': '<rootDir>/src/core/presentation/$1',
     '@configs/(.*)': '<rootDir>/src/configs/$1'
   },
-  setupFilesAfterEnv: ['']
+  setupFilesAfterEnv: [
+    '<rootDir>/__tests__/setup/typeorm.ts',
+    '<rootDir>/__tests__/setup/ioredis.ts']
 };
