@@ -7,8 +7,6 @@ import { userSchema } from '@database/schemas/user.schema';
 import { app } from '@http/app';
 import { User } from '@models/user';
 import { jwtConfig } from '@configs/jwt';
-import { RedisRepository } from '@cache/redis.repository';
-import { cacheConfig } from '@configs/cache';
 
 describe('[Controller] Delete User', () => {
   let user: User;
@@ -43,7 +41,6 @@ describe('[Controller] Delete User', () => {
     );
 
     await appDataSource.manager.save(user);
-    await new RedisRepository().set(`${cacheConfig.prefix.user}-${user.id}`, user);
   });
 
   it('Should returns 204 if delete successfully', async () => {
