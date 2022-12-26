@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken';
 import request from 'supertest';
 
-import { jwtConfig } from '@configs/jwt';
 import { appDataSource } from '@database/data-source';
 import { userSchema } from '@database/schemas/user.schema';
 import { User } from '@models/user';
@@ -9,16 +7,6 @@ import { app } from '@http/app';
 
 describe('[Controller] Login User', () => {
   let user: User;
-  const generateToken = (_user: User, expires?: number) => {
-    const token = jwt.sign({
-      id: _user.id,
-      email: _user.email,
-      name: _user.name
-    }, jwtConfig.secret, { expiresIn: expires || jwtConfig.expiresIn }
-    );
-
-    return token;
-  };
 
   beforeEach(async () => {
     await appDataSource.manager.clear(userSchema);
