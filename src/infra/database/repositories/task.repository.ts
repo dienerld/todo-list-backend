@@ -35,11 +35,10 @@ class TaskRepository implements ITaskRepository {
 
   async findWithFilters (userId: string, filters: TFiltersQuery): Promise<TResultFind> {
     const { title, hidden } = filters;
-
     const [tasks, total] = await this.repository.findAndCount({
       where: {
         userId,
-        ...(hidden && { hidden }),
+        ...(hidden !== undefined && { hidden }),
         ...(title && { title: ILike(`%${title}%`) })
       },
       order: { date: 'ASC', hour: 'ASC' }

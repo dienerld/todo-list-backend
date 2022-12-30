@@ -3,7 +3,7 @@ import { hasAuthentication } from '../middleware';
 
 import {
   CreateTaskController, DeleteTaskController,
-  GetAllTaskController, GetTaskController, UpdateTaskController
+  FindAllTaskController, FindTaskController, UpdateTaskController
 } from '../controllers/task';
 import {
   CreateTaskUseCase, DeleteTaskUseCase,
@@ -22,7 +22,7 @@ tasksRouter.get('/', (req, res) => {
   const repo = new TaskRepository();
   const repoCache = new RedisRepository();
   const useCase = new FindAllTaskUseCase(repo, repoCache);
-  const controller = new GetAllTaskController(useCase);
+  const controller = new FindAllTaskController(useCase);
 
   return controller.handle(req, res);
 });
@@ -65,7 +65,7 @@ tasksRouter.delete('/:id', (req, res) => {
 tasksRouter.get('/search', (req, res) => {
   const repo = new TaskRepository();
   const useCase = new FindWithFiltersUseCase(repo);
-  const controller = new GetTaskController(useCase);
+  const controller = new FindTaskController(useCase);
 
   return controller.handle(req, res);
 });
