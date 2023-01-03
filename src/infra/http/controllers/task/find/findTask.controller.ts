@@ -6,16 +6,10 @@ class FindTaskController {
   constructor (private findTaskUseCase: FindWithFiltersUseCase) {}
 
   async handle (req: CustomRequest, res: Response) {
-    try {
-      const userId = req.user!.id;
-      const { body, statusCode } = await this.findTaskUseCase.execute(userId, req.query);
+    const userId = req.user!.id;
+    const { body, statusCode } = await this.findTaskUseCase.execute(userId, req.query);
 
-      return res.status(statusCode).json(body);
-    } catch (err: any) {
-      return res.status(400).json({
-        message: err.message || 'Unexpected error.'
-      });
-    }
+    return res.status(statusCode).json(body);
   }
 }
 

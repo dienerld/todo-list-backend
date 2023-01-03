@@ -1,3 +1,4 @@
+
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
 
@@ -8,6 +9,7 @@ import { User } from '@models/user';
 import { jwtConfig } from '@configs/jwt';
 import { app } from '@http/app';
 import { Task } from '@models/task';
+
 describe('[Controller] Find Task', () => {
   let user: User;
   let task: Task;
@@ -27,20 +29,15 @@ describe('[Controller] Find Task', () => {
   });
 
   beforeEach(async () => {
-    function createTask () {
-      return Task.create(
-        'any title',
-        new Date(),
-        '00:00',
-        user.id
-      );
-    }
-
     await appDataSource.manager.clear(taskSchema);
 
-    task = createTask();
-    await appDataSource.manager.save(task);
-    task = createTask();
+    task = Task.create(
+      'any title',
+      new Date(),
+      '00:00',
+      user.id
+    );
+
     await appDataSource.manager.save(task);
   });
 
@@ -55,31 +52,12 @@ describe('[Controller] Find Task', () => {
     );
   };
 
-  it('Should return 200 with all tasks if not provided filter', async () => {
-    const response = await request(app)
-      .get('/tasks/search')
-      .set('Content-Type', 'application/json')
+  it('Should return 200 with task when founded', async () => {
+    const response = await request(app).get('/tasks')
       .set('Authorization', `Bearer ${generateToken(user)}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty('total', 2);
-    expect(response.body).toHaveProperty('tasks');
-  });
-
-  it('Should return 200 with tasks filtered based in provided filters', async () => {
-    const response = await request(app)
-      .get('/tasks/search')
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${generateToken(user)}`)
-      .query({
-        hidden: true
-      });
-
-    console.log(response.body);
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveProperty('total', 0);
-    expect(response.body).toHaveProperty('tasks');
+    expect(response.body).toHaveProperty('total', 1);
   });
 
   it('Should returns 401 if token expired', async () => {

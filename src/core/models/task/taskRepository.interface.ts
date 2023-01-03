@@ -1,7 +1,7 @@
 import { TTask } from './task.dtos';
 import { Task } from './task.model';
 
-export type TFiltersQuery = Omit<Partial<TTask>, 'id' | 'created_at' | 'updated_at' | 'user_id'| 'hour'>
+export type TFiltersQuery = Omit<Partial<TTask>, 'id' | 'done' | 'date' | 'created_at' | 'updated_at' | 'user_id'| 'hour'>
 
 export type TResultFind = {
   tasks: Task[];
