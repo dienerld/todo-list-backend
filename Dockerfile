@@ -9,9 +9,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn --frozen-lockfile && yarn build \
-  && NODE_ENV=production \
-  npm prune --production && node-prune
+RUN yarn --frozen-lockfile && yarn build && yarn --production && node-prune
 
 ## Prod
 FROM node:16.16.0-alpine
