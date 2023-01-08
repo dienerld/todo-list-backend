@@ -5,7 +5,7 @@ services:
     image: postgres:14
     container_name: growdev-db-prod
     volumes:
-      - todo-data:/var/lib/postgresql/data
+      - todo-data-prod:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
