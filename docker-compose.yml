@@ -3,11 +3,11 @@ version: "3.6"
 services:
   todo-db:
     image: postgres:14
-    container_name: growdev-db-dev
+    container_name: growdev-db-prod
     volumes:
       - todo-data:/var/lib/postgresql/data
     ports:
-      - 5434:5432
+      - 5432:5432
     environment:
       - POSTGRES_DB=todo
       - POSTGRES_USER=todo
@@ -15,7 +15,7 @@ services:
 
   todo-redis:
     image: bitnami/redis:7.0.7
-    container_name: growdev-redis-dev
+    container_name: growdev-redis-prod
     environment:
       - REDIS_PASSWORD=todo
     ports:
@@ -24,8 +24,8 @@ services:
   todo-api:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    container_name: todo-api-dev
+      dockerfile: Dockerfile
+    container_name: todo-api-prod
     ports:
       - 8080:8080
     environment:
@@ -41,4 +41,4 @@ services:
       - .:/app
 
 volumes:
-  todo-data:
+  todo-data-prod:
