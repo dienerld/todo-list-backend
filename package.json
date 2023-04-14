@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "yarn tsup && yarn typeorm:up",
+    "build": "yarn tsup",
     "dev": "tsnd --respawn --transpile-only --ignore-watch  node_modules -r tsconfig-paths/register src/infra/http/server.ts",
     "start": "node dist/infra/http/server.js",
     "typeorm": "typeorm-ts-node-commonjs",

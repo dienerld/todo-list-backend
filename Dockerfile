@@ -21,4 +21,4 @@ COPY --from=BUILD_IMAGE_TEMP /app/dist ./dist
 COPY --from=BUILD_IMAGE_TEMP /app/node_modules ./node_modules
 
 
-ENTRYPOINT [ "node", "dist/infra/http/server.js" ]
+ENTRYPOINT [ "node", "./dist/server.js" ]
