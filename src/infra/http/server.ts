@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 8080;
 (async () => {
   try {
     await appDataSource.initialize();
-    await appDataSource.runMigrations();
     app.listen(PORT, () => console.log(`🚀 Server is running http://localhost:${PORT}`));
   } catch (error) {
     console.log('Error: ', error);
