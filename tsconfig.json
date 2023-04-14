@@ -2,14 +2,15 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "rootDir": "./src",
-    "baseUrl": "./src",
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
-      "@database/*": ["infra/database/*"],
-      "@models/*": ["core/models/*"],
-      "@usecases/*": ["core/usecases/*"],
-      "@presentation/*": ["core/presentation/*"],
-      "@configs/*": ["configs/*"]
+      "@database/*": ["./src/infra/database/*"],
+      "@models/*": ["./src/core/models/*"],
+      "@usecases/*": ["./src/core/usecases/*"],
+      "@presentation/*": ["./src/core/presentation/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@http/*": ["./src/infra/http/*"]
     },
     "resolveJsonModule": true,
     "outDir": "./dist",
